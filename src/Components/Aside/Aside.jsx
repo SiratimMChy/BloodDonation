@@ -4,6 +4,7 @@ import { NavLink, useNavigate } from 'react-router';
 import { AuthContext } from '../../Provider/AuthProvider';
 import { signOut } from 'firebase/auth';
 import auth from '../../Firebase/firebase.config';
+import { MdBloodtype } from 'react-icons/md';
 
 const Aside = () => {
   const { role } = useContext(AuthContext);
@@ -42,7 +43,7 @@ const Aside = () => {
       <div className="px-6 pt-8 pb-6 border-b border-gray-200 bg-white">
         <div className={`flex items-center gap-3 mb-2 ${isCollapsed ? 'justify-center' : ''}`}>
           <div className=" mt-1.5 w-8 h-8 lg:w-12 lg:h-12 bg-linear-to-br from-red-500 to-red-600 rounded-lg flex items-center justify-center shadow-md shrink-0">
-            <span className="text-white font-bold text-xl">🩸</span>
+            <span className="text-white font-bold text-xl"><MdBloodtype className="text-white" size={18} /></span>
           </div>
           {!isCollapsed && (
             <div>
