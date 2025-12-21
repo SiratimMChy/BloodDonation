@@ -356,7 +356,7 @@ const Home = () => {
                     </div>
                     <div>
                       <p className="text-white/80 text-sm font-semibold mb-1">Email Address</p>
-                      <p className="text-xl font-bold break-all">support@blooddonation.org</p>
+                      <p className="text-xl font-bold break-all">support@Hemovia.org</p>
                     </div>
                   </div>
 
