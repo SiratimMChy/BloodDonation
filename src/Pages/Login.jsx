@@ -9,7 +9,7 @@ import { toast } from 'react-toastify';
 import { FaEnvelope, FaLock } from 'react-icons/fa';
 const Login = () => {
 
-    const { setUser, handleSignupWithGoogle } = useContext(AuthContext);
+    const { setUser} = useContext(AuthContext);
     const location = useLocation();
     const navigate = useNavigate();
     const path = location.state ? location.state : '/';
@@ -33,18 +33,7 @@ const Login = () => {
     }
 
 
-    const SignInWithGoogle = () => {
-        handleSignupWithGoogle()
-            .then(result => {
-                const user = result.user;
-                setUser(user);
-                toast.success('Google login successful!');
-                navigate(path);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    }
+   
     const hanldeforget = (e) => {
         e.preventDefault();
         const emailInput = e.target.form.email.value;
