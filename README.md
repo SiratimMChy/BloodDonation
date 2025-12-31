@@ -9,17 +9,17 @@ Live Website Link Client-side: https://blooddonation-f6367.web.app
 
 Features
 
-⦁Join as a donor
+⦁ Join as a donor
 
-⦁add request
+⦁ add request
 
-⦁Admin Management
+⦁ Admin Management
+ 
+⦁ search blood donor using bloodgroup ,district and upazila 
 
-⦁search blood donor using bloodgroup ,district and upazila 
+⦁ Aslo have CRUD operation implemented
 
-⦁Aslo have CRUD operation implemented
-
-⦁RESTful API
+⦁ RESTful API
 
 NPM packages: React-router, react-toastify, react-icons etc.
 
