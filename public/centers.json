@@ -1,0 +1,915 @@
+[
+  {
+    "id": 1,
+    "name": "Quantum Blood Center",
+    "division": "Dhaka",
+    "district": "Dhaka",
+    "address": "31/V (1st Floor), Shilpacharya Zainul Abedin Sarak, Shantinagar, Dhaka-1217",
+    "phone": "+880-2-222221441",
+    "email": "blood@quantummethod.org.bd",
+    "openDays": "All Days",
+    "openHours": "24 Hours",
+    "emergency": "Round-the-Clock Emergency Blood Services",
+    "rating": 4.9,
+    "reviews": 298,
+    "facilities": [
+      "24/7 Voluntary Blood Donation",
+      "Advanced Screening Laboratory",
+      "Donor Recognition Program",
+      "Secure Parking Facility"
+    ],
+    "verified": true,
+    "featured": true
+  },
+  {
+    "id": 2,
+    "name": "Sandhani BSMMU",
+    "division": "Dhaka",
+    "district": "Dhaka",
+    "address": "Room 35, Tinshed Outdoor Building, BSMMU, Shahbag, Dhaka-1000",
+    "phone": "+880-2-8621658",
+    "email": "central@sandhani.org",
+    "openDays": "Sunday to Thursday",
+    "openHours": "09:00 AM – 05:00 PM",
+    "emergency": "24/7 Emergency Blood Support Available",
+    "rating": 4.9,
+    "reviews": 312,
+    "facilities": [
+      "Voluntary Blood Donation Network",
+      "Student Volunteer Program",
+      "Safe Blood Collection",
+      "Donor Recognition Program"
+    ],
+    "verified": true,
+    "featured": false
+  },
+  {
+    "id": 3,
+    "name": "Sandhani DMCH",
+    "division": "Dhaka",
+    "district": "Dhaka",
+    "address": "Dhaka Medical College, Bakshibazar, Dhaka-1000",
+    "phone": "+880-2-9668609",
+    "email": "sandhani@dmch.gov.bd",
+    "openDays": "Sunday to Thursday",
+    "openHours": "10:00 AM – 05:00 PM",
+    "emergency": "Emergency Support via On-Call Volunteers",
+    "rating": 4.8,
+    "reviews": 267,
+    "facilities": [
+      "Trained Student Volunteers",
+      "Safe & Ethical Blood Collection",
+      "Donation Certificates",
+      "Post-Donation Refreshments"
+    ],
+    "verified": true,
+    "featured": false
+  },
+  {
+    "id": 4,
+    "name": "Red Crescent Dhaka",
+    "division": "Dhaka",
+    "district": "Dhaka",
+    "address": "7/5, Aurangzeb Road, Mohammadpur, Dhaka-1207",
+    "phone": "+880-2-41023562",
+    "email": "info@bdrcs.org",
+    "openDays": "All Days",
+    "openHours": "09:00 AM – 08:00 PM",
+    "emergency": "Hotline: +880-1811-458537",
+    "rating": 4.7,
+    "reviews": 234,
+    "facilities": [
+      "Walk-in Donation Service",
+      "Volunteer Donor Network",
+      "Emergency Blood Services",
+      "Community Outreach"
+    ],
+    "verified": true,
+    "featured": false
+  },
+
+  {
+    "id": 5,
+    "name": "CMCH Blood Bank",
+    "division": "Chittagong",
+    "district": "Chittagong",
+    "address": "K.B. Fazlul Kader Road, Panchlaish, Chittagong-4203",
+    "phone": "+880-31-619199",
+    "email": "bloodbank@cmch.gov.bd",
+    "openDays": "Sunday to Thursday",
+    "openHours": "09:00 AM – 04:00 PM",
+    "emergency": "24/7 Emergency Blood Supply Available",
+    "rating": 4.7,
+    "reviews": 189,
+    "facilities": [
+      "Free Health Screening",
+      "Donor Identification Card",
+      "Comfortable Waiting Area",
+      "Post-Donation Care"
+    ],
+    "verified": true,
+    "featured": true
+  },
+  {
+    "id": 6,
+    "name": "Sandhani CMCH",
+    "division": "Chittagong",
+    "district": "Chittagong",
+    "address": "Chittagong Medical College, K.B. Fazlul Kader Road, Chittagong-4203",
+    "phone": "+880-31-616625",
+    "email": "sandhani@cmch.gov.bd",
+    "openDays": "Sunday to Thursday",
+    "openHours": "10:00 AM – 05:00 PM",
+    "emergency": "Emergency Blood Support Available",
+    "rating": 4.6,
+    "reviews": 167,
+    "facilities": [
+      "Student Volunteer Network",
+      "Safe Blood Collection",
+      "Donation Certificates",
+      "Refreshments"
+    ],
+    "verified": true,
+    "featured": false
+  },
+  {
+    "id": 7,
+    "name": "Red Crescent CTG",
+    "division": "Chittagong",
+    "district": "Chittagong",
+    "address": "395 Anderkilla, Chattogram-4000",
+    "phone": "+880-31-620926",
+    "email": "chittagong@bdrcs.org",
+    "openDays": "All Days",
+    "openHours": "09:00 AM – 05:00 PM",
+    "emergency": "Hotline: +880-1815-850533",
+    "rating": 4.6,
+    "reviews": 145,
+    "facilities": [
+      "Walk-in Donation Service",
+      "Volunteer Donor Network",
+      "Emergency Blood Services",
+      "Community Outreach"
+    ],
+    "verified": true,
+    "featured": false
+  },
+  {
+    "id": 8,
+    "name": "CTG Blood Bank",
+    "division": "Chittagong",
+    "district": "Chittagong",
+    "address": "Mayabini Building, 57 K.B. Fazlul Khader Road, East Gate, Chittagong",
+    "phone": "+880-1837-690914",
+    "email": "info@ctgbloodbank.org",
+    "openDays": "All Days",
+    "openHours": "09:00 AM – 07:00 PM",
+    "emergency": "Emergency Blood Services Available",
+    "rating": 4.5,
+    "reviews": 128,
+    "facilities": [
+      "Modern Blood Collection Equipment",
+      "Trained Nursing Staff",
+      "Sterile Environment",
+      "Donor Refreshments"
+    ],
+    "verified": true,
+    "featured": false
+  },
+
+  {
+    "id": 9,
+    "name": "MAG Osmani MCH",
+    "division": "Sylhet",
+    "district": "Sylhet",
+    "address": "Medical Road, Kajolshah, Sylhet-3100",
+    "phone": "+880-821-716720",
+    "email": "bloodbank@somch.gov.bd",
+    "openDays": "Sunday to Thursday",
+    "openHours": "08:30 AM – 02:30 PM",
+    "emergency": "Emergency Blood Support Available",
+    "rating": 4.6,
+    "reviews": 156,
+    "facilities": [
+      "Trained Medical Personnel",
+      "Safe Blood Collection",
+      "Donation Certification",
+      "Refreshment Services"
+    ],
+    "verified": true,
+    "featured": true
+  },
+
+  {
+    "id": 10,
+    "name": "Jalalabad RRMC",
+    "division": "Sylhet",
+    "district": "Sylhet",
+    "address": "Jalalabad, Sylhet-3100",
+    "phone": "+880-821-728000",
+    "email": "info@jrmc.edu.bd",
+    "openDays": "Sunday to Thursday",
+    "openHours": "09:00 AM – 03:00 PM",
+    "emergency": "24/7 Emergency Blood Services",
+    "rating": 4.5,
+    "reviews": 123,
+    "facilities": [
+      "Modern Laboratory Facilities",
+      "Air-Conditioned Waiting Area",
+      "Free Health Screening",
+      "Secure Parking"
+    ],
+    "verified": true,
+    "featured": false
+  },
+
+  {
+    "id": 11,
+    "name": "Red Crescent Sylhet",
+    "division": "Sylhet",
+    "district": "Sylhet",
+    "address": "Chowhatta, Sylhet-3100",
+    "phone": "+880-821-724098",
+    "email": "sylhet@bdrcs.org",
+    "openDays": "All Days",
+    "openHours": "09:00 AM – 05:00 PM",
+    "emergency": "Hotline: +880-1611-300900",
+    "rating": 4.5,
+    "reviews": 112,
+    "facilities": [
+      "Community Blood Services",
+      "Donor Identification Cards",
+      "Emergency Blood Support",
+      "Refreshments"
+    ],
+    "verified": true,
+    "featured": false
+  },
+
+  {
+    "id": 12,
+    "name": "Sandhani Sylhet",
+    "division": "Sylhet",
+    "district": "Sylhet",
+    "address": "MAG Osmani Medical College, Medical Road, Sylhet-3100",
+    "phone": "+880-821-716568",
+    "email": "sandhani@somch.gov.bd",
+    "openDays": "Sunday to Thursday",
+    "openHours": "10:00 AM – 05:00 PM",
+    "emergency": "Emergency Blood Support Available",
+    "rating": 4.4,
+    "reviews": 98,
+    "facilities": [
+      "Student Volunteer Network",
+      "Safe Blood Collection",
+      "Donation Certificates",
+      "Community Services"
+    ],
+    "verified": true,
+    "featured": false
+  },
+
+  {
+    "id": 13,
+    "name": "RMCH Blood Bank",
+    "division": "Rajshahi",
+    "district": "Rajshahi",
+    "address": "Laxmipur, Rajshahi-6000",
+    "phone": "+880-721-772150",
+    "email": "bloodbank@rmch.gov.bd",
+    "openDays": "Sunday to Thursday",
+    "openHours": "09:00 AM – 03:00 PM",
+    "emergency": "24/7 Emergency Blood Supply Available",
+    "rating": 4.5,
+    "reviews": 134,
+    "facilities": [
+      "Modern Blood Storage",
+      "Clean Waiting Area",
+      "Post-Donation Care",
+      "Safe Donation Environment"
+    ],
+    "verified": true,
+    "featured": false
+  },
+
+  {
+    "id": 14,
+    "name": "Sandhani RMCH",
+    "division": "Rajshahi",
+    "district": "Rajshahi",
+    "address": "Rajshahi Medical College, Laxmipur, Rajshahi-6000",
+    "phone": "+880-721-52165180",
+    "email": "sandhani@rmch.gov.bd",
+    "openDays": "Sunday to Thursday",
+    "openHours": "10:00 AM – 05:00 PM",
+    "emergency": "Emergency Blood Support Available",
+    "rating": 4.6,
+    "reviews": 156,
+    "facilities": [
+      "Student Volunteer Network",
+      "Safe Blood Collection",
+      "Donation Certificates",
+      "Refreshments"
+    ],
+    "verified": true,
+    "featured": true
+  },
+
+  {
+    "id": 15,
+    "name": "Red Crescent Rajshahi",
+    "division": "Rajshahi",
+    "district": "Rajshahi",
+    "address": "Rajshahi District Road, Rajshahi-6000",
+    "phone": "+880-1865-055075",
+    "email": "rajshahi@bdrcs.org",
+    "openDays": "All Days",
+    "openHours": "09:00 AM – 05:00 PM",
+    "emergency": "Hotline: +880-1556-333821",
+    "rating": 4.5,
+    "reviews": 124,
+    "facilities": [
+      "Community Blood Services",
+      "Donor Recognition Program",
+      "Emergency Blood Support",
+      "Refreshments"
+    ],
+    "verified": true,
+    "featured": false
+  },
+
+  {
+    "id": 16,
+    "name": "Sandhani RU",
+    "division": "Rajshahi",
+    "district": "Rajshahi",
+    "address": "Rajshahi University Campus, Rajshahi-6205",
+    "phone": "+880-721-750041",
+    "email": "sandhani@ru.ac.bd",
+    "openDays": "Sunday to Thursday",
+    "openHours": "10:00 AM – 05:00 PM",
+    "emergency": "Limited Emergency Support",
+    "rating": 4.4,
+    "reviews": 112,
+    "facilities": [
+      "Student Volunteer Network",
+      "Safe Blood Collection",
+      "Donation Certificates",
+      "Refreshments"
+    ],
+    "verified": true,
+    "featured": false
+  },
+
+  {
+    "id": 17,
+    "name": "KMCH Blood Bank",
+    "division": "Khulna",
+    "district": "Khulna",
+    "address": "Khulna-Satkhira Road, Khulna-9000",
+    "phone": "+880-41-760300",
+    "email": "bloodbank@kmch.gov.bd",
+    "openDays": "Sunday to Thursday",
+    "openHours": "08:00 AM – 02:00 PM",
+    "emergency": "Emergency Blood Services Available",
+    "rating": 4.6,
+    "reviews": 142,
+    "facilities": [
+      "Expert Medical Team",
+      "Air-Conditioned Donor Area",
+      "Safety Compliance Protocols",
+      "Donor Recognition"
+    ],
+    "verified": true,
+    "featured": true
+  },
+
+  {
+    "id": 18,
+    "name": "Sandhani KMCH",
+    "division": "Khulna",
+    "district": "Khulna",
+    "address": "Khulna Medical College, Khulna-Satkhira Road, Khulna-9000",
+    "phone": "+880-41-761509",
+    "email": "sandhani@kmch.gov.bd",
+    "openDays": "Sunday to Thursday",
+    "openHours": "10:00 AM – 05:00 PM",
+    "emergency": "Emergency Blood Support Available",
+    "rating": 4.5,
+    "reviews": 128,
+    "facilities": [
+      "Student Volunteer Network",
+      "Safe Blood Collection",
+      "Donation Certificates",
+      "Refreshments"
+    ],
+    "verified": true,
+    "featured": false
+  },
+
+  {
+    "id": 19,
+    "name": "Gazi Medical College",
+    "division": "Khulna",
+    "district": "Khulna",
+    "address": "A-19-21, Majid Sarani, Sonadanga, Khulna-9000",
+    "phone": "+880-41-810234",
+    "email": "info@gmc.edu.bd",
+    "openDays": "All Days",
+    "openHours": "24 Hours",
+    "emergency": "24/7 Emergency Blood Services",
+    "rating": 4.6,
+    "reviews": 145,
+    "facilities": [
+      "500-Bed Teaching Hospital",
+      "Modern Medical Equipment",
+      "Professional Care Team",
+      "Secure Parking"
+    ],
+    "verified": true,
+    "featured": false
+  },
+
+  {
+    "id": 20,
+    "name": "Khulna General Hospital",
+    "division": "Khulna",
+    "district": "Khulna",
+    "address": "Shamsur Rahman Road, Khulna-9100",
+    "phone": "+880-41-762006",
+    "email": "bloodbank@ghk.gov.bd",
+    "openDays": "Sunday to Thursday",
+    "openHours": "09:00 AM – 03:00 PM",
+    "emergency": "Emergency Blood Support Available",
+    "rating": 4.4,
+    "reviews": 119,
+    "facilities": [
+      "Established Blood Bank Service",
+      "Safe Blood Collection",
+      "Emergency Support",
+      "Refreshments"
+    ],
+    "verified": true,
+    "featured": false
+  },
+
+  {
+    "id": 21,
+    "name": "SBMCH Blood Bank",
+    "division": "Barisal",
+    "district": "Barisal",
+    "address": "Band Road, Barisal-8200",
+    "phone": "+880-431-2176011",
+    "email": "bloodbank@sbmch.gov.bd",
+    "openDays": "Sunday to Thursday",
+    "openHours": "09:00 AM – 03:00 PM",
+    "emergency": "24/7 Emergency Blood Services",
+    "rating": 4.5,
+    "reviews": 134,
+    "facilities": [
+      "Hygienic Donation Environment",
+      "Trained Nursing Staff",
+      "Dedicated Donor Lounge",
+      "Refreshments"
+    ],
+    "verified": true,
+    "featured": true
+  },
+
+  {
+    "id": 22,
+    "name": "Sandhani SBMCH",
+    "division": "Barisal",
+    "district": "Barisal",
+    "address": "Sher-E-Bangla Medical College, Band Road, Barisal-8200",
+    "phone": "+880-431-64055",
+    "email": "sandhani@sbmch.gov.bd",
+    "openDays": "Sunday to Thursday",
+    "openHours": "10:00 AM – 05:00 PM",
+    "emergency": "Emergency Blood Support Available",
+    "rating": 4.4,
+    "reviews": 118,
+    "facilities": [
+      "Student Volunteer Network",
+      "Safe Blood Collection",
+      "Donation Certificates",
+      "Refreshments"
+    ],
+    "verified": true,
+    "featured": false
+  },
+
+  {
+    "id": 23,
+    "name": "Barisal General Hospital",
+    "division": "Barisal",
+    "district": "Barisal",
+    "address": "Hospital Road, Barisal-8200",
+    "phone": "+880-431-63890",
+    "email": "bloodbank@bgh.gov.bd",
+    "openDays": "Sunday to Thursday",
+    "openHours": "08:30 AM – 02:30 PM",
+    "emergency": "Emergency Blood Support Available",
+    "rating": 4.3,
+    "reviews": 98,
+    "facilities": [
+      "Safe Blood Donation",
+      "Basic Medical Facilities",
+      "Emergency Services",
+      "Parking Facility"
+    ],
+    "verified": true,
+    "featured": false
+  },
+
+  {
+    "id": 24,
+    "name": "Red Crescent Barisal",
+    "division": "Barisal",
+    "district": "Barisal",
+    "address": "Nathullabad, Barisal-8200",
+    "phone": "+880-431-2177890",
+    "email": "barisal@bdrcs.org",
+    "openDays": "All Days",
+    "openHours": "09:00 AM – 05:00 PM",
+    "emergency": "Emergency Blood Services Available",
+    "rating": 4.5,
+    "reviews": 105,
+    "facilities": [
+      "Community Blood Services",
+      "Donor Recognition Program",
+      "Clean Donation Area",
+      "Refreshments"
+    ],
+    "verified": true,
+    "featured": false
+  },
+
+  {
+    "id": 25,
+    "name": "RMCH Rangpur",
+    "division": "Rangpur",
+    "district": "Rangpur",
+    "address": "Medical College Road, Rangpur-5400",
+    "phone": "+880-521-63523",
+    "email": "bloodbank@rmch.gov.bd",
+    "openDays": "Sunday to Thursday",
+    "openHours": "08:30 AM – 02:30 PM",
+    "emergency": "Emergency Blood Support Available",
+    "rating": 4.5,
+    "reviews": 117,
+    "facilities": [
+      "Modern Medical Infrastructure",
+      "Comfortable Donor Beds",
+      "Free Health Screening",
+      "Parking Facility"
+    ],
+    "verified": true,
+    "featured": false
+  },
+
+  {
+    "id": 26,
+    "name": "Sandhani RMCH Rangpur",
+    "division": "Rangpur",
+    "district": "Rangpur",
+    "address": "2nd Floor (Middle Block), Rangpur Medical College Hospital, Rangpur-5400",
+    "phone": "+880-521-62180",
+    "email": "sandhanirpmcunit@gmail.com",
+    "openDays": "All Days",
+    "openHours": "08:00 AM – 02:00 PM & 07:00 PM – 09:00 PM",
+    "emergency": "Emergency Blood Support Available",
+    "rating": 4.6,
+    "reviews": 134,
+    "facilities": [
+      "Student Volunteer Network",
+      "Safe Blood Collection",
+      "Donation Certificates",
+      "Community Services"
+    ],
+    "verified": true,
+    "featured": false
+  },
+
+  {
+    "id": 27,
+    "name": "RCMCH Rangpur",
+    "division": "Rangpur",
+    "district": "Rangpur",
+    "address": "Medical East Gate, Health City Road, Rangpur-5400",
+    "phone": "+880-2589966365",
+    "email": "info@rcmch.com.bd",
+    "openDays": "All Days",
+    "openHours": "24 Hours",
+    "emergency": "Hotline: +880-1701-264704",
+    "rating": 4.7,
+    "reviews": 156,
+    "facilities": [
+      "24/7 Blood Bank Service",
+      "Modern Laboratory",
+      "Emergency Blood Services",
+      "Secure Parking"
+    ],
+    "verified": true,
+    "featured": true
+  },
+
+  {
+    "id": 28,
+    "name": "Red Crescent Dinajpur",
+    "division": "Rangpur",
+    "district": "Dinajpur",
+    "address": "1 New Town, Dinajpur-5200",
+    "phone": "+880-531-61300",
+    "email": "dinajpur@bdrcs.org",
+    "openDays": "All Days",
+    "openHours": "09:00 AM – 05:00 PM",
+    "emergency": "Hotline: +880-1723-595972",
+    "rating": 4.4,
+    "reviews": 102,
+    "facilities": [
+      "Community Blood Services",
+      "Donor Recognition Program",
+      "Emergency Blood Support",
+      "Refreshments"
+    ],
+    "verified": true,
+    "featured": false
+  },
+
+  {
+    "id": 29,
+    "name": "MMCH Blood Bank",
+    "division": "Mymensingh",
+    "district": "Mymensingh",
+    "address": "Charpara, Mymensingh-2200",
+    "phone": "+880-91-66063",
+    "email": "bloodbank@mmch.gov.bd",
+    "openDays": "Sunday to Thursday",
+    "openHours": "09:00 AM – 03:00 PM",
+    "emergency": "24/7 Emergency Blood Services",
+    "rating": 4.7,
+    "reviews": 167,
+    "facilities": [
+      "Department of Blood Transfusion Medicine",
+      "Experienced Medical Staff",
+      "Safe Blood Collection",
+      "Refreshments"
+    ],
+    "verified": true,
+    "featured": true
+  },
+
+  {
+    "id": 30,
+    "name": "Sandhani MMCH",
+    "division": "Mymensingh",
+    "district": "Mymensingh",
+    "address": "Mymensingh Medical College, Charpara, Mymensingh-2200",
+    "phone": "+880-91-54829",
+    "email": "sandhani@mmch.gov.bd",
+    "openDays": "Sunday to Thursday",
+    "openHours": "10:00 AM – 05:00 PM",
+    "emergency": "Emergency Blood Support Available",
+    "rating": 4.6,
+    "reviews": 145,
+    "facilities": [
+      "Student Volunteer Network",
+      "Safe Blood Collection",
+      "Voluntary Blood Donation Programs",
+      "Donation Certificates"
+    ],
+    "verified": true,
+    "featured": false
+  },
+
+  {
+    "id": 31,
+    "name": "Sandhani BAU",
+    "division": "Mymensingh",
+    "district": "Mymensingh",
+    "address": "BAU Campus, Mymensingh-2202",
+    "phone": "+880-91-56123",
+    "email": "sandhani@bau.edu.bd",
+    "openDays": "Sunday to Thursday",
+    "openHours": "10:00 AM – 04:00 PM",
+    "emergency": "Limited Emergency Blood Services",
+    "rating": 4.4,
+    "reviews": 108,
+    "facilities": [
+      "Student-Led Volunteer Program",
+      "Safe Blood Collection",
+      "Donation Certification",
+      "Community Service"
+    ],
+    "verified": true,
+    "featured": false
+  },
+
+  {
+    "id": 32,
+    "name": "CBMC Mymensingh",
+    "division": "Mymensingh",
+    "district": "Mymensingh",
+    "address": "Barhatta Road, Mymensingh-2202",
+    "phone": "+880-91-67890",
+    "email": "info@cbmc.edu.bd",
+    "openDays": "Sunday to Thursday",
+    "openHours": "08:30 AM – 02:30 PM",
+    "emergency": "Emergency Blood Support Available",
+    "rating": 4.5,
+    "reviews": 123,
+    "facilities": [
+      "Modern Medical Setup",
+      "Professional Care Team",
+      "Parking Facility",
+      "Post-Donation Snacks"
+    ],
+    "verified": true,
+    "featured": false
+  },
+
+  {
+    "id": 33,
+    "name": "Shaheed Suhrawardy MCH",
+    "division": "Dhaka",
+    "district": "Dhaka",
+    "address": "Sher-E-Bangla Nagar, Dhaka-1207",
+    "phone": "+880-2-8144048",
+    "email": "bloodbank@shsmc.gov.bd",
+    "openDays": "Sunday to Thursday",
+    "openHours": "09:00 AM – 03:00 PM",
+    "emergency": "24/7 Emergency Blood Services",
+    "rating": 4.7,
+    "reviews": 178,
+    "facilities": [
+      "Blood Transfusion Medicine Department",
+      "Component Blood Separation",
+      "Trained Medical Staff",
+      "Post-Donation Care"
+    ],
+    "verified": true,
+    "featured": false
+  },
+
+  {
+    "id": 34,
+    "name": "Popular Medical College",
+    "division": "Dhaka",
+    "district": "Dhaka",
+    "address": "House # 2, Road # 2, Dhanmondi, Dhaka-1205",
+    "phone": "+880-9666-787800",
+    "email": "bloodbank@popular-hospital.com",
+    "openDays": "All Days",
+    "openHours": "24 Hours",
+    "emergency": "24/7 Blood Bank Services",
+    "rating": 4.6,
+    "reviews": 198,
+    "facilities": [
+      "First Registered Hospital Blood Bank",
+      "Advanced Screening Technology",
+      "Component Blood Storage",
+      "Secure Parking"
+    ],
+    "verified": true,
+    "featured": false
+  },
+
+  {
+    "id": 35,
+    "name": "Badhan Blood Bank",
+    "division": "Dhaka",
+    "district": "Dhaka",
+    "address": "TSC (Ground Floor), Dhaka University, Dhaka-1000",
+    "phone": "+880-2-8629042",
+    "email": "central@badhan.org",
+    "openDays": "All Days",
+    "openHours": "06:30 PM – 09:00 PM",
+    "emergency": "Hotline: +880-1534-982674",
+    "rating": 4.8,
+    "reviews": 256,
+    "facilities": [
+      "Student Volunteer Organization",
+      "Safe Blood Collection",
+      "Free Blood Donation Service",
+      "Community Outreach"
+    ],
+    "verified": true,
+    "featured": false
+  },
+
+  {
+    "id": 36,
+    "name": "Holy Family Red Crescent",
+    "division": "Dhaka",
+    "district": "Dhaka",
+    "address": "1st Floor, Out Door 1, Eskaton Garden Road, Dhaka-1000",
+    "phone": "+880-1811-458536",
+    "email": "holyfamily@bdrcs.org",
+    "openDays": "All Days",
+    "openHours": "08:00 AM – 08:00 PM",
+    "emergency": "Emergency Blood Services Available",
+    "rating": 4.5,
+    "reviews": 156,
+    "facilities": [
+      "Red Crescent Blood Center",
+      "Walk-in Donation Service",
+      "Emergency Blood Support",
+      "Donor Recognition"
+    ],
+    "verified": true,
+    "featured": false
+  },
+
+  {
+    "id": 37,
+    "name": "Bangladesh Medical College",
+    "division": "Dhaka",
+    "district": "Dhaka",
+    "address": "House #34, Road #14/A (New), Dhanmondi, Dhaka-1209",
+    "phone": "+880-2-9124619",
+    "email": "bloodbank@bmch.edu.bd",
+    "openDays": "Sunday to Thursday",
+    "openHours": "09:00 AM – 03:00 PM",
+    "emergency": "Emergency Blood Support Available",
+    "rating": 4.5,
+    "reviews": 142,
+    "facilities": [
+      "Medical College Hospital Blood Bank",
+      "Safe Blood Collection",
+      "Student Volunteer Support",
+      "Refreshments"
+    ],
+    "verified": true,
+    "featured": false
+  },
+
+  {
+    "id": 38,
+    "name": "Sandhani Comilla MC",
+    "division": "Chittagong",
+    "district": "Comilla",
+    "address": "Room no: 143, Ground Floor, Comilla Medical College Hospital, Kuchaitoli, Comilla",
+    "phone": "+880-81-67890",
+    "email": "sandhani@comch.gov.bd",
+    "openDays": "Sunday to Thursday",
+    "openHours": "10:00 AM – 05:00 PM",
+    "emergency": "Emergency Blood Support Available",
+    "rating": 4.4,
+    "reviews": 98,
+    "facilities": [
+      "Student Volunteer Network",
+      "Safe Blood Collection",
+      "Donation Certificates",
+      "Community Services"
+    ],
+    "verified": true,
+    "featured": false
+  },
+
+  {
+    "id": 39,
+    "name": "Sandhani Cox's Bazar",
+    "division": "Chittagong",
+    "district": "Cox's Bazar",
+    "address": "First Floor, South Block, Zilla Sadar Hospital, Cox's Bazar",
+    "phone": "+880-1820-345678",
+    "email": "sandhani@coxsbazar.gov.bd",
+    "openDays": "Sunday to Thursday",
+    "openHours": "09:00 AM – 04:00 PM",
+    "emergency": "Limited Emergency Support",
+    "rating": 4.3,
+    "reviews": 87,
+    "facilities": [
+      "Student Volunteer Network",
+      "Safe Blood Collection",
+      "Coastal Area Coverage",
+      "Refreshments"
+    ],
+    "verified": true,
+    "featured": false
+  },
+
+  {
+    "id": 40,
+    "name": "Sandhani Rangamati",
+    "division": "Chittagong",
+    "district": "Rangamati",
+    "address": "Academic Building, Rangamati Medical College, Rangamati",
+    "phone": "+880-1838-209198",
+    "email": "sandhani@rangamatimc.gov.bd",
+    "openDays": "Sunday to Thursday",
+    "openHours": "10:00 AM – 04:00 PM",
+    "emergency": "Emergency Blood Support Available",
+    "rating": 4.4,
+    "reviews": 92,
+    "facilities": [
+      "Hill District Blood Service",
+      "Student Volunteer Network",
+      "Safe Blood Collection",
+      "Community Outreach"
+    ],
+    "verified": true,
+    "featured": false
+  }
+]

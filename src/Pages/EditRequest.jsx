@@ -312,7 +312,7 @@ const EditRequest = () => {
                         <button
                             type="button"
                             onClick={() => navigate('/dashboard/myRequest')}
-                            className="w-full rounded-lg bg-yellow-500 py-2.5 sm:py-3 text-white font-semibold text-sm sm:text-base hover:bg-gray-600 transition duration-200"
+                            className="w-full rounded-lg bg-red-500 py-2.5 sm:py-3 text-white font-semibold text-sm sm:text-base hover:bg-red-600 transition duration-200"
                         >
                             Cancel
                         </button>

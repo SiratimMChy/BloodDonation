@@ -69,7 +69,7 @@ const ViewRequest = () => {
                 {/* Status */}
                 <div className="mb-6 flex justify-center">
                     <span className={`px-4 py-2 rounded-full text-sm font-semibold ${requestData.donation_status === 'pending'
-                        ? 'bg-yellow-100 text-yellow-800'
+                        ? 'bg-red-100 text-red-800'
                         : requestData.donation_status === 'inprogress'
                             ? 'bg-blue-100 text-blue-800'
                             : requestData.donation_status === 'done'
@@ -112,7 +112,7 @@ const ViewRequest = () => {
                             </button>
                             <button
                                 onClick={() => navigate(-1)}
-                                className=" mb-4 bg-yellow-500 text-white py-3 px-5 rounded-lg font-semibold hover:bg-yellow-600"
+                                className=" mb-4 bg-red-500 text-white py-3 px-5 rounded-lg font-semibold hover:bg-red-600"
                             >
                                 Cancel
                             </button>

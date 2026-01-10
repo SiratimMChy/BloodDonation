@@ -12,6 +12,15 @@ const AdminDashboard = () => {
     const [totalFunding, setTotalFunding] = useState(0);
     const [totalRequests, setTotalRequests] = useState(0);
 
+    // Format count for display
+    const formatCount = (count) => {
+        if (count >= 100) return '100+';
+        if (count >= 50) return '50+';
+        if (count >= 25) return '25+';
+        if (count >= 10) return '10+';
+        return count.toString();
+    };
+
     useEffect(() => {
         if (user?.email) {
             axiosSecure.get(`/users/role/${user.email}`)
@@ -79,7 +88,7 @@ const AdminDashboard = () => {
                             Total Donors
                         </p>
                         <h2 className='text-2xl md:text-5xl font-bold text-gray-800 mb-1'>
-                            {totalUsers}
+                            {formatCount(totalUsers)}
                         </h2>
                         <p className='text-gray-400 text-sm'>Registered users</p>
                     </div>
@@ -125,7 +134,7 @@ const AdminDashboard = () => {
                             Blood Requests
                         </p>
                         <h2 className='text-2xl md:text-5xl font-bold text-gray-800 mb-1'>
-                            {totalRequests}
+                            {formatCount(totalRequests)}
                         </h2>
                         <p className='text-gray-400 text-sm'>Total requests</p>
                     </div>

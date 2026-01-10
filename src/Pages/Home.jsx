@@ -1,8 +1,12 @@
-import React, { useState } from 'react';
-import { Heart, Search, Phone, Mail, MapPin, Droplet, Users, Activity, Award, Clock, Shield } from 'lucide-react';
-import { FaFacebook, FaHeart, FaTwitter, FaYoutube } from 'react-icons/fa';
+import { useState, useEffect } from 'react';
+import { Heart, Search, Phone, Mail, MapPin, Droplet, Users, Activity, Award, Clock, Shield, Send, CheckCircle, AlertCircle } from 'lucide-react';
 import { Link } from 'react-router';
-import { MdBloodtype } from 'react-icons/md';
+import emailjs from '@emailjs/browser';
+import { EMAILJS_CONFIG } from '../config/emailjs';
+import BloodCompatibilitySection from './BloodCompatibilitySection';
+import FAQPage from './FAQPage';
+import axios from 'axios';
+import useAxios from '../Hooks/useAxios';
 
 const Home = () => {
   const [formData, setFormData] = useState({
@@ -10,11 +14,102 @@ const Home = () => {
     email: '',
     message: ''
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState(null); // 'success', 'error', null
+  const [centersData, setCentersData] = useState([]);
+  const [livesSaved, setLivesSaved] = useState(0);
+  const [apiStats, setApiStats] = useState({
+    totalDonors: 0,
+    totalRequests: 0,
+    successRate: 0,
+    pendingRequests: 0
+  });
+  const axiosInstance = useAxios();
 
-  const handleContactSubmit = (e) => {
+  // Format count for display
+  const formatCount = (count) => {
+    if (count >= 100) return '100+';
+    if (count >= 50) return '50+';
+    if (count >= 25) return '25+';
+    if (count >= 10) return '10+';
+    return count.toString();
+  };
+
+  useEffect(() => {
+    axios.get('/centers.json')
+      .then(res => {
+        setCentersData(res.data);
+      });
+  }, []);
+
+  // Fetch real stats - following About page pattern
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const response = await axiosInstance.get('/public-stats');
+        const { successRate, totalRequests, totalDonors } = response.data;
+        
+        // Calculate done requests from success rate
+        const estimatedDone = Math.round((successRate / (100 - successRate)) * totalRequests);
+        setLivesSaved(estimatedDone > 0 ? estimatedDone : 0);
+        
+        // Update API stats with real data
+        setApiStats({
+          totalDonors: totalDonors,
+          totalRequests: totalRequests + estimatedDone, // Real total = pending + done
+          successRate: successRate,
+          pendingRequests: totalRequests // API totalRequests is actually pending requests
+        });
+      } catch (err) {
+        console.error(err);
+        setLivesSaved(0);
+      }
+    };
+
+    fetchStats();
+  }, [axiosInstance]);
+
+  const handleContactSubmit = async (e) => {
     e.preventDefault();
-    alert('Thank you for contacting us! We will get back to you soon.');
-    setFormData({ name: '', email: '', message: '' });
+
+    if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) {
+      setSubmitStatus('error');
+      setTimeout(() => setSubmitStatus(null), 5000);
+      return;
+    }
+
+    setIsSubmitting(true);
+    setSubmitStatus(null);
+
+    try {
+      const templateParams = {
+        from_name: formData.name,
+        from_email: formData.email,
+        message: formData.message,
+        to_name: 'Hemovia Support Team',
+        reply_to: formData.email
+      };
+
+      await emailjs.send(
+        EMAILJS_CONFIG.SERVICE_ID,
+        EMAILJS_CONFIG.TEMPLATE_ID,
+        templateParams,
+        EMAILJS_CONFIG.PUBLIC_KEY
+      );
+
+      setSubmitStatus('success');
+      setFormData({ name: '', email: '', message: '' });
+
+      setTimeout(() => setSubmitStatus(null), 5000);
+
+    } catch (error) {
+      console.error('EmailJS Error:', error);
+      setSubmitStatus('error');
+
+      setTimeout(() => setSubmitStatus(null), 5000);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (e) => {
@@ -48,21 +143,18 @@ const Home = () => {
                 </div>
                 <span className="text-red-600 font-bold text-xs md:text-sm">Save Lives • Make Impact</span>
               </div>
-              
+
               {/* Main Heading */}
               <div>
                 <h1 className="text-4xl xl:text-6xl font-black text-gray-900 leading-none mb-3 md:mb-5">
-                  Donate
-                  <span className="block bg-linear-to-r from-red-600 to-rose-600 bg-clip-text text-transparent mt-1 md:mt-2">
-                    Blood
-                  </span>
+                  Donate<span className="bg-linear-to-r from-red-600 to-rose-600 bg-clip-text text-transparent">Blood</span>
                 </h1>
                 <div className="flex items-center gap-2 md:gap-3">
                   <div className="h-1 w-12 md:w-20 bg-linear-to-r from-red-600 to-rose-600 rounded-full"></div>
                   <p className="text-lg md:text-xl lg:text-2xl font-bold text-gray-700">Give Life</p>
                 </div>
               </div>
-              
+
               {/* Description */}
               <p className="text-base md:text-lg lg:text-xl text-gray-600 leading-relaxed max-w-xl font-medium">
                 Join our community of heroes making a real difference. Every donation saves up to three lives and brings hope to families in critical need.
@@ -70,14 +162,14 @@ const Home = () => {
 
               {/* CTA Buttons */}
               <div className="flex flex-col sm:flex-row gap-3 md:gap-4 lg:gap-5 pt-2">
-                <a 
+                <a
                   href="/signup"
                   className="group inline-flex items-center justify-center gap-2 md:gap-3 bg-linear-to-r from-red-600 to-red-700 text-white px-6 md:px-8 lg:px-10 py-3 md:py-4 lg:py-5 rounded-xl md:rounded-2xl font-bold text-base md:text-lg hover:from-red-700 hover:to-red-800 transition-all shadow-xl shadow-red-200 hover:shadow-2xl hover:scale-105"
                 >
                   <Heart size={20} className="md:w-6 md:h-6 group-hover:scale-110 transition-transform" />
                   <span>Join as a Donor</span>
                 </a>
-                <a 
+                <a
                   href="/search"
                   className="group inline-flex items-center justify-center gap-2 md:gap-3 bg-white text-red-600 px-6 md:px-8 lg:px-10 py-3 md:py-4 lg:py-5 rounded-xl md:rounded-2xl font-bold text-base md:text-lg border-2 border-gray-200 hover:border-red-300 hover:bg-red-50 transition-all shadow-lg hover:shadow-xl hover:scale-105"
                 >
@@ -92,21 +184,21 @@ const Home = () => {
                   <div className="flex items-center gap-1 md:gap-2 mb-1 md:mb-2">
                     <Users className="text-red-600" size={16} />
                   </div>
-                  <p className="text-xl sm:text-2xl md:text-3xl font-black text-gray-900">15K+</p>
+                  <p className="text-xl sm:text-2xl md:text-3xl font-black text-gray-900">{formatCount(apiStats.totalDonors)}</p>
                   <p className="text-xs md:text-sm text-gray-600 font-semibold">Active Donors</p>
                 </div>
                 <div className="bg-white border-2 border-gray-100 rounded-xl md:rounded-2xl p-3 md:p-4 lg:p-5 hover:border-red-200 transition shadow-sm hover:shadow-lg">
                   <div className="flex items-center gap-1 md:gap-2 mb-1 md:mb-2">
                     <Heart className="text-red-600 fill-red-600" size={16} />
                   </div>
-                  <p className="text-xl sm:text-2xl md:text-3xl font-black text-gray-900">40K+</p>
+                  <p className="text-xl sm:text-2xl md:text-3xl font-black text-gray-900">{livesSaved}</p>
                   <p className="text-xs md:text-sm text-gray-600 font-semibold">Lives Saved</p>
                 </div>
                 <div className="bg-white border-2 border-gray-100 rounded-xl md:rounded-2xl p-3 md:p-4 lg:p-5 hover:border-red-200 transition shadow-sm hover:shadow-lg">
                   <div className="flex items-center gap-1 md:gap-2 mb-1 md:mb-2">
                     <Activity className="text-red-600" size={16} />
                   </div>
-                  <p className="text-xl sm:text-2xl md:text-3xl font-black text-gray-900">800+</p>
+                  <p className="text-xl sm:text-2xl md:text-3xl font-black text-gray-900">{formatCount(centersData.length)}</p>
                   <p className="text-xs md:text-sm text-gray-600 font-semibold">Blood Banks</p>
                 </div>
               </div>
@@ -118,16 +210,16 @@ const Home = () => {
               <div className="relative">
                 <div className="absolute inset-0 bg-linear-to-br from-red-500 to-rose-500 rounded-2xl md:rounded-3xl transform rotate-3"></div>
                 <div className="relative rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl transform hover:rotate-0 transition-transform duration-500">
-                  <img 
-                    src="https://images.unsplash.com/photo-1615461066159-fea0960485d5?q=80&w=2016&auto=format&fit=crop" 
+                  <img
+                    src="https://images.unsplash.com/photo-1615461066159-fea0960485d5?q=80&w=2016&auto=format&fit=crop"
                     alt="Blood Donation"
                     className="w-full h-100h-[500px] md:h-137.5 lg:h-150 object-cover"
                   />
                   <div className="absolute inset-0 bg-linear-to-t from-black/50 via-transparent to-transparent"></div>
-                  
+
                 </div>
               </div>
-              
+
               {/* Floating Info Card - Hidden on small screens, adjusted on medium */}
               <div className="hidden sm:block absolute -bottom-6 md:-bottom-8 left-4 md:-left-8 bg-white border-2 border-gray-100 rounded-xl md:rounded-2xl p-4 md:p-6 shadow-2xl max-w-70 md:max-w-xs">
                 <div className="flex items-center gap-3 md:gap-4 mb-2 md:mb-3">
@@ -158,7 +250,7 @@ const Home = () => {
         {/* Bottom Wave */}
         <div className="absolute bottom-0 left-0 right-0">
           <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-16 md:h-auto">
-            <path d="M0 120L60 105C120 90 240 60 360 45C480 30 600 30 720 37.5C840 45 960 60 1080 67.5C1200 75 1320 75 1380 75L1440 75V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0Z" fill="white"/>
+            <path d="M0 120L60 105C120 90 240 60 360 45C480 30 600 30 720 37.5C840 45 960 60 1080 67.5C1200 75 1320 75 1380 75L1440 75V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0Z" fill="white" />
           </svg>
         </div>
       </div>
@@ -169,6 +261,7 @@ const Home = () => {
           {/* Section Header */}
           <div className="text-center mb-16">
             <div className="inline-flex items-center gap-2 bg-red-100 px-4 py-2 rounded-full mb-4">
+              <Award className="text-red-600" size={16} />
               <span className="text-red-600 font-bold text-sm">WHY CHOOSE US</span>
             </div>
             <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4">
@@ -260,6 +353,8 @@ const Home = () => {
         </div>
       </div>
 
+      <BloodCompatibilitySection />
+      <FAQPage />
       {/* Contact Us Section */}
       <div className="py-24 bg-linear-to-b from-white to-gray-50">
         <div className="container mx-auto px-4 max-w-6xl">
@@ -276,61 +371,113 @@ const Home = () => {
           </div>
 
           <div className="grid lg:grid-cols-2 gap-12">
-            {/* Contact Form */}
-            <div className="bg-white border-2 border-gray-100 rounded-2xl p-8 shadow-lg">
-              <h3 className="text-2xl font-bold text-gray-900 mb-6">Send us a Message</h3>
-              
-              <div className="space-y-5">
-                <div>
-                  <label className="block text-sm font-bold text-gray-700 mb-2">
-                    Your Name
-                  </label>
-                  <input
-                    type="text"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    placeholder="Enter your full name"
-                    className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-red-500 focus:outline-none transition"
-                    required
-                  />
+            {/* Enhanced Contact Form */}
+            <div className="bg-white border-2 border-gray-100 rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 group">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-10 h-10 bg-linear-to-br from-red-500 to-red-600 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                  <Send className="text-white" size={20} />
+                </div>
+                <h3 className="text-2xl font-bold text-gray-900">Send us a Message</h3>
+              </div>
+
+              {/* Status Messages */}
+              {submitStatus === 'success' && (
+                <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-xl flex items-center gap-3 animate-fade-in">
+                  <CheckCircle className="text-green-600" size={20} />
+                  <div>
+                    <p className="text-green-800 font-semibold">Message sent successfully!</p>
+                    <p className="text-green-600 text-sm">We'll get back to you within 24 hours.</p>
+                  </div>
+                </div>
+              )}
+
+              {submitStatus === 'error' && (
+                <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-xl flex items-center gap-3 animate-fade-in">
+                  <AlertCircle className="text-red-600" size={20} />
+                  <div>
+                    <p className="text-red-800 font-semibold">Failed to send message</p>
+                    <p className="text-red-600 text-sm">Please try again or contact us directly.</p>
+                  </div>
+                </div>
+              )}
+
+              <form onSubmit={handleContactSubmit} className="space-y-6">
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div className="group">
+                    <label className="block text-sm font-bold text-gray-700 mb-2 group-focus-within:text-red-600 transition-colors duration-200">
+                      Your Name *
+                    </label>
+                    <input
+                      type="text"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      placeholder="Enter your full name"
+                      className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-red-500 focus:outline-none transition-all duration-300 hover:border-gray-300 focus:ring-2 focus:ring-red-100"
+                      required
+                      disabled={isSubmitting}
+                    />
+                  </div>
+
+                  <div className="group">
+                    <label className="block text-sm font-bold text-gray-700 mb-2 group-focus-within:text-red-600 transition-colors duration-200">
+                      Email Address *
+                    </label>
+                    <input
+                      type="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      placeholder="Enter your email"
+                      className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-red-500 focus:outline-none transition-all duration-300 hover:border-gray-300 focus:ring-2 focus:ring-red-100"
+                      required
+                      disabled={isSubmitting}
+                    />
+                  </div>
                 </div>
 
-                <div>
-                  <label className="block text-sm font-bold text-gray-700 mb-2">
-                    Email Address
-                  </label>
-                  <input
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    placeholder="Enter your email"
-                    className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-red-500 focus:outline-none transition"
-                    required
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-bold text-gray-700 mb-2">
-                    Message
+                <div className="group">
+                  <label className="block text-sm font-bold text-gray-700 mb-2 group-focus-within:text-red-600 transition-colors duration-200">
+                    Message *
                   </label>
                   <textarea
                     name="message"
                     value={formData.message}
                     onChange={handleChange}
-                    placeholder="Write your message here..."
-                    className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-red-500 focus:outline-none transition h-32 resize-none"
+                    placeholder="Write your message here... Tell us how we can help you."
+                    className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-red-500 focus:outline-none transition-all duration-300 hover:border-gray-300 h-32 resize-none focus:ring-2 focus:ring-red-100"
                     required
+                    disabled={isSubmitting}
                   />
                 </div>
 
-                <button 
-                  onClick={handleContactSubmit}
-                  className="w-full bg-linear-to-r from-red-600 to-red-700 text-white px-8 py-4 rounded-xl font-bold text-lg hover:from-red-700 hover:to-red-800 transition shadow-lg shadow-red-200"
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className={`w-full px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-3 ${isSubmitting
+                      ? 'bg-gray-400 cursor-not-allowed'
+                      : 'bg-linear-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 shadow-lg shadow-red-200 hover:shadow-xl active:scale-95'
+                    } text-white`}
                 >
-                  Send Message
+                  {isSubmitting ? (
+                    <>
+                      <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                      Sending...
+                    </>
+                  ) : (
+                    <>
+                      <Send size={20} className="group-hover:translate-x-1 transition-transform duration-200" />
+                      Send Message
+                    </>
+                  )}
                 </button>
+              </form>
+
+              {/* Form Footer */}
+              <div className="mt-6 pt-6 border-t border-gray-200">
+                <p className="text-sm text-gray-600 text-center">
+                  <span className="font-semibold">Response Time:</span> We typically respond within 24 hours during business days.
+                </p>
               </div>
             </div>
 
@@ -338,7 +485,7 @@ const Home = () => {
             <div className="space-y-6">
               <div className="bg-linear-to-br from-red-600 to-red-700 rounded-2xl p-8 text-white shadow-xl">
                 <h3 className="text-2xl font-bold mb-6">Contact Information</h3>
-                
+
                 <div className="space-y-6">
                   <div className="flex items-start gap-4">
                     <div className="w-12 h-12 bg-white/20 backdrop-blur rounded-xl flex items-center justify-center shrink-0">
@@ -404,91 +551,17 @@ const Home = () => {
           </div>
         </div>
       </div>
-<footer className="bg-linear-to-br from-gray-900 to-gray-800 text-white py-16">
-            <div className="container mx-auto px-4 max-w-7xl">
-                <div className="flex flex-col md:flex-row justify-between gap-10 mb-12">
-                    {/* Brand */}
-                    <div className="max-w-md">
-                        <div className="flex items-center gap-3 mb-4">
-                            <div className="w-12 h-12 bg-linear-to-br from-red-500 to-red-600 rounded-xl flex items-center justify-center shadow-lg">
-                                <MdBloodtype className="text-white" size={24} />
-                            </div>
-                            <span className="text-2xl font-extrabold">Hemovia</span>
-                        </div>
-                        <p className="text-gray-400 leading-relaxed mb-6">
-                            Connecting donors with those in need. Every donation saves lives and brings hope to families.
-                        </p>
-                        {/* Social Media */}
-                        
-                    </div>
-                    
-                    {/* Quick Links */}
-                    <div>
-                        <h6 className="font-bold text-lg mb-5 text-white">Quick Links</h6>
-                        <ul className="space-y-3">
-                            <li>
-                                <Link to="/" className="text-gray-400 hover:text-white transition hover:translate-x-1 inline-block">
-                                    Home
-                                </Link>
-                            </li>
-                            <li>
-                                <Link to="/signup" className="text-gray-400 hover:text-white transition hover:translate-x-1 inline-block">
-                                    Register as Donor
-                                </Link>
-                            </li>
-                            <li>
-                                <Link to="/search" className="text-gray-400 hover:text-white transition hover:translate-x-1 inline-block">
-                                    Search Donors
-                                </Link>
-                            </li>
-                            
-                        </ul>
-                    </div>
 
-                    {/* Support */}
-                    <div>
-                        <h6 className="font-bold text-lg mb-5 text-white">Social Links</h6>
-                        <ul className="space-y-3">
-                            <div className="flex gap-3">
-                            <a 
-                                href="https://facebook.com" 
-                                target="_blank" 
-                                rel="noopener noreferrer"
-                                className="bg-gray-800 hover:bg-red-600 p-3 rounded-full transition-all duration-200"
-                            >
-                                <FaFacebook size={20} />
-                            </a>
-                            <a 
-                                href="https://twitter.com" 
-                                target="_blank" 
-                                rel="noopener noreferrer"
-                                className="bg-gray-800 hover:bg-red-600 p-3 rounded-full transition-all duration-200"
-                            >
-                                <FaTwitter size={20} />
-                            </a>
-                            <a 
-                                href="https://youtube.com" 
-                                target="_blank" 
-                                rel="noopener noreferrer"
-                                className="bg-gray-800 hover:bg-red-600 p-3 rounded-full transition-all duration-200"
-                            >
-                                <FaYoutube size={20} />
-                            </a>
-                        </div>
-                            
-                        </ul>
-                    </div>
-
-                </div>
-                
-                <div className="border-t border-gray-700 pt-8 flex flex-col md:flex-row justify-center text-center items-center gap-4">
-                    <p className="text-gray-400">
-                        © {new Date().getFullYear()} Hemovia. All rights reserved.
-                    </p>
-                   
-                </div>
-            </div>
-        </footer>
+      <style>{`
+        @keyframes fade-in {
+          from { opacity: 0; transform: translateY(10px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .animate-fade-in {
+          animation: fade-in 0.3s ease-out;
+        }
+      `}</style>
     </div>
   );
 };

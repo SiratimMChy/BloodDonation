@@ -3,7 +3,6 @@ import RootLayout from "../RootLayout/RootLayout";
 import Home from "../Pages/Home";
 import Login from "../Pages/Login";
 import Register from "../Pages/Register";
-import MainDashboard from "../Dashboard/MainDashboard/MainDashboard";
 import DashboardLayout from "../DashboardLayout/DashboardLayout";
 import AddRequest from "../Dashboard/AddRequest/AddRequest";
 import AllUsers from "../Dashboard/AllUsers/AllUsers";
@@ -21,6 +20,13 @@ import EditRequest from "../Pages/EditRequest";
 import ViewRequest from "../Pages/ViewRequest";
 import VolunteerDashboard from "../Dashboard/VolunteerDashboard/VolunteerDashboard";
 import Search from "../Pages/search";
+import BloodCompatibilitySection from "../Pages/BloodCompatibilitySection";
+import FAQPage from "../Pages/FAQPage";
+import DonationCentersPage from "../Pages/DonationCentersPage";
+import CenterDetails from "../Pages/CenterDetails";
+import About from "../Pages/About";
+
+
 
 
 const router = createBrowserRouter([
@@ -59,8 +65,32 @@ const router = createBrowserRouter([
             {
                 path: '/search',
                 Component: Search
+            },
+            {
+                path: '/BloodCom',
+                Component: BloodCompatibilitySection
+            },
+            {
+                path: '/request/:id',
+                Component: ViewRequest
+            },
+            {
+                path:'/faq',
+                Component:FAQPage
+            },
+            {
+                path:'/center',
+                Component: DonationCentersPage
+            },
+            {
+                path:'/center/:id',
+                Component: CenterDetails
+            },
+            {
+                path:'/about',
+                Component: About
             }
-
+              
         ]
     },
     {

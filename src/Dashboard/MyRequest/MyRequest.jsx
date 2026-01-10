@@ -122,7 +122,7 @@ const MyRequest = () => {
 
                                             <Link
                                                 to={`/dashboard/view-request/${request._id}`}
-                                                className="btn bg-linear-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white border-0 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 flex items-center gap-2"
+                                                className="btn bg-linear-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white border-0 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 flex items-center gap-2"
                                             >
                                                 <FaRegEye size={20} /> View
                                             </Link>

@@ -1,9 +1,8 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { AuthContext } from '../../Provider/AuthProvider';
 import { Link } from 'react-router';
 import { signOut } from 'firebase/auth';
 import auth from '../../Firebase/firebase.config';
-import { FaHeart } from 'react-icons/fa';
 import { MdBloodtype } from 'react-icons/md';
 import { useNavigate } from 'react-router';
 import { NavLink } from 'react-router';
@@ -30,7 +29,7 @@ const Navbar = () => {
     }
     
     return (
-        <div className="navbar bg-base-100 shadow-sm border border-gray-200">
+        <div className="navbar bg-base-100 shadow-sm border border-gray-200 h-20 px-4">
             <div className="navbar-start">
                 <div className="dropdown">
                     <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -62,6 +61,28 @@ const Navbar = () => {
                             }
                         >
                             Donation Requests
+                        </NavLink>
+                        <NavLink
+                            to="/center"
+                            className={({ isActive }) =>
+                                "font-bold text-lg leading-none " +
+                                (isActive
+                                    ? "bg-linear-to-r from-red-500 to-red-600 bg-clip-text text-transparent"
+                                    : "text-base-content hover:text-red-500")
+                            }
+                        >
+                            Donation Centers
+                        </NavLink>
+                        <NavLink
+                            to="/about"
+                            className={({ isActive }) =>
+                                "font-bold text-lg leading-none " +
+                                (isActive
+                                    ? "bg-linear-to-r from-red-500 to-red-600 bg-clip-text text-transparent"
+                                    : "text-base-content hover:text-red-500")
+                            }
+                        >
+                            About
                         </NavLink>
                         {user && (
                             <NavLink
@@ -111,6 +132,28 @@ const Navbar = () => {
                         }
                     >
                         Donation Requests
+                    </NavLink>
+                    <NavLink
+                        to="/center"
+                        className={({ isActive }) =>
+                            "font-bold text-lg leading-none " +
+                            (isActive
+                                ? "bg-linear-to-r from-red-500 to-red-600 bg-clip-text text-transparent"
+                                : "text-base-content hover:text-red-500")
+                        }
+                    >
+                        Donation Centers
+                    </NavLink>
+                    <NavLink
+                        to="/about"
+                        className={({ isActive }) =>
+                            "font-bold text-lg leading-none " +
+                            (isActive
+                                ? "bg-linear-to-r from-red-500 to-red-600 bg-clip-text text-transparent"
+                                : "text-base-content hover:text-red-500")
+                        }
+                    >
+                        About
                     </NavLink>
                     {user && (
                         <NavLink
