@@ -46,9 +46,9 @@ const Login = () => {
 
 
     return (
-         <div className='flex items-center justify-center min-h-screen px-4 py-10'>
+         <div className='flex items-center justify-center min-h-screen px-4 py-10 bg-white text-gray-900'>
             <title>Login</title>
-            <form onSubmit={handleSubmit} className="fieldset bg-linear-to-r from-red-100 to-orange-100 border border-blue-100 rounded-box w-full max-w-lg p-4 sm:p-6 md:p-8">
+            <form onSubmit={handleSubmit} className="fieldset bg-linear-to-r]from-red-100 to-orange-100 border border-blue-100 rounded-box w-full max-w-lg p-4 sm:p-6 md:p-8">
                 <h2 className="text-2xl md:text-3xl font-bold text-black text-center">Login</h2>
                 
                 <fieldset className="fieldset mb-4">

@@ -55,7 +55,7 @@ const DonationRequests = () => {
   };
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-red-50 via-white to-rose-50 py-8 px-4">
+    <div className="min-h-screen bg-base-100 py-8 px-4">
       <div className="container mx-auto max-w-7xl">
         {/* Header */}
         <div className="text-center mb-10">
@@ -140,7 +140,7 @@ const DonationRequests = () => {
                     className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 border border-gray-200 overflow-hidden"
                   >
                     {/* Card Header */}
-                    <div className="bg-linear-to-r from-red-500 to-red-600 p-4">
+                    <div className="bg-gradient-to-r from-red-500 to-red-600 p-4">
                       <div className="flex items-center gap-2 text-white mb-2">
                         <FaUser size={18} />
                         <h3 className="font-bold text-lg">Recipient Info</h3>
@@ -188,7 +188,7 @@ const DonationRequests = () => {
                       <div className="pt-3">
                         <button
                           onClick={() => handleViewDetails(request._id)}
-                          className="btn bg-linear-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white border-0 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 w-full flex items-center justify-center gap-2"
+                          className="btn bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white border-0 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 w-full flex items-center justify-center gap-2"
                         >
                           <FaRegEye size={18} /> View Details
                         </button>
@@ -204,7 +204,7 @@ const DonationRequests = () => {
               <div className="flex justify-center items-center mt-12 gap-4">
                 <button
                   onClick={handlePrevPage}
-                  className="btn bg-linear-to-r from-gray-500 to-gray-600 hover:from-gray-600 hover:to-gray-700 text-white border-0 rounded-lg shadow-md hover:shadow-lg transition-all duration-200"
+                  className="btn bg-gradient-to-r from-gray-500 to-gray-600 hover:from-gray-600 hover:to-gray-700 text-white border-0 rounded-lg shadow-md hover:shadow-lg transition-all duration-200"
                 >
                   Prev
                 </button>
@@ -212,7 +212,7 @@ const DonationRequests = () => {
                   <button
                     key={pg}
                     className={`btn rounded-lg shadow-md hover:shadow-lg transition-all duration-200 border-0 ${pg === currentPage
-                      ? 'bg-linear-to-r from-red-500 to-red-600 text-white'
+                      ? 'bg-gradient-to-r from-red-500 to-red-600 text-white'
                       : 'bg-white text-gray-700 hover:bg-gray-100'
                       }`}
                     onClick={() => setCurrentPage(pg)}

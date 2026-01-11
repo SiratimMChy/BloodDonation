@@ -203,7 +203,7 @@ const FAQPage = () => {
                   
                   {/* Active indicator */}
                   {isActive && (
-                    <div className="mt-4 w-full h-1 bg-linear-to-r from-red-500 to-rose-500 rounded-full"></div>
+                    <div className="mt-4 w-full h-1 bg-linear-to-r] from-red-500 to-rose-500 rounded-full"></div>
                   )}
                 </div>
               );

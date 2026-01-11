@@ -221,7 +221,7 @@ const CenterDetails = () => {
 
   if (!center) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-base-200 flex items-center justify-center">
         <div className="text-center">
           <Building className="mx-auto text-gray-400 mb-4" size={64} />
           <h2 className="text-2xl font-bold text-gray-900 mb-2">Center Not Found</h2>
@@ -238,9 +238,9 @@ const CenterDetails = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-base-200">
       {/* Header */}
-      <div className="bg-white border-b border-gray-200">
+      <div className="bg-base-100 border-b border-base-300">
         <div className="container mx-auto px-4 py-6">
           <Link 
             to="/center" 

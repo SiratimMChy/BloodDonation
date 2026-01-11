@@ -147,7 +147,7 @@ const BloodCompatibilitySection = () => {
   return (
     <div className="min-h-screen bg-white relative overflow-hidden">
       {/* Background Pattern */}
-      <div className="absolute inset-0 bg-linear-to-br from-red-50 via-white to-rose-50">
+      <div className="absolute inset-0 bg-gradient-to-br from-red-50 via-white to-rose-50">
         <div className="absolute inset-0" style={{
           backgroundImage: 'radial-gradient(circle at 1px 1px, rgb(254 202 202 / 0.3) 1px, transparent 0)',
           backgroundSize: '40px 40px'
@@ -179,7 +179,7 @@ const BloodCompatibilitySection = () => {
             {/* Active Donors */}
             <div className="group bg-white rounded-xl md:rounded-2xl p-4 md:p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border-2 border-gray-100">
               <div className="flex items-center justify-between mb-3 md:mb-4">
-                <div className="w-10 h-10 md:w-12 md:h-12 bg-linear-to-br from-blue-500 to-blue-600 rounded-lg md:rounded-xl flex items-center justify-center shadow-lg shadow-blue-200">
+                <div className="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg md:rounded-xl flex items-center justify-center shadow-lg shadow-blue-200">
                   <UserCheck className="text-white" size={18} />
                 </div>
                 <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
@@ -191,7 +191,7 @@ const BloodCompatibilitySection = () => {
             {/* Blood Requests */}
             <div className="group bg-white rounded-xl md:rounded-2xl p-4 md:p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border-2 border-gray-100">
               <div className="flex items-center justify-between mb-3 md:mb-4">
-                <div className="w-10 h-10 md:w-12 md:h-12 bg-linear-to-br from-red-500 to-red-600 rounded-lg md:rounded-xl flex items-center justify-center shadow-lg shadow-red-200">
+                <div className="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-br from-red-500 to-red-600 rounded-lg md:rounded-xl flex items-center justify-center shadow-lg shadow-red-200">
                   <Heart className="text-white" size={18} />
                 </div>
                 <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
@@ -203,7 +203,7 @@ const BloodCompatibilitySection = () => {
             {/* Blood Types */}
             <div className="group bg-white rounded-xl md:rounded-2xl p-4 md:p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border-2 border-gray-100">
               <div className="flex items-center justify-between mb-3 md:mb-4">
-                <div className="w-10 h-10 md:w-12 md:h-12 bg-linear-to-br from-green-500 to-green-600 rounded-lg md:rounded-xl flex items-center justify-center shadow-lg shadow-green-200">
+                <div className="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-lg md:rounded-xl flex items-center justify-center shadow-lg shadow-green-200">
                   <Droplet className="text-white" size={18} />
                 </div>
                 <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
@@ -215,7 +215,7 @@ const BloodCompatibilitySection = () => {
             {/* Success Rate */}
             <div className="group bg-white rounded-xl md:rounded-2xl p-4 md:p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border-2 border-gray-100">
               <div className="flex items-center justify-between mb-3 md:mb-4">
-                <div className="w-10 h-10 md:w-12 md:h-12 bg-linear-to-br from-blue-500 to-blue-600 rounded-lg md:rounded-xl flex items-center justify-center shadow-lg shadow-blue-200">
+                <div className="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg md:rounded-xl flex items-center justify-center shadow-lg shadow-blue-200">
                   <TrendingUp className="text-white" size={18} />
                 </div>
                 <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
@@ -230,11 +230,11 @@ const BloodCompatibilitySection = () => {
             <div className="lg:col-span-2 flex">
               <div className="bg-white rounded-xl md:rounded-2xl shadow-xl border border-gray-100 overflow-hidden hover:shadow-2xl transition-all duration-500 w-full flex flex-col">
                 {/* Header */}
-                <div className="bg-linear-to-r from-red-50 to-rose-50 p-4 md:p-6 border-b border-gray-100">
+                <div className="bg-gradient-to-r from-red-50 to-rose-50 p-4 md:p-6 border-b border-gray-100">
                   <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div>
                       <h2 className="text-xl md:text-2xl font-bold text-gray-900 mb-2 flex items-center gap-3">
-                        <div className="w-8 h-8 md:w-10 md:h-10 bg-linear-to-br from-red-500 to-red-600 rounded-lg md:rounded-xl flex items-center justify-center shadow-lg">
+                        <div className="w-8 h-8 md:w-10 md:h-10 bg-gradient-to-br from-red-500 to-red-600 rounded-lg md:rounded-xl flex items-center justify-center shadow-lg">
                           <Droplet className="text-white fill-white" size={16} />
                         </div>
                         Blood Compatibility Analysis
@@ -271,8 +271,8 @@ const BloodCompatibilitySection = () => {
                             onClick={() => setSelectedBloodType(type)}
                             className={`group relative p-3 md:p-4 rounded-lg md:rounded-xl transition-all duration-300 transform hover:scale-105 hover:-translate-y-1 ${
                               isSelected 
-                                ? 'bg-linear-to-br from-red-500 to-red-600 text-white shadow-xl shadow-red-200 scale-105' 
-                                : 'bg-linear-to-br from-gray-50 to-gray-100 hover:from-red-50 hover:to-rose-50 border-2 border-gray-200 hover:border-red-200'
+                                ? 'bg-gradient-to-br from-red-500 to-red-600 text-white shadow-xl shadow-red-200 scale-105' 
+                                : 'bg-gradient-to-br from-gray-50 to-gray-100 hover:from-red-50 hover:to-rose-50 border-2 border-gray-200 hover:border-red-200'
                             }`}
                           >
                             <div className="text-center">
@@ -312,11 +312,11 @@ const BloodCompatibilitySection = () => {
                   </div>
 
                   {/* Enhanced Compatibility Details */}
-                  <div className="bg-linear-to-br from-red-50 via-rose-50 to-pink-50 rounded-xl md:rounded-2xl p-4 md:p-6 border-2 border-red-100 shadow-inner">
+                  <div className="bg-gradient-to-br from-red-50 via-rose-50 to-pink-50 rounded-xl md:rounded-2xl p-4 md:p-6 border-2 border-red-100 shadow-inner">
                     {/* Selected Blood Type Header */}
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4 md:mb-6 pb-3 md:pb-4 border-b border-red-200 gap-4">
                       <div className="flex items-center gap-3 md:gap-4">
-                        <div className="w-12 h-12 md:w-16 md:h-16 bg-linear-to-br from-red-500 to-red-600 rounded-xl md:rounded-2xl flex items-center justify-center shadow-lg">
+                        <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-red-500 to-red-600 rounded-xl md:rounded-2xl flex items-center justify-center shadow-lg">
                           <span className="text-lg md:text-2xl font-black text-white">{selectedBloodType}</span>
                         </div>
                         <div>
@@ -427,7 +427,7 @@ const BloodCompatibilitySection = () => {
               {/* Beautiful Blood Request Distribution Card */}
               <div className="bg-white rounded-2xl md:rounded-3xl shadow-2xl border border-gray-50 overflow-hidden hover:shadow-3xl transition-all duration-700 group w-full flex flex-col">
                 {/* Stunning Header with Enhanced Gradient */}
-                <div className="relative bg-linear-to-br from-red-50 via-rose-50 to-pink-50 p-6 md:p-8 border-b border-red-100/50">
+                <div className="relative bg-gradient-to-br from-red-50 via-rose-50 to-pink-50 p-6 md:p-8 border-b border-red-100/50">
                   {/* Decorative Background Elements */}
                   <div className="absolute top-0 right-0 w-24 h-24 md:w-32 md:h-32 bg-red-200/20 rounded-full blur-2xl"></div>
                   <div className="absolute bottom-0 left-0 w-16 h-16 md:w-24 md:h-24 bg-rose-200/20 rounded-full blur-xl"></div>
@@ -442,7 +442,7 @@ const BloodCompatibilitySection = () => {
                   
                   <div className="relative flex items-center gap-3 md:gap-4">
                     <div className="relative">
-                      <div className="w-12 h-12 md:w-14 md:h-14 bg-linear-to-br from-red-500 via-red-600 to-rose-600 rounded-xl md:rounded-2xl flex items-center justify-center shadow-2xl shadow-red-200/50 group-hover:scale-110 transition-transform duration-500">
+                      <div className="w-12 h-12 md:w-14 md:h-14 bg-gradient-to-br from-red-500 via-red-600 to-rose-600 rounded-xl md:rounded-2xl flex items-center justify-center shadow-2xl shadow-red-200/50 group-hover:scale-110 transition-transform duration-500">
                         <Activity className="text-white" size={20} />
                       </div>
                       {/* Animated Ring */}
@@ -453,7 +453,7 @@ const BloodCompatibilitySection = () => {
                       </div>
                     </div>
                     <div>
-                      <h3 className="text-xl md:text-2xl font-black text-gray-900 bg-linear-to-r from-gray-900 to-gray-700 bg-clip-text">
+                      <h3 className="text-xl md:text-2xl font-black text-gray-900 bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text">
                         Request Analytics
                       </h3>
                       <p className="text-xs md:text-sm text-gray-600 font-medium">Real-time blood type insights</p>
@@ -461,13 +461,13 @@ const BloodCompatibilitySection = () => {
                   </div>
                 </div>
 
-                <div className="p-6 md:p-8 flex-1 flex flex-col bg-linear-to-b from-white to-gray-50/30">
+                <div className="p-6 md:p-8 flex-1 flex flex-col bg-gradient-to-b from-white to-gray-50/30">
                   {/* Beautiful Enhanced Donut Chart */}
                   <div className="flex justify-center mb-6 md:mb-8 flex-1 items-center">
                     <div className="relative w-48 h-48 md:w-64 md:h-64 group/chart">
                       {/* Multiple Background Layers for Depth */}
-                      <div className="absolute inset-4 bg-linear-to-br from-red-50 via-rose-50 to-pink-50 rounded-full opacity-40 animate-pulse"></div>
-                      <div className="absolute inset-8 bg-linear-to-br from-white to-red-50/50 rounded-full shadow-inner"></div>
+                      <div className="absolute inset-4 bg-lanraro-br from-red-50 via-rose-50 to-pink-50 rounded-full opacity-40 animate-pulse"></div>
+                      <div className="absolute inset-8 bg-lanraro-br from-white to-red-50/50 rounded-full shadow-inner"></div>
                       
                       <svg viewBox="0 0 240 240" className="-rotate-90 filter drop-shadow-lg">
                         {(() => {
@@ -500,14 +500,14 @@ const BloodCompatibilitySection = () => {
                           const outerR = 95;
                           const innerR = 65;
                           const colors = {
-                            'O+': '#dc2626',  // Red-600 (primary home page red)
-                            'O-': '#be185d',  // Pink-700 (rose family from home page)
-                            'A+': '#2563eb',  // Blue-600 (home page blue accent)
-                            'A-': '#1e40af',  // Blue-700 (darker blue)
-                            'B+': '#16a34a',  // Green-600 (home page green accent)
-                            'B-': '#15803d',  // Green-700 (darker green)
-                            'AB+': '#2563eb', // Blue-600 (replacing purple)
-                            'AB-': '#7c2d12'  // Brown-800 (neutral accent)
+                            'O+': '#dc2626',  // Red-600 (most common, primary donation)
+                            'O-': '#ef4444',  // Red-500 (universal donor, critical)
+                            'A+': '#2563eb',  // Blue-600 (information, trust)
+                            'A-': '#3b82f6',  // Blue-500 (information, trust)
+                            'B+': '#16a34a',  // Green-600 (success, completion)
+                            'B-': '#22c55e',  // Green-500 (success, completion)
+                            'AB+': '#1d4ed8', // Blue-700 (rare, special information)
+                            'AB-': '#059669'  // Green-700 (rarest, special success)
                           };
 
                           return (
@@ -594,12 +594,12 @@ const BloodCompatibilitySection = () => {
                       <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
                         <div className="bg-white/95 backdrop-blur-sm rounded-full p-6 shadow-2xl border border-gray-100/50">
                           <p className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Total Requests</p>
-                          <p className="text-5xl font-black bg-linear-to-br from-gray-900 via-gray-800 to-gray-700 bg-clip-text text-transparent mb-2">
+                          <p className="text-5xl font-black bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700 bg-clip-text text-transparent mb-2">
                             {Object.values(stats.bloodTypeCounts).reduce((a, b) => a + b, 0)}
                           </p>
                           <p className="text-xs font-semibold text-gray-600">Active Now</p>
                           <div className="mt-2 flex justify-center">
-                            <div className="w-8 h-1 bg-linear-to-r from-red-500 to-rose-500 rounded-full"></div>
+                            <div className="w-8 h-1 bg-gradient-to-r from-red-500 to-rose-500 rounded-full"></div>
                           </div>
                         </div>
                       </div>
@@ -619,7 +619,7 @@ const BloodCompatibilitySection = () => {
                     <div className="space-y-3 md:space-y-4 mt-auto">
                       <div className="flex items-center justify-between pb-3 md:pb-4 border-b border-gray-200/50">
                         <div className="flex items-center gap-2 md:gap-3">
-                          <div className="w-6 h-6 md:w-8 md:h-8 bg-linear-to-br from-red-500 to-rose-500 rounded-lg flex items-center justify-center shadow-lg">
+                          <div className="w-6 h-6 md:w-8 md:h-8 bg-gradient-to-br from-red-500 to-rose-500 rounded-lg flex items-center justify-center shadow-lg">
                             <Droplet className="text-white" size={14} />
                           </div>
                           <span className="text-base md:text-lg font-black text-gray-900">Distribution Breakdown</span>
@@ -634,14 +634,14 @@ const BloodCompatibilitySection = () => {
                           const total = Object.values(stats.bloodTypeCounts).reduce((a, b) => a + b, 0);
                           const percent = total > 0 ? ((count / total) * 100).toFixed(1) : 0;
                           const colors = {
-                            'O+': '#dc2626',  // Red-600 (primary home page red)
-                            'O-': '#be185d',  // Pink-700 (rose family from home page)
-                            'A+': '#2563eb',  // Blue-600 (home page blue accent)
-                            'A-': '#1e40af',  // Blue-700 (darker blue)
-                            'B+': '#16a34a',  // Green-600 (home page green accent)
-                            'B-': '#15803d',  // Green-700 (darker green)
-                            'AB+': '#2563eb', // Blue-600 (replacing purple)
-                            'AB-': '#7c2d12'  // Brown-800 (neutral accent)
+                            'O+': '#dc2626',  // Red-600 (most common, primary donation)
+                            'O-': '#ef4444',  // Red-500 (universal donor, critical)
+                            'A+': '#2563eb',  // Blue-600 (information, trust)
+                            'A-': '#3b82f6',  // Blue-500 (information, trust)
+                            'B+': '#16a34a',  // Green-600 (success, completion)
+                            'B-': '#22c55e',  // Green-500 (success, completion)
+                            'AB+': '#1d4ed8', // Blue-700 (rare, special information)
+                            'AB-': '#059669'  // Green-700 (rarest, special success)
                           };
 
                           const isSelected = selectedBloodType === type;
