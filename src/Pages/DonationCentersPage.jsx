@@ -2,12 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router';
 import { MapPin, Phone, Clock, Navigation, Search, Star, Award, Building, ChevronDown, ExternalLink, Droplet, Shield, CheckCircle, Globe, Users } from 'lucide-react';
 import axios from 'axios';
+import SkeletonLoader from '../Components/SkeletonLoader/SkeletonLoader';
 
 const DonationCentersPage = () => {
   const [selectedDivision, setSelectedDivision] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedFilter, setSelectedFilter] = useState('All'); 
   const [isLoading, setIsLoading] = useState(false);
+  const [isInitialLoading, setIsInitialLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(8);
   const [animatedStats, setAnimatedStats] = useState({
@@ -31,9 +33,15 @@ const DonationCentersPage = () => {
 
   // Fetch centers data from JSON file 
   useEffect(() => {
+    setIsInitialLoading(true);
     axios.get('/centers.json')
       .then(res => {
         setCenters(res.data);
+        setIsInitialLoading(false);
+      })
+      .catch(err => {
+        console.error('Error loading centers:', err);
+        setIsInitialLoading(false);
       });
   }, []);
 
@@ -117,7 +125,6 @@ const DonationCentersPage = () => {
   // Pagination handlers
   const goToPage = (page) => {
     setCurrentPage(page);
-    // Scroll to the "All Centers" section instead of the top
     document.getElementById('all-centers-section')?.scrollIntoView({ behavior: 'smooth' });
   };
 
@@ -134,59 +141,59 @@ const DonationCentersPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* Hero Section - Following Project Design */}
-      <div className="relative min-h-screen bg-white overflow-hidden">
-        {/* Background Pattern - Same as Home */}
-        <div className="absolute inset-0 bg-gradient-to-br from-red-50 via-white to-rose-50">
-          <div className="absolute inset-0" style={{
+    <div className="min-h-screen bg-base-100">
+      {/* Hero Section */}
+      <div className="relative min-h-screen bg-base-100 overflow-hidden">
+        {/* Background Pattern */}
+        <div className="absolute inset-0 bg-gradient-to-br from-red-50 via-white to-rose-50 dark:from-base-200 dark:via-base-100 dark:to-base-200">
+          <div className="absolute inset-0 opacity-30 dark:opacity-10" style={{
             backgroundImage: 'radial-gradient(circle at 1px 1px, rgb(254 202 202 / 0.3) 1px, transparent 0)',
             backgroundSize: '40px 40px'
           }}></div>
         </div>
-        {/* Decorative Blobs - Same as Home */}
-        <div className="absolute top-0 right-0 w-32 h-32 sm:w-48 sm:h-48 md:w-64 md:h-64 lg:w-96 lg:h-96 bg-red-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse"></div>
-        <div className="absolute bottom-0 left-0 w-32 h-32 sm:w-48 sm:h-48 md:w-64 md:h-64 lg:w-96 lg:h-96 bg-rose-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse" style={{ animationDelay: '2s' }}></div>
+        {/* Decorative Blobs */}
+        <div className="absolute top-0 right-0 w-32 h-32 sm:w-48 sm:h-48 md:w-64 md:h-64 lg:w-96 lg:h-96 bg-red-200 dark:bg-red-900/20 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse"></div>
+        <div className="absolute bottom-0 left-0 w-32 h-32 sm:w-48 sm:h-48 md:w-64 md:h-64 lg:w-96 lg:h-96 bg-rose-200 dark:bg-rose-900/20 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse" style={{ animationDelay: '2s' }}></div>
 
         <div className="relative container mx-auto px-4 pt-6 sm:pt-8 md:pt-12 lg:pt-16 pb-8 sm:pb-10 md:pb-12 lg:pb-16">
           <div className="text-center space-y-6 sm:space-y-8 max-w-5xl mx-auto">
-            {/* Badge - Following Home Pattern */}
-            <div className="inline-flex items-center gap-2 md:gap-3 bg-white border-2 border-red-100 px-3 sm:px-4 md:px-5 py-2 md:py-3 rounded-full shadow-sm">
-              <div className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 bg-red-100 rounded-full flex items-center justify-center shrink-0">
-                <Building className="text-red-600" size={12} />
+            {/* Badge */}
+            <div className="inline-flex items-center gap-2 md:gap-3 bg-base-200 border-2 border-red-100 dark:border-red-900/50 px-3 sm:px-4 md:px-5 py-2 md:py-3 rounded-full shadow-sm">
+              <div className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center shrink-0">
+                <Building className="text-red-600 dark:text-red-400" size={12} />
               </div>
-              <span className="text-red-600 font-bold text-xs sm:text-sm">Donation Centers • Nationwide Network</span>
+              <span className="text-red-600 dark:text-red-400 font-bold text-xs sm:text-sm">Donation Centers • Nationwide Network</span>
             </div>
 
-            {/* Main Heading - Following Home Pattern */}
+            {/* Main Heading */}
             <div>
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black text-gray-900 leading-none mb-3 md:mb-5">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black text-base-content leading-none mb-3 md:mb-5">
                 Find<span className="bg-gradient-to-r from-red-600 to-rose-600 bg-clip-text text-transparent"> Centers</span>
               </h1>
               <div className="flex items-center justify-center gap-2 md:gap-3">
                 <div className="h-0.5 sm:h-1 w-8 sm:w-12 md:w-20 bg-gradient-to-r from-red-600 to-rose-600 rounded-full"></div>
-                <p className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-gray-700">Save Lives</p>
+                <p className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-base-content/80">Save Lives</p>
                 <div className="h-0.5 sm:h-1 w-8 sm:w-12 md:w-20 bg-gradient-to-r from-red-600 to-rose-600 rounded-full"></div>
               </div>
             </div>
 
             {/* Description */}
-            <p className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-600 leading-relaxed max-w-2xl mx-auto font-medium px-4">
+            <p className="text-sm sm:text-base md:text-lg lg:text-xl text-base-content/70 leading-relaxed max-w-2xl mx-auto font-medium px-4">
               Connect with verified donation centers across Bangladesh. Safe, reliable, and always ready to help save lives in your community.
             </p>
 
-            {/* Search Interface - Following Home Pattern */}
-            <div className="bg-white border-2 border-gray-100 rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-6 shadow-lg max-w-4xl mx-auto">
+            {/* Search Interface */}
+            <div className="bg-base-200 border-2 border-base-300 rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-6 shadow-lg max-w-4xl mx-auto">
               {/* Main Search Bar */}
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-4 sm:mb-6">
                 <div className="flex-1 relative group">
-                  <Search className="absolute left-3 sm:left-4 top-1/2 transform -translate-y-1/2 text-gray-400 group-focus-within:text-red-500 transition-colors" size={16} />
+                  <Search className="absolute left-3 sm:left-4 top-1/2 transform -translate-y-1/2 text-base-content/40 group-focus-within:text-red-500 transition-colors" size={16} />
                   <input
                     type="text"
                     placeholder="Search by name, location, or district..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full pl-10 sm:pl-12 pr-3 sm:pr-4 py-2.5 sm:py-3 border-2 border-gray-200 rounded-lg sm:rounded-xl focus:border-red-500 focus:outline-none transition-all duration-300 hover:border-gray-300 text-sm sm:text-base bg-white text-gray-900"
+                    className="w-full pl-10 sm:pl-12 pr-3 sm:pr-4 py-2.5 sm:py-3 border-2 border-base-300 rounded-lg sm:rounded-xl focus:border-red-500 focus:outline-none transition-all duration-300 hover:border-base-content/30 text-sm sm:text-base bg-base-100 text-base-content"
                   />
                 </div>
                 <button 
@@ -208,8 +215,8 @@ const DonationCentersPage = () => {
                   )}
                 </button>
               </div>
-              {/* Trust Indicators - Following Home Pattern */}
-              <div className="flex flex-wrap justify-center items-center gap-3 sm:gap-4 md:gap-6 text-xs sm:text-sm text-gray-600">
+              {/* Trust Indicators */}
+              <div className="flex flex-wrap justify-center items-center gap-3 sm:gap-4 md:gap-6 text-xs sm:text-sm text-base-content/70">
                 <div className="flex items-center gap-1.5 sm:gap-2">
                   <Shield className="text-green-500" size={14} />
                   <span className="font-medium">100% Verified Centers</span>
@@ -227,77 +234,81 @@ const DonationCentersPage = () => {
           </div>
         </div>
 
-        {/* Bottom Wave - Same as Home */}
+        {/* Bottom Wave */}
         <div className="absolute bottom-0 left-0 right-0">
           <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-12 sm:h-16 md:h-auto">
-            <path d="M0 120L60 105C120 90 240 60 360 45C480 30 600 30 720 37.5C840 45 960 60 1080 67.5C1200 75 1320 75 1380 75L1440 75V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0Z" fill="currentColor" className="text-white" />
+            <path d="M0 120L60 105C120 90 240 60 360 45C480 30 600 30 720 37.5C840 45 960 60 1080 67.5C1200 75 1320 75 1380 75L1440 75V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0Z" fill="currentColor" className="text-base-100" />
           </svg>
         </div>
       </div>
 
-      {/* Stats Section - Following Home Page Pattern */}
-      <div className="py-8 sm:py-12 md:py-16 lg:py-20 bg-white">
+      {/* Stats Section */}
+      <div className="py-8 sm:py-12 md:py-16 lg:py-20 bg-base-100">
         <div className="container mx-auto px-4 max-w-7xl">
           {/* Section Header */}
           <div className="text-center mb-6 sm:mb-8 md:mb-12">
-            <div className="inline-flex items-center gap-2 bg-red-100 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full mb-3 sm:mb-4">
-              <Award className="text-red-600" size={14} />
-              <span className="text-red-600 font-bold text-xs sm:text-sm">NETWORK OVERVIEW</span>
+            <div className="inline-flex items-center gap-2 bg-red-100 dark:bg-red-900/30 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full mb-3 sm:mb-4">
+              <Award className="text-red-600 dark:text-red-400" size={14} />
+              <span className="text-red-600 dark:text-red-400 font-bold text-xs sm:text-sm">NETWORK OVERVIEW</span>
             </div>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-gray-900 mb-2 sm:mb-4">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-base-content mb-2 sm:mb-4">
               Our Network
             </h2>
-            <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-2xl mx-auto px-4">
+            <p className="text-base sm:text-lg md:text-xl text-base-content/70 max-w-2xl mx-auto px-4">
               Real-time statistics from our nationwide donation network
             </p>
           </div>
 
-          {/* Stats Cards - Following Home Pattern */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
-            <div className="group bg-white border-2 border-gray-100 rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 hover:border-red-200 hover:shadow-xl transition-all">
-              <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-gradient-to-br from-red-500 to-red-600 rounded-xl sm:rounded-2xl flex items-center justify-center mb-3 sm:mb-4 md:mb-6 group-hover:scale-110 transition-transform shadow-lg shadow-red-200">
-                <Building className="text-white" size={20} />
+          {/* Stats Cards */}
+          {isInitialLoading ? (
+            <SkeletonLoader type="stats" count={4} />
+          ) : (
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
+              <div className="group bg-base-200 border-2 border-base-300 rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 hover:border-red-200 dark:hover:border-red-900/50 hover:shadow-xl transition-all">
+                <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-linear-to-br from-red-500 to-red-600 rounded-xl sm:rounded-2xl flex items-center justify-center mb-3 sm:mb-4 md:mb-6 group-hover:scale-110 transition-transform shadow-lg shadow-red-200 dark:shadow-red-900/30">
+                  <Building className="text-white" size={20} />
+                </div>
+                <h3 className="text-xl sm:text-2xl md:text-3xl font-black text-base-content mb-1 sm:mb-2 tabular-nums">{animatedStats.centers}</h3>
+                <p className="text-xs sm:text-sm md:text-base text-base-content/70 leading-relaxed font-semibold">
+                  Active Centers
+                </p>
               </div>
-              <h3 className="text-xl sm:text-2xl md:text-3xl font-black text-gray-900 mb-1 sm:mb-2 tabular-nums">{animatedStats.centers}</h3>
-              <p className="text-xs sm:text-sm md:text-base text-gray-600 leading-relaxed font-semibold">
-                Active Centers
-              </p>
-            </div>
-            <div className="group bg-white border-2 border-gray-100 rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 hover:border-blue-200 hover:shadow-xl transition-all">
-              <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl sm:rounded-2xl flex items-center justify-center mb-3 sm:mb-4 md:mb-6 group-hover:scale-110 transition-transform shadow-lg shadow-blue-200">
-                <Globe className="text-white" size={20} />
+              <div className="group bg-base-200 border-2 border-base-300 rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 hover:border-blue-200 dark:hover:border-blue-900/50 hover:shadow-xl transition-all">
+                <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-linear-to-br from-blue-500 to-blue-600 rounded-xl sm:rounded-2xl flex items-center justify-center mb-3 sm:mb-4 md:mb-6 group-hover:scale-110 transition-transform shadow-lg shadow-blue-200 dark:shadow-blue-900/30">
+                  <Globe className="text-white" size={20} />
+                </div>
+                <h3 className="text-xl sm:text-2xl md:text-3xl font-black text-base-content mb-1 sm:mb-2 tabular-nums">{animatedStats.divisions}</h3>
+                <p className="text-xs sm:text-sm md:text-base text-base-content/70 leading-relaxed font-semibold">
+                  Divisions Covered
+                </p>
               </div>
-              <h3 className="text-xl sm:text-2xl md:text-3xl font-black text-gray-900 mb-1 sm:mb-2 tabular-nums">{animatedStats.divisions}</h3>
-              <p className="text-xs sm:text-sm md:text-base text-gray-600 leading-relaxed font-semibold">
-                Divisions Covered
-              </p>
-            </div>
 
-            <div className="group bg-white border-2 border-gray-100 rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 hover:border-green-200 hover:shadow-xl transition-all">
-              <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-gradient-to-br from-green-500 to-green-600 rounded-xl sm:rounded-2xl flex items-center justify-center mb-3 sm:mb-4 md:mb-6 group-hover:scale-110 transition-transform shadow-lg shadow-green-200">
-                <Shield className="text-white" size={20} />
+              <div className="group bg-base-200 border-2 border-base-300 rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 hover:border-green-200 dark:hover:border-green-900/50 hover:shadow-xl transition-all">
+                <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-linear-to-br from-green-500 to-green-600 rounded-xl sm:rounded-2xl flex items-center justify-center mb-3 sm:mb-4 md:mb-6 group-hover:scale-110 transition-transform shadow-lg shadow-green-200 dark:shadow-green-900/30">
+                  <Shield className="text-white" size={20} />
+                </div>
+                <h3 className="text-xl sm:text-2xl md:text-3xl font-black text-base-content mb-1 sm:mb-2 tabular-nums">{animatedStats.verified}</h3>
+                <p className="text-xs sm:text-sm md:text-base text-base-content/70 leading-relaxed font-semibold">
+                  Verified Centers
+                </p>
               </div>
-              <h3 className="text-xl sm:text-2xl md:text-3xl font-black text-gray-900 mb-1 sm:mb-2 tabular-nums">{animatedStats.verified}</h3>
-              <p className="text-xs sm:text-sm md:text-base text-gray-600 leading-relaxed font-semibold">
-                Verified Centers
-              </p>
-            </div>
 
-            <div className="group bg-white border-2 border-gray-100 rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 hover:border-red-200 hover:shadow-xl transition-all">
-              <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-gradient-to-br from-red-500 to-red-600 rounded-xl sm:rounded-2xl flex items-center justify-center mb-3 sm:mb-4 md:mb-6 group-hover:scale-110 transition-transform shadow-lg shadow-red-200">
-                <Clock className="text-white" size={20} />
+              <div className="group bg-base-200 border-2 border-base-300 rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 hover:border-red-200 dark:hover:border-red-900/50 hover:shadow-xl transition-all">
+                <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-gradient-to-br from-red-500 to-red-600 rounded-xl sm:rounded-2xl flex items-center justify-center mb-3 sm:mb-4 md:mb-6 group-hover:scale-110 transition-transform shadow-lg shadow-red-200 dark:shadow-red-900/30">
+                  <Clock className="text-white" size={20} />
+                </div>
+                <h3 className="text-xl sm:text-2xl md:text-3xl font-black text-base-content mb-1 sm:mb-2">24/7</h3>
+                <p className="text-xs sm:text-sm md:text-base text-base-content/70 leading-relaxed font-semibold">
+                  Emergency Support
+                </p>
               </div>
-              <h3 className="text-xl sm:text-2xl md:text-3xl font-black text-gray-900 mb-1 sm:mb-2">24/7</h3>
-              <p className="text-xs sm:text-sm md:text-base text-gray-600 leading-relaxed font-semibold">
-                Emergency Support
-              </p>
             </div>
-          </div>
+          )}
         </div>
       </div>
 
       {/* Centers List */}
-      <div id="results-section" className="py-8 sm:py-12 md:py-16 bg-gray-50">
+      <div id="results-section" className="py-8 sm:py-12 md:py-16 bg-base-200">
         <div className="container mx-auto px-4 max-w-7xl">
           {/* All Centers Section with Filter Buttons */}
           <div id="all-centers-section">
@@ -308,26 +319,24 @@ const DonationCentersPage = () => {
                   <Building className="text-white" size={20} />
                 </div>
                 <div>
-                  <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900">All Centers</h2>
-                  <p className="text-sm sm:text-base text-gray-600">
-                    Showing <span className="font-bold text-gray-900">{startIndex + 1}-{Math.min(endIndex, filteredCenters.length)}</span> of <span className="font-bold text-gray-900">{filteredCenters.length}</span> donation centers
-                    {selectedDivision !== 'All' && <span> in <span className="font-bold text-red-600">{selectedDivision}</span></span>}
-                    {selectedFilter !== 'All' && <span> • <span className="font-bold text-blue-600">{selectedFilter}</span></span>}
-                    {totalPages > 1 && <span> • Page <span className="font-bold text-gray-900">{currentPage}</span> of <span className="font-bold text-gray-900">{totalPages}</span></span>}
+                  <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-base-content">All Centers</h2>
+                  <p className="text-sm sm:text-base text-base-content/70">
+                    Showing <span className="font-bold text-base-content">{startIndex + 1}-{Math.min(endIndex, filteredCenters.length)}</span> of <span className="font-bold text-base-content">{filteredCenters.length}</span> donation centers
+                    {selectedDivision !== 'All' && <span> in <span className="font-bold text-red-600 dark:text-red-400">{selectedDivision}</span></span>}
+                    {selectedFilter !== 'All' && <span> • <span className="font-bold text-blue-600 dark:text-blue-400">{selectedFilter}</span></span>}
+                    {totalPages > 1 && <span> • Page <span className="font-bold text-base-content">{currentPage}</span> of <span className="font-bold text-base-content">{totalPages}</span></span>}
                   </p>
                 </div>
               </div>
               {/* Filter Buttons */}
               <div className="w-full lg:w-auto">
-                {/* Mobile: 2x2 Grid, Desktop: Horizontal */}
                 <div className="grid grid-cols-2 lg:flex gap-2 lg:gap-3">
-                  {/* Main Filter Buttons */}
                   <button
                     onClick={() => setSelectedFilter('All')}
                     className={`px-2 sm:px-3 lg:px-6 py-2 sm:py-3 rounded-lg sm:rounded-xl font-bold transition-all duration-300 shadow-lg transform hover:scale-105 text-xs sm:text-sm lg:text-base ${
                       selectedFilter === 'All'
                         ? 'bg-gradient-to-r from-red-600 to-rose-600 text-white'
-                        : 'bg-white border-2 border-gray-200 text-gray-700 hover:border-red-300 hover:bg-red-50 hover:text-red-600'
+                        : 'bg-base-100 border-2 border-base-300 text-base-content hover:border-red-300 dark:hover:border-red-900/50 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-600 dark:hover:text-red-400'
                     }`}
                   >
                     All Centers ({centers.length})
@@ -337,7 +346,7 @@ const DonationCentersPage = () => {
                     className={`px-2 sm:px-3 lg:px-6 py-2 sm:py-3 rounded-lg sm:rounded-xl font-bold transition-all duration-300 shadow-lg transform hover:scale-105 flex items-center justify-center gap-1 lg:gap-2 text-xs sm:text-sm lg:text-base ${
                       selectedFilter === 'Featured'
                         ? 'bg-gradient-to-r from-red-500 to-red-600 text-white'
-                        : 'bg-white border-2 border-gray-200 text-gray-700 hover:border-red-300 hover:bg-red-50 hover:text-red-600'
+                        : 'bg-base-100 border-2 border-base-300 text-base-content hover:border-red-300 dark:hover:border-red-900/50 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-600 dark:hover:text-red-400'
                     }`}
                   >
                     <Star size={12} className={selectedFilter === 'Featured' ? 'fill-white' : 'fill-red-400'} />
@@ -348,7 +357,7 @@ const DonationCentersPage = () => {
                     className={`px-2 sm:px-3 lg:px-6 py-2 sm:py-3 rounded-lg sm:rounded-xl font-bold transition-all duration-300 shadow-lg transform hover:scale-105 flex items-center justify-center gap-1 lg:gap-2 text-xs sm:text-sm lg:text-base ${
                       selectedFilter === '24/7'
                         ? 'bg-gradient-to-r from-red-600 to-red-700 text-white'
-                        : 'bg-white border-2 border-gray-200 text-gray-700 hover:border-red-300 hover:bg-red-50 hover:text-red-600'
+                        : 'bg-base-100 border-2 border-base-300 text-base-content hover:border-red-300 dark:hover:border-red-900/50 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-600 dark:hover:text-red-400'
                     }`}
                   >
                     <Clock size={12} />
@@ -361,7 +370,7 @@ const DonationCentersPage = () => {
                     <select
                       value={selectedDivision}
                       onChange={(e) => setSelectedDivision(e.target.value)}
-                      className="w-full px-2 sm:px-3 lg:px-6 py-2 sm:py-3 border-2 border-gray-200 rounded-lg sm:rounded-xl focus:border-red-500 focus:outline-none appearance-none bg-white transition-all duration-300 font-bold text-gray-700 hover:border-gray-300 shadow-lg cursor-pointer text-xs sm:text-sm lg:text-base"
+                      className="w-full px-2 sm:px-3 lg:px-6 py-2 sm:py-3 border-2 border-base-300 rounded-lg sm:rounded-xl focus:border-red-500 focus:outline-none appearance-none bg-base-100 transition-all duration-300 font-bold text-base-content hover:border-base-content/30 shadow-lg cursor-pointer text-xs sm:text-sm lg:text-base"
                     >
                       {divisions.map(division => (
                         <option key={division} value={division}>
@@ -370,19 +379,22 @@ const DonationCentersPage = () => {
                         </option>
                       ))}
                     </select>
-                    <ChevronDown className="absolute right-1 sm:right-2 lg:right-4 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none" size={14} />
+                    <ChevronDown className="absolute right-1 sm:right-2 lg:right-4 top-1/2 transform -translate-y-1/2 text-base-content/40 pointer-events-none" size={14} />
                   </div>
                 </div>
               </div>
             </div>
             {/* Centers Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 justify-items-center mt-4 mb-6 sm:mb-8">
-              {displayedCenters.map((center) => (
+            {isInitialLoading ? (
+              <SkeletonLoader type="card" count={8} />
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 justify-items-center mt-4 mb-6 sm:mb-8">
+                {displayedCenters.map((center) => (
                 <div
                   key={center.id}
-                  className="card bg-base-100 w-full max-w-sm shadow-sm border border-base-content/10 flex flex-col h-full relative rounded-xl sm:rounded-2xl overflow-hidden hover:shadow-lg transition-all duration-300"
+                  className="card bg-base-100 w-full max-w-sm shadow-sm border border-base-300 flex flex-col h-full relative rounded-xl sm:rounded-2xl overflow-hidden hover:shadow-lg transition-all duration-300"
                 >
-                  {/* Featured Badge - Only show if center is featured */}
+                  {/* Featured Badge */}
                   {center.featured && (
                     <div className="absolute top-2 sm:top-3 right-2 sm:right-3 bg-gradient-to-r from-red-400 to-red-500 text-white px-2 sm:px-2.5 py-1 rounded-full text-xs font-semibold flex items-center gap-1 z-10 shadow-sm">
                       <Star size={8} className="fill-white" />
@@ -398,8 +410,8 @@ const DonationCentersPage = () => {
 
                   {/* Figure Section */}
                   <figure>
-                    <div className="w-full h-32 sm:h-40 md:h-48 bg-gradient-to-br from-red-100 to-red-200 flex items-center justify-center">
-                      <Building className="text-red-600" size={32} />
+                    <div className="w-full h-32 sm:h-40 md:h-48 bg-gradient-to-br from-red-100 to-red-200 dark:from-red-900/30 dark:to-red-800/30 flex items-center justify-center">
+                      <Building className="text-red-600 dark:text-red-400" size={32} />
                     </div>
                   </figure>
 
@@ -407,15 +419,15 @@ const DonationCentersPage = () => {
                   <div className="card-body p-3 sm:p-4 md:p-5 flex-1 flex flex-col justify-between">
                     <div>
                       {/* Title */}
-                      <h2 className="card-title mb-2 font-bold line-clamp-2 min-h-10 sm:min-h-12 text-sm sm:text-base text-gray-900">{center.name}</h2>
+                      <h2 className="card-title mb-2 font-bold line-clamp-2 min-h-10 sm:min-h-12 text-sm sm:text-base text-base-content">{center.name}</h2>
                       
                       {/* Meta Information */}
                       <div className="flex justify-between items-center">
-                        <h5 className="flex items-center gap-1 text-xs sm:text-sm font-medium text-gray-900">
-                          <MapPin className="w-3 h-3 sm:w-4 sm:h-4 text-red-600" /> 
+                        <h5 className="flex items-center gap-1 text-xs sm:text-sm font-medium text-base-content">
+                          <MapPin className="w-3 h-3 sm:w-4 sm:h-4 text-red-600 dark:text-red-400" /> 
                           {center.district}
                         </h5>
-                        <h5 className="flex items-center gap-1 text-xs sm:text-sm font-medium text-gray-900">
+                        <h5 className="flex items-center gap-1 text-xs sm:text-sm font-medium text-base-content">
                           <Star className="w-3 h-3 sm:w-4 sm:h-4 text-red-500 fill-red-500" /> 
                           {center.rating}
                         </h5>
@@ -424,8 +436,8 @@ const DonationCentersPage = () => {
 
                     <div className="flex justify-between mt-3 sm:mt-4 items-center">
                       <div className="flex items-center font-bold text-xs sm:text-sm">
-                        <Clock className="w-3 h-3 sm:w-4 sm:h-4 text-gray-500 mr-1 sm:mr-2" />
-                        <span className="text-gray-600">
+                        <Clock className="w-3 h-3 sm:w-4 sm:h-4 text-base-content/50 mr-1 sm:mr-2" />
+                        <span className="text-base-content/70">
                           {center.emergency && center.emergency.includes('24/7') ? '24/7 Available' : 'Regular Hours'}
                         </span>
                       </div>
@@ -440,16 +452,17 @@ const DonationCentersPage = () => {
                   </div>
                 </div>
               ))}
-            </div>
+              </div>
+            )}
           </div>
           {/* No Results */}
           {filteredCenters.length === 0 && (
             <div className="text-center py-12 sm:py-16">
-              <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
-                <Building className="text-gray-400" size={32} />
+              <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 bg-base-300 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
+                <Building className="text-base-content/40" size={32} />
               </div>
-              <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2">No Centers Found</h3>
-              <p className="text-sm sm:text-base text-gray-600 mb-4 sm:mb-6 px-4">
+              <h3 className="text-xl sm:text-2xl font-bold text-base-content mb-2">No Centers Found</h3>
+              <p className="text-sm sm:text-base text-base-content/70 mb-4 sm:mb-6 px-4">
                 We couldn't find any donation centers matching your search criteria.
               </p>
               <button
@@ -465,19 +478,19 @@ const DonationCentersPage = () => {
             </div>
           )}
 
-          {/* Pagination - For all filtered centers */}
+          {/* Pagination */}
           {filteredCenters.length > itemsPerPage && (
             <div className="flex flex-col lg:flex-row justify-between items-center gap-4 sm:gap-6 mt-8 sm:mt-12">
               <div className="text-center lg:text-left">
-                <p className="text-sm sm:text-base md:text-lg text-gray-600">
-                  Showing <span className="font-bold text-gray-900">{startIndex + 1}</span> to{' '}
-                  <span className="font-bold text-gray-900">{Math.min(endIndex, filteredCenters.length)}</span> of{' '}
-                  <span className="font-bold text-red-600">{filteredCenters.length}</span> centers
+                <p className="text-sm sm:text-base md:text-lg text-base-content/70">
+                  Showing <span className="font-bold text-base-content">{startIndex + 1}</span> to{' '}
+                  <span className="font-bold text-base-content">{Math.min(endIndex, filteredCenters.length)}</span> of{' '}
+                  <span className="font-bold text-red-600 dark:text-red-400">{filteredCenters.length}</span> centers
                   {selectedFilter !== 'All' && <span> ({selectedFilter.toLowerCase()})</span>}
                 </p>
-                <p className="text-xs sm:text-sm text-gray-500 mt-1">
-                  Page <span className="font-bold text-gray-700">{currentPage}</span> of{' '}
-                  <span className="font-bold text-gray-700">{totalPages}</span>
+                <p className="text-xs sm:text-sm text-base-content/50 mt-1">
+                  Page <span className="font-bold text-base-content/70">{currentPage}</span> of{' '}
+                  <span className="font-bold text-base-content/70">{totalPages}</span>
                 </p>
               </div>
               <div className="flex items-center gap-2 sm:gap-3">
@@ -486,7 +499,7 @@ const DonationCentersPage = () => {
                   disabled={currentPage === 1}
                   className={`px-3 sm:px-4 md:px-6 py-2 sm:py-2.5 md:py-3 rounded-lg sm:rounded-xl font-bold transition-all duration-300 text-xs sm:text-sm md:text-base ${
                     currentPage === 1
-                      ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                      ? 'bg-base-300 text-base-content/40 cursor-not-allowed'
                       : 'bg-gradient-to-r from-gray-600 to-gray-700 text-white hover:from-gray-700 hover:to-gray-800 shadow-lg hover:shadow-xl transform hover:scale-105'
                   }`}
                 >
@@ -504,7 +517,7 @@ const DonationCentersPage = () => {
                     if (!showPage) {
                       if (page === currentPage - 2 || page === currentPage + 2) {
                         return (
-                          <span key={page} className="px-2 sm:px-3 py-2 sm:py-3 text-gray-400 font-bold text-xs sm:text-sm">
+                          <span key={page} className="px-2 sm:px-3 py-2 sm:py-3 text-base-content/40 font-bold text-xs sm:text-sm">
                             ...
                           </span>
                         );
@@ -518,7 +531,7 @@ const DonationCentersPage = () => {
                         className={`px-2.5 sm:px-3 md:px-4 py-2 sm:py-2.5 md:py-3 rounded-lg sm:rounded-xl font-bold transition-all duration-300 min-w-8 sm:min-w-10 md:min-w-12 text-xs sm:text-sm md:text-base ${
                           currentPage === page
                             ? 'bg-gradient-to-r from-red-600 to-rose-600 text-white shadow-lg transform scale-105'
-                            : 'bg-white border-2 border-gray-200 text-gray-700 hover:border-red-300 hover:bg-red-50 hover:text-red-600 shadow-sm hover:shadow-md transform hover:scale-105'
+                            : 'bg-base-100 border-2 border-base-300 text-base-content hover:border-red-300 dark:hover:border-red-900/50 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-600 dark:hover:text-red-400 shadow-sm hover:shadow-md transform hover:scale-105'
                         }`}
                       >
                         {page}
@@ -531,7 +544,7 @@ const DonationCentersPage = () => {
                   disabled={currentPage === totalPages}
                   className={`px-3 sm:px-4 md:px-6 py-2 sm:py-2.5 md:py-3 rounded-lg sm:rounded-xl font-bold transition-all duration-300 text-xs sm:text-sm md:text-base ${
                     currentPage === totalPages
-                      ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                      ? 'bg-base-300 text-base-content/40 cursor-not-allowed'
                       : 'bg-gradient-to-r from-gray-600 to-gray-700 text-white hover:from-gray-700 hover:to-gray-800 shadow-lg hover:shadow-xl transform hover:scale-105'
                   }`}
                 >
@@ -544,31 +557,31 @@ const DonationCentersPage = () => {
         </div>
       </div>
 
-      {/* Call to Action - Following Project Design */}
-      <div className="py-12 sm:py-16 md:py-20 lg:py-24 bg-gradient-to-br from-red-50 to-rose-50">
+      {/* Call to Action */}
+      <div className="py-12 sm:py-16 md:py-20 lg:py-24 bg-gradient-to-br from-red-50 to-rose-50 dark:from-base-200 dark:to-base-200">
         <div className="container mx-auto px-4 max-w-6xl">
           <div className="text-center space-y-6 sm:space-y-8">
             {/* Badge */}
-            <div className="inline-flex items-center gap-2 bg-white border-2 border-red-100 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full shadow-sm">
-              <div className="w-5 h-5 sm:w-6 sm:h-6 bg-red-100 rounded-full flex items-center justify-center">
-                <Droplet className="text-red-600 fill-red-600" size={12} />
+            <div className="inline-flex items-center gap-2 bg-base-200 border-2 border-red-100 dark:border-red-900/50 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full shadow-sm">
+              <div className="w-5 h-5 sm:w-6 sm:h-6 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center">
+                <Droplet className="text-red-600 dark:text-red-400 fill-red-600 dark:fill-red-400" size={12} />
               </div>
-              <span className="text-red-600 font-bold text-xs sm:text-sm">SAVE LIVES • MAKE IMPACT</span>
+              <span className="text-red-600 dark:text-red-400 font-bold text-xs sm:text-sm">SAVE LIVES • MAKE IMPACT</span>
             </div>
 
             {/* Main Heading */}
             <div>
-              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-gray-900 leading-none mb-2 sm:mb-3">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-base-content leading-none mb-2 sm:mb-3">
                 Ready to<span className="bg-gradient-to-r from-red-600 to-rose-600 bg-clip-text text-transparent"> Save Lives?</span>
               </h2>
               <div className="flex items-center justify-center gap-2 sm:gap-3">
                 <div className="h-0.5 sm:h-1 w-12 sm:w-16 bg-gradient-to-r from-red-600 to-rose-600 rounded-full"></div>
-                <p className="text-base sm:text-lg md:text-xl font-bold text-gray-700">Join Our Mission</p>
+                <p className="text-base sm:text-lg md:text-xl font-bold text-base-content/80">Join Our Mission</p>
                 <div className="h-0.5 sm:h-1 w-12 sm:w-16 bg-gradient-to-r from-red-600 to-rose-600 rounded-full"></div>
               </div>
             </div>
             {/* Description */}
-            <p className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-600 leading-relaxed max-w-2xl mx-auto font-medium px-4">
+            <p className="text-sm sm:text-base md:text-lg lg:text-xl text-base-content/70 leading-relaxed max-w-2xl mx-auto font-medium px-4">
               Visit any of our verified donation centers and become a hero today. Every donation saves up to three lives.
             </p>
 
@@ -576,14 +589,14 @@ const DonationCentersPage = () => {
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center pt-2 sm:pt-4">
               <a
                 href="/signup"
-                className="group inline-flex items-center justify-center gap-2 sm:gap-3 bg-gradient-to-r from-red-600 to-red-700 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl sm:rounded-2xl font-bold text-sm sm:text-base lg:text-lg hover:from-red-700 hover:to-red-800 transition-all shadow-xl shadow-red-200 hover:shadow-2xl hover:scale-105 w-full sm:w-auto"
+                className="group inline-flex items-center justify-center gap-2 sm:gap-3 bg-gradient-to-r from-red-600 to-red-700 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl sm:rounded-2xl font-bold text-sm sm:text-base lg:text-lg hover:from-red-700 hover:to-red-800 transition-all shadow-xl shadow-red-200 dark:shadow-red-900/30 hover:shadow-2xl hover:scale-105 w-full sm:w-auto"
               >
                 <Droplet size={16} className="group-hover:scale-110 transition-transform fill-white" />
                 <span>Register as Donor</span>
               </a>
               <a
                 href="/search"
-                className="group inline-flex items-center justify-center gap-2 sm:gap-3 bg-white text-red-600 px-6 sm:px-8 py-3 sm:py-4 rounded-xl sm:rounded-2xl font-bold text-sm sm:text-base lg:text-lg border-2 border-gray-200 hover:border-red-300 hover:bg-red-50 transition-all shadow-lg hover:shadow-xl hover:scale-105 w-full sm:w-auto"
+                className="group inline-flex items-center justify-center gap-2 sm:gap-3 bg-base-100 text-red-600 dark:text-red-400 px-6 sm:px-8 py-3 sm:py-4 rounded-xl sm:rounded-2xl font-bold text-sm sm:text-base lg:text-lg border-2 border-base-300 hover:border-red-300 dark:hover:border-red-900/50 hover:bg-red-50 dark:hover:bg-red-900/20 transition-all shadow-lg hover:shadow-xl hover:scale-105 w-full sm:w-auto"
               >
                 <Search size={16} className="group-hover:scale-110 transition-transform" />
                 <span>Find Donors</span>
@@ -592,26 +605,26 @@ const DonationCentersPage = () => {
 
             {/* Stats Cards */}
             <div className="grid grid-cols-3 gap-3 sm:gap-4 pt-6 sm:pt-8 max-w-lg sm:max-w-2xl mx-auto">
-              <div className="bg-white border-2 border-gray-100 rounded-xl sm:rounded-2xl p-3 sm:p-4 hover:border-red-200 transition shadow-sm hover:shadow-lg">
+              <div className="bg-base-100 border-2 border-base-300 rounded-xl sm:rounded-2xl p-3 sm:p-4 hover:border-red-200 dark:hover:border-red-900/50 transition shadow-sm hover:shadow-lg">
                 <div className="flex items-center justify-center mb-1 sm:mb-2">
-                  <Users className="text-red-600" size={16} />
+                  <Users className="text-red-600 dark:text-red-400" size={16} />
                 </div>
-                <p className="text-lg sm:text-xl md:text-2xl font-black text-gray-900">{centers.length}+</p>
-                <p className="text-xs sm:text-sm text-gray-600 font-semibold">Centers</p>
+                <p className="text-lg sm:text-xl md:text-2xl font-black text-base-content">{centers.length}+</p>
+                <p className="text-xs sm:text-sm text-base-content/70 font-semibold">Centers</p>
               </div>
-              <div className="bg-white border-2 border-gray-100 rounded-xl sm:rounded-2xl p-3 sm:p-4 hover:border-red-200 transition shadow-sm hover:shadow-lg">
+              <div className="bg-base-100 border-2 border-base-300 rounded-xl sm:rounded-2xl p-3 sm:p-4 hover:border-red-200 dark:hover:border-red-900/50 transition shadow-sm hover:shadow-lg">
                 <div className="flex items-center justify-center mb-1 sm:mb-2">
-                  <Shield className="text-red-600" size={16} />
+                  <Shield className="text-red-600 dark:text-red-400" size={16} />
                 </div>
-                <p className="text-lg sm:text-xl md:text-2xl font-black text-gray-900">100%</p>
-                <p className="text-xs sm:text-sm text-gray-600 font-semibold">Verified</p>
+                <p className="text-lg sm:text-xl md:text-2xl font-black text-base-content">100%</p>
+                <p className="text-xs sm:text-sm text-base-content/70 font-semibold">Verified</p>
               </div>
-              <div className="bg-white border-2 border-gray-100 rounded-xl sm:rounded-2xl p-3 sm:p-4 hover:border-red-200 transition shadow-sm hover:shadow-lg">
+              <div className="bg-base-100 border-2 border-base-300 rounded-xl sm:rounded-2xl p-3 sm:p-4 hover:border-red-200 dark:hover:border-red-900/50 transition shadow-sm hover:shadow-lg">
                 <div className="flex items-center justify-center mb-1 sm:mb-2">
-                  <Clock className="text-red-600" size={16} />
+                  <Clock className="text-red-600 dark:text-red-400" size={16} />
                 </div>
-                <p className="text-lg sm:text-xl md:text-2xl font-black text-gray-900">24/7</p>
-                <p className="text-xs sm:text-sm text-gray-600 font-semibold">Support</p>
+                <p className="text-lg sm:text-xl md:text-2xl font-black text-base-content">24/7</p>
+                <p className="text-xs sm:text-sm text-base-content/70 font-semibold">Support</p>
               </div>
             </div>
           </div>

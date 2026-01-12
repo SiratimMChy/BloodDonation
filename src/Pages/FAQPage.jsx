@@ -127,13 +127,13 @@ const FAQPage = () => {
 
   const toggleCategory = (index) => {
     setActiveCategory(activeCategory === index ? null : index);
-    setOpenQuestion(null); // Reset open question when changing category
+    setOpenQuestion(null);
   };
 
   return (
-    <div className="py-6 pb-6 bg-white relative overflow-hidden">
+    <div className="py-6 pb-6 bg-base-100 relative overflow-hidden">
       {/* Background Pattern */}
-      <div className="absolute inset-0 bg-linear-to-br from-red-50 via-white to-rose-50">
+      <div className="absolute inset-0 bg-linear-to-br from-red-50 via-white to-rose-50 dark:from-base-200 dark:via-base-100 dark:to-base-200">
         <div className="absolute inset-0" style={{
           backgroundImage: 'radial-gradient(circle at 1px 1px, rgb(254 202 202 / 0.3) 1px, transparent 0)',
           backgroundSize: '40px 40px'
@@ -141,21 +141,21 @@ const FAQPage = () => {
       </div>
 
       {/* Decorative Blobs */}
-      <div className="absolute top-0 right-0 w-96 h-96 bg-red-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse"></div>
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-rose-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse" style={{ animationDelay: '2s' }}></div>
+      <div className="absolute top-0 right-0 w-96 h-96 bg-red-200 dark:bg-red-900 rounded-full mix-blend-multiply filter blur-3xl opacity-30 dark:opacity-20 animate-pulse"></div>
+      <div className="absolute bottom-0 left-0 w-96 h-96 bg-rose-200 dark:bg-rose-900 rounded-full mix-blend-multiply filter blur-3xl opacity-30 dark:opacity-20 animate-pulse" style={{ animationDelay: '2s' }}></div>
 
       <div className="relative z-10">
         {/* Header Section */}
         <div className="py-20 text-center">
           <div className="container mx-auto px-4 max-w-7xl">
-            <div className="inline-flex items-center gap-2 bg-red-100 px-4 py-2 rounded-full mb-6">
+            <div className="inline-flex items-center gap-2 bg-red-100 dark:bg-red-900/30 px-4 py-2 rounded-full mb-6">
               <Droplet className="text-red-600 fill-red-600" size={16} />
               <span className="text-red-600 font-bold text-sm">FREQUENTLY ASKED QUESTIONS</span>
             </div>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 mb-6">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-base-content mb-6">
               How Can We Help You?
             </h1>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto mb-8">
+            <p className="text-xl text-base-content/70 max-w-2xl mx-auto mb-8">
               Find answers to common questions about blood donation, eligibility, and our platform
             </p>
           </div>
@@ -168,42 +168,42 @@ const FAQPage = () => {
               const Icon = category.icon;
               const isActive = activeCategory === categoryIndex;
               const colorClasses = {
-                red: 'from-red-500 to-red-600 shadow-red-200',
-                blue: 'from-blue-500 to-blue-600 shadow-blue-200',
-                green: 'from-green-500 to-green-600 shadow-green-200'
+                red: 'from-red-500 to-red-600 shadow-red-200 dark:shadow-red-900/30',
+                blue: 'from-blue-500 to-blue-600 shadow-blue-200 dark:shadow-blue-900/30',
+                green: 'from-green-500 to-green-600 shadow-green-200 dark:shadow-green-900/30'
               };
 
               return (
                 <div
                   key={categoryIndex}
                   onClick={() => toggleCategory(categoryIndex)}
-                  className={`group bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border-2 cursor-pointer ${
-                    isActive ? 'border-red-300 shadow-xl scale-105' : 'border-gray-100 hover:border-red-200'
+                  className={`group bg-base-200 border-2 border-base-300 rounded-xl md:rounded-2xl p-4 md:p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 cursor-pointer ${
+                    isActive ? 'border-red-300 dark:border-red-900/50 shadow-xl shadow-gray-300 dark:shadow-gray-900/70 scale-105' : 'hover:border-red-200 dark:hover:border-red-900/50'
                   }`}
                 >
-                  <div className="flex items-center justify-between mb-4">
-                    <div className={`w-12 h-12 bg-linear-to-br ${colorClasses[category.color]} rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform`}>
-                      <Icon className="text-white" size={24} />
+                  <div className="flex items-center justify-between mb-3 md:mb-4">
+                    <div className={`w-10 h-10 md:w-12 md:h-12 bg-gradient-to-br ${colorClasses[category.color]} rounded-lg md:rounded-xl flex items-center justify-center shadow-md group-hover:scale-110 transition-transform`}>
+                      <Icon className="text-white" size={18} />
                     </div>
                     <ChevronDown
                       className={`text-gray-400 transition-transform duration-300 ${
                         isActive ? 'rotate-180 text-red-600' : 'group-hover:text-red-600'
                       }`}
-                      size={20}
+                      size={18}
                     />
                   </div>
                   <h3 className={`text-xl font-bold mb-2 transition-colors ${
-                    isActive ? 'text-red-600' : 'text-gray-900 group-hover:text-red-600'
+                    isActive ? 'text-red-600 dark:text-red-400' : 'text-base-content group-hover:text-red-600 dark:group-hover:text-red-400'
                   }`}>
                     {category.name}
                   </h3>
-                  <p className="text-gray-600 text-sm leading-relaxed">
+                  <p className="text-base-content/70 text-sm leading-relaxed">
                     {category.description}
                   </p>
                   
                   {/* Active indicator */}
                   {isActive && (
-                    <div className="mt-4 w-full h-1 bg-linear-to-r] from-red-500 to-rose-500 rounded-full"></div>
+                    <div className="mt-4 w-full h-1 bg-gradient-to-r from-red-500 to-rose-500 rounded-full"></div>
                   )}
                 </div>
               );
@@ -212,25 +212,25 @@ const FAQPage = () => {
 
           {/* Expandable Questions Section */}
           {activeCategory !== null && (
-            <div className="bg-white rounded-2xl border-2 border-gray-100 shadow-lg overflow-hidden">
+            <div className="bg-base-200 border-2 border-base-300 rounded-2xl shadow-lg shadow-gray-200 dark:shadow-gray-900/50 overflow-hidden hover:border-red-200 dark:hover:border-red-900/50 transition-all">
               <div className="p-8">
                 <div className="flex items-center gap-4 mb-6">
-                  <div className={`w-12 h-12 bg-linear-to-br ${
+                  <div className={`w-10 h-10 md:w-12 md:h-12 bg-gradient-to-br ${
                     categories[activeCategory].color === 'red' ? 'from-red-500 to-red-600' :
                     categories[activeCategory].color === 'blue' ? 'from-blue-500 to-blue-600' :
                     categories[activeCategory].color === 'green' ? 'from-green-500 to-green-600' :
                     'from-blue-500 to-blue-600'
-                  } rounded-xl flex items-center justify-center shadow-lg`}>
+                  } rounded-lg md:rounded-xl flex items-center justify-center shadow-md`}>
                     {(() => {
                       const Icon = categories[activeCategory].icon;
-                      return <Icon className="text-white" size={24} />;
+                      return <Icon className="text-white" size={18} />;
                     })()}
                   </div>
                   <div>
-                    <h2 className="text-2xl font-bold text-gray-900">
+                    <h2 className="text-xl font-bold text-base-content">
                       {categories[activeCategory].name}
                     </h2>
-                    <p className="text-gray-600">
+                    <p className="text-base-content/70 text-sm">
                       {categories[activeCategory].description}
                     </p>
                   </div>
@@ -244,20 +244,20 @@ const FAQPage = () => {
                     return (
                       <div
                         key={questionIndex}
-                        className="border-2 border-gray-100 rounded-xl overflow-hidden hover:border-red-200 transition-all"
+                        className="border-2 border-gray-100 dark:border-gray-700 rounded-xl overflow-hidden hover:border-red-200 transition-all"
                       >
                         <button
                           onClick={() => toggleQuestion(activeCategory, questionIndex)}
-                          className="w-full flex items-center justify-between p-6 text-left hover:bg-gray-50 transition-all"
+                          className="w-full flex items-center justify-between p-4 text-left hover:bg-red-50 dark:hover:bg-base-300 transition-all"
                         >
-                          <span className="text-lg font-bold text-gray-900 pr-4">
+                          <span className="text-base font-bold text-base-content pr-4">
                             {faq.question}
                           </span>
                           <ChevronDown
                             className={`text-red-600 shrink-0 transition-transform duration-300 ${
                               isOpen ? 'rotate-180' : ''
                             }`}
-                            size={24}
+                            size={20}
                           />
                         </button>
                         
@@ -268,9 +268,9 @@ const FAQPage = () => {
                               : 'max-h-0 opacity-0'
                           } overflow-hidden`}
                         >
-                          <div className="px-6 pb-6">
-                            <div className="pt-4 border-t-2 border-gray-100">
-                              <p className="text-gray-600 leading-relaxed">
+                          <div className="px-4 pb-4">
+                            <div className="pt-3 border-t-2 border-base-300">
+                              <p className="text-base-content/70 leading-relaxed text-sm">
                                 {faq.answer}
                               </p>
                             </div>

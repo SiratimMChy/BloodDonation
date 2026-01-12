@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router';
 import { FaRegEye, FaUser, FaTint, FaMapMarkerAlt, FaCalendarAlt, FaClock } from "react-icons/fa";
 import useAxios from '../../Hooks/useAxios';
 import { AuthContext } from '../../Provider/AuthProvider';
+import SkeletonLoader from '../../Components/SkeletonLoader/SkeletonLoader';
 
 const DonationRequests = () => {
   const { user } = useContext(AuthContext);
@@ -59,15 +60,15 @@ const DonationRequests = () => {
       <div className="container mx-auto max-w-7xl">
         {/* Header */}
         <div className="text-center mb-10">
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-3">
+          <h2 className="text-4xl md:text-5xl font-bold text-base-content mb-3">
             Pending Donation Requests
           </h2>
-          <p className="text-gray-600 text-lg">
+          <p className="text-base-content/70 text-lg">
             Help save lives by responding to urgent blood requests
           </p>
           {!loading && (
             <div className="mt-4">
-              <span className="badge badge-lg bg-red-100 text-red-600 font-semibold">
+              <span className="badge badge-lg bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 font-semibold">
                 {pendingRequests.length} {pendingRequests.length === 1 ? 'Request' : 'Requests'} Pending
               </span>
             </div>
@@ -76,59 +77,17 @@ const DonationRequests = () => {
 
         {/* Loading State */}
         {loading ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {[...Array(8)].map((_, index) => (
-              <div
-                key={index}
-                className="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden animate-pulse"
-              >
-                {/* Skeleton Header */}
-                <div className="bg-gray-300 p-4">
-                  <div className="h-4 bg-gray-400 rounded w-1/2 mb-3"></div>
-                  <div className="h-10 bg-gray-400 rounded"></div>
-                </div>
-
-                {/* Skeleton Body */}
-                <div className="p-5 space-y-3">
-                  <div>
-                    <div className="h-3 bg-gray-300 rounded w-1/4 mb-2"></div>
-                    <div className="h-5 bg-gray-300 rounded w-3/4"></div>
-                  </div>
-
-                  <div>
-                    <div className="h-3 bg-gray-300 rounded w-1/3 mb-2"></div>
-                    <div className="h-4 bg-gray-300 rounded w-full"></div>
-                    <div className="h-4 bg-gray-300 rounded w-2/3 mt-1"></div>
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-3 pt-2">
-                    <div>
-                      <div className="h-3 bg-gray-300 rounded w-2/3 mb-2"></div>
-                      <div className="h-4 bg-gray-300 rounded w-full"></div>
-                    </div>
-                    <div>
-                      <div className="h-3 bg-gray-300 rounded w-2/3 mb-2"></div>
-                      <div className="h-4 bg-gray-300 rounded w-full"></div>
-                    </div>
-                  </div>
-
-                  <div className="pt-3">
-                    <div className="h-10 bg-gray-300 rounded-lg"></div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+          <SkeletonLoader type="card" count={8} />
         ) : (
           <>
             {/* Cards Grid */}
             {pendingRequests.length === 0 ? (
-              <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-12 text-center">
-                <div className="text-gray-400 mb-4">
+              <div className="bg-base-200 rounded-2xl shadow-lg border border-base-300 p-12 text-center">
+                <div className="text-base-content/40 mb-4">
                   <FaTint size={64} className="mx-auto" />
                 </div>
-                <h3 className="text-2xl font-bold text-gray-800 mb-2">No Pending Requests</h3>
-                <p className="text-gray-600">
+                <h3 className="text-2xl font-bold text-base-content mb-2">No Pending Requests</h3>
+                <p className="text-base-content/70">
                   There are currently no pending donation requests.
                 </p>
               </div>
@@ -137,7 +96,7 @@ const DonationRequests = () => {
                 {pendingRequests.map(request => (
                   <div
                     key={request._id}
-                    className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 border border-gray-200 overflow-hidden"
+                    className="bg-base-200 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 border border-base-300 overflow-hidden"
                   >
                     {/* Card Header */}
                     <div className="bg-gradient-to-r from-red-500 to-red-600 p-4">
@@ -154,32 +113,32 @@ const DonationRequests = () => {
                     {/* Card Body */}
                     <div className="p-5 space-y-3">
                       <div>
-                        <p className="text-sm text-gray-600 font-semibold mb-1">Name</p>
-                        <p className="text-gray-900 font-bold text-lg">{request.recipientName}</p>
+                        <p className="text-sm text-base-content/60 font-semibold mb-1">Name</p>
+                        <p className="text-base-content font-bold text-lg">{request.recipientName}</p>
                       </div>
 
                       <div className="flex items-start gap-2">
-                        <FaMapMarkerAlt className="text-gray-400 mt-1 shrink-0" size={14} />
+                        <FaMapMarkerAlt className="text-base-content/40 mt-1 shrink-0" size={14} />
                         <div>
-                          <p className="text-sm text-gray-600 font-semibold">Location</p>
-                          <p className="text-gray-800 text-sm">{request.fullAddress}</p>
+                          <p className="text-sm text-base-content/60 font-semibold">Location</p>
+                          <p className="text-base-content/80 text-sm">{request.fullAddress}</p>
                         </div>
                       </div>
 
                       <div className="grid grid-cols-2 gap-3 pt-2">
                         <div className="flex items-start gap-2">
-                          <FaCalendarAlt className="text-gray-400 mt-1 shrink-0" size={14} />
+                          <FaCalendarAlt className="text-base-content/40 mt-1 shrink-0" size={14} />
                           <div>
-                            <p className="text-xs text-gray-600 font-semibold">Date</p>
-                            <p className="text-gray-800 text-sm">{request.donationDate}</p>
+                            <p className="text-xs text-base-content/60 font-semibold">Date</p>
+                            <p className="text-base-content/80 text-sm">{request.donationDate}</p>
                           </div>
                         </div>
 
                         <div className="flex items-start gap-2">
-                          <FaClock className="text-gray-400 mt-1 shrink-0" size={14} />
+                          <FaClock className="text-base-content/40 mt-1 shrink-0" size={14} />
                           <div>
-                            <p className="text-xs text-gray-600 font-semibold">Time</p>
-                            <p className="text-gray-800 text-sm">{request.donationTime}</p>
+                            <p className="text-xs text-base-content/60 font-semibold">Time</p>
+                            <p className="text-base-content/80 text-sm">{request.donationTime}</p>
                           </div>
                         </div>
                       </div>
@@ -213,7 +172,7 @@ const DonationRequests = () => {
                     key={pg}
                     className={`btn rounded-lg shadow-md hover:shadow-lg transition-all duration-200 border-0 ${pg === currentPage
                       ? 'bg-gradient-to-r from-red-500 to-red-600 text-white'
-                      : 'bg-white text-gray-700 hover:bg-gray-100'
+                      : 'bg-base-200 text-base-content hover:bg-base-300'
                       }`}
                     onClick={() => setCurrentPage(pg)}
                   >
@@ -222,7 +181,7 @@ const DonationRequests = () => {
                 ))}
                 <button
                   onClick={handleNextPage}
-                  className="btn bg-linear-to-r from-gray-500 to-gray-600 hover:from-gray-600 hover:to-gray-700 text-white border-0 rounded-lg shadow-md hover:shadow-lg transition-all duration-200"
+                  className="btn bg-gradient-to-r from-gray-500 to-gray-600 hover:from-gray-600 hover:to-gray-700 text-white border-0 rounded-lg shadow-md hover:shadow-lg transition-all duration-200"
                 >
                   Next
                 </button>

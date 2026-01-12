@@ -1,10 +1,9 @@
 import { Droplet } from 'lucide-react';
-import React, { useEffect } from 'react';
-import { useContext } from 'react';
+import { useEffect, useContext, useState } from 'react';
 import { AuthContext } from '../../Provider/AuthProvider';
 import axios from 'axios';
-import { useState } from 'react';
 import useAxiosSecure from '../../Hooks/useAxiosSecure';
+import { useDemoRestriction } from '../../Hooks/useDemoRestriction';
 
 const AddRequest = () => {
     const { user } = useContext(AuthContext);
@@ -12,7 +11,7 @@ const AddRequest = () => {
     const [districts, setDistricts] = useState([]);
     const [district, setDistrict] = useState('');
     const [upazila, setUpazila] = useState('');
-
+    const { checkDemoRestriction } = useDemoRestriction();
 
     const axiosSecure = useAxiosSecure();
 
@@ -33,6 +32,12 @@ const AddRequest = () => {
 
     const handleRequest = (e) => {
         e.preventDefault();
+        
+        // Check if user is demo user and restrict action
+        if (checkDemoRestriction()) {
+            return;
+        }
+        
         const form = e.target;
         const requesterName = form.requesterName.value;
         const requesterEmail = form.requesterEmail.value;
@@ -75,10 +80,10 @@ const AddRequest = () => {
 
 
     return (
-        <div className="min-h-screen  flex items-start sm:items-center justify-center px-3 sm:px-6 py-6">
-            <div className="w-full max-w-3xl bg-white rounded-xl sm:rounded-2xl shadow-md sm:shadow-lg p-4 sm:p-6 md:p-8">
-                <h2 className="flex items-center justify-center gap-1 text-sm sm:text-2xl font-semibold text-red-600 mb-6 text-center">
-                    <Droplet className="text-red-600" size={28} />
+        <div className="min-h-screen flex items-stretch sm:items-center justify-center px-0 sm:px-6 py-0 sm:py-6 bg-base-100">
+            <div className="w-full min-h-screen sm:min-h-0 sm:max-w-3xl bg-base-200 rounded-none sm:rounded-2xl shadow-none sm:shadow-lg p-4 sm:p-6 md:p-8 border-0 sm:border-2 border-base-300">
+                <h2 className="flex items-center justify-center gap-1 text-sm sm:text-2xl font-semibold text-red-600 dark:text-red-600 mb-6 text-center">
+                    <Droplet className="text-red-600 dark:text-red-600" size={28} />
                     Blood Donation Request
                 </h2>
 
@@ -86,24 +91,24 @@ const AddRequest = () => {
                     {/* Requester Info */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Requester Name</label>
+                            <label className="block text-sm font-medium text-base-content mb-1">Requester Name</label>
                             <input
                                 name='requesterName'
                                 type="text"
                                 readOnly
                                 value={user?.displayName}
-                                className="w-full rounded-lg border border-gray-300 bg-gray-100 px-3 sm:px-4 py-2 text-gray-700 cursor-not-allowed text-sm"
+                                className="w-full rounded-lg border-2 border-base-300 bg-base-300 px-3 sm:px-4 py-2 text-base-content cursor-not-allowed text-sm"
                             />
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Requester Email</label>
+                            <label className="block text-sm font-medium text-base-content mb-1">Requester Email</label>
                             <input
                                 name='requesterEmail'
                                 type="email"
                                 readOnly
                                 value={user?.email}
-                                className="w-full rounded-lg border border-gray-300 bg-gray-100 px-3 sm:px-4 py-2 text-gray-700 cursor-not-allowed text-sm"
+                                className="w-full rounded-lg border-2 border-base-300 bg-base-300 px-3 sm:px-4 py-2 text-base-content cursor-not-allowed text-sm"
                             />
                         </div>
                     </div>
@@ -111,23 +116,23 @@ const AddRequest = () => {
                     {/* Recipient Info */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div className="flex flex-col">
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Recipient Name</label>
+                            <label className="block text-sm font-medium text-base-content mb-1">Recipient Name</label>
                             <input
                                 required
                                 name='recipientName'
                                 type="text"
                                 placeholder="Enter recipient name"
-                                className="input w-full rounded-lg border border-gray-300 px-3 sm:px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-500 text-sm"
+                                className="input w-full rounded-lg border-2 border-base-300 bg-base-200 text-base-content px-3 sm:px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-500 text-sm"
                             />
                         </div>
                         <div className="flex flex-col">
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Recipient Mobile No</label>
+                            <label className="block text-sm font-medium text-base-content mb-1">Recipient Mobile No</label>
                             <input
                                 required
                                 name='mobile'
                                 type="text"
-                                placeholder="Enter recipient Mobile No"
-                                className="input w-full rounded-lg border border-gray-300 px-3 sm:px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-500 text-sm"
+                                placeholder="Enter recipient mobile number"
+                                className="input w-full rounded-lg border-2 border-base-300 bg-base-200 text-base-content px-3 sm:px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-500 text-sm"
                             />
                         </div>
 
@@ -135,8 +140,8 @@ const AddRequest = () => {
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Recipient District</label>
-                            <select required name='recipientDistrict' value={district} onChange={(e) => setDistrict(e.target.value)} className="select w-full rounded-lg border border-gray-300 px-3 sm:px-4 py-2 focus:ring-2 focus:ring-red-500 text-sm">
+                            <label className="block text-sm font-medium text-base-content mb-1">Recipient District</label>
+                            <select required name='recipientDistrict' value={district} onChange={(e) => setDistrict(e.target.value)} className="select w-full rounded-lg border-2 border-base-300 bg-base-200 text-base-content px-3 sm:px-4 py-2 focus:ring-2 focus:ring-red-500 text-sm">
                                 <option>Select district</option>
                                 {
                                     districts.map(district => (
@@ -149,8 +154,8 @@ const AddRequest = () => {
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Recipient Upazila</label>
-                            <select required name='recipientUpazila' value={upazila} onChange={(e) => setUpazila(e.target.value)} className="select w-full rounded-lg border border-gray-300 px-3 sm:px-4 py-2 focus:ring-2 focus:ring-red-500 text-sm">
+                            <label className="block text-sm font-medium text-base-content mb-1">Recipient Upazila</label>
+                            <select required name='recipientUpazila' value={upazila} onChange={(e) => setUpazila(e.target.value)} className="select w-full rounded-lg border-2 border-base-300 bg-base-200 text-base-content px-3 sm:px-4 py-2 focus:ring-2 focus:ring-red-500 text-sm">
                                 <option>Select upazila</option>
                                 {
                                     upazilas.map(upazila => (
@@ -165,31 +170,31 @@ const AddRequest = () => {
 
                     {/* Hospital Info */}
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Hospital Name</label>
+                        <label className="block text-sm font-medium text-base-content mb-1">Hospital Name</label>
                         <input
                             required
                             type="text"
                             name='hospitalName'
                             placeholder="e.g. Dhaka Medical College Hospital"
-                            className="input w-full rounded-lg border border-gray-300 px-3 sm:px-4 py-2 focus:ring-2 focus:ring-red-500 text-sm"
+                            className="input w-full rounded-lg border-2 border-base-300 bg-base-200 text-base-content px-3 sm:px-4 py-2 focus:ring-2 focus:ring-red-500 text-sm"
                         />
                     </div>
 
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Full Address</label>
+                        <label className="block text-sm font-medium text-base-content mb-1">Full Address</label>
                         <input
                             name='fullAddress'
                             type="text"
                             placeholder="e.g. Zahir Raihan Rd, Dhaka"
                             required
-                            className=" input w-full rounded-lg border border-gray-300 px-3 sm:px-4 py-2 focus:ring-2 focus:ring-red-500 text-sm"
+                            className="input w-full rounded-lg border-2 border-base-300 bg-base-200 text-base-content px-3 sm:px-4 py-2 focus:ring-2 focus:ring-red-500 text-sm"
                         />
                     </div>
 
                     {/* Blood Group */}
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Blood Group</label>
-                        <select required name='bloodGroup' className="w-full select rounded-lg border border-gray-300 px-3 text-red-600 font-bold sm:px-4 py-2 focus:ring-2 focus:ring-red-500 text-sm">
+                        <label className="block text-sm font-medium text-base-content mb-1">Blood Group</label>
+                        <select required name='bloodGroup' className="w-full select rounded-lg border-2 border-base-300 bg-base-200 text-red-600 dark:text-red-400 font-bold px-3 sm:px-4 py-2 focus:ring-2 focus:ring-red-500 text-sm">
                             <option disabled value="">Choose Blood Group</option>
                             <option value="A+">A+</option>
                             <option value="A-">A-</option>
@@ -205,33 +210,33 @@ const AddRequest = () => {
                     {/* Date & Time */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Donation Date</label>
+                            <label className="block text-sm font-medium text-base-content mb-1">Donation Date</label>
                             <input
                                 required
                                 name='donationDate'
                                 type="date"
-                                className="input w-full rounded-lg border border-gray-300 px-3 sm:px-4 py-2 focus:ring-2 focus:ring-red-500 text-sm"
+                                className="input w-full rounded-lg border-2 border-base-300 bg-base-200 text-base-content px-3 sm:px-4 py-2 focus:ring-2 focus:ring-red-500 text-sm"
                             />
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Donation Time</label>
+                            <label className="block text-sm font-medium text-base-content mb-1">Donation Time</label>
                             <input
                                 name='donationTime'
                                 type="time"
-                                className="input w-full rounded-lg border border-gray-300 px-3 sm:px-4 py-2 focus:ring-2 focus:ring-red-500 text-sm"
+                                className="input w-full rounded-lg border-2 border-base-300 bg-base-200 text-base-content px-3 sm:px-4 py-2 focus:ring-2 focus:ring-red-500 text-sm"
                             />
                         </div>
                     </div>
 
                     {/* Request Message */}
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Request Message</label>
+                        <label className="block text-sm font-medium text-base-content mb-1">Request Message</label>
                         <textarea
                             rows="3"
                             name='requestMessage'
                             placeholder="Write details about why blood is needed..."
-                            className=" textarea w-full rounded-lg border border-gray-300 px-3 sm:px-4 py-2 focus:ring-2 focus:ring-red-500 text-sm"
+                            className="textarea w-full rounded-lg border-2 border-base-300 bg-base-200 text-base-content px-3 sm:px-4 py-2 focus:ring-2 focus:ring-red-500 text-sm"
                         ></textarea>
                     </div>
 

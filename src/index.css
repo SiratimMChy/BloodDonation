@@ -1,10 +1,9 @@
 @import "tailwindcss";
 @plugin "daisyui";
 
-/* Ensure proper base styling */
-html, body {
-  background-color: white;
-  color: #111827; /* gray-900 */
+/* Ensure DaisyUI theme variables work properly */
+:root {
+  color-scheme: light dark;
 }
 
 /* Blood Compatibility Section Animations */
@@ -85,27 +84,4 @@ html, body {
 /* Hover scale utility */
 .hover\:scale-102:hover {
   transform: scale(1.02);
-}
-
-/* Ensure content is visible */
-.min-h-screen {
-  min-height: 100vh;
-}
-
-/* Fix any potential z-index issues */
-.relative {
-  position: relative;
-}
-
-/* Ensure text is visible */
-.text-gray-900 {
-  color: #111827 !important;
-}
-
-.text-gray-600 {
-  color: #4b5563 !important;
-}
-
-.text-white {
-  color: #ffffff !important;
 }

@@ -66,6 +66,7 @@ const About = () => {
     successfulDonations: livesSaved,
     totalCenters: formatCount(centersData.length),
     totalCities: [...new Set(centersData.map(center => center.district))].length,
+    totalDivisions: [...new Set(centersData.map(center => center.division))].length,
     totalRequests: formatCount(apiStats.totalRequests),
     pendingRequests: formatCount(apiStats.pendingRequests),
     successRate: apiStats.successRate
@@ -128,46 +129,46 @@ const About = () => {
   const divisions = [...new Set(centersData.map(center => center.division))];
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-base-100">
       {/* Hero Section */}
-      <div className="relative py-20 bg-gradient-to-br from-red-50 via-white to-rose-50 overflow-hidden">
+      <div className="relative py-20 bg-gradient-to-br from-red-50 via-white to-rose-50 dark:from-base-200 dark:via-base-100 dark:to-base-200 overflow-hidden">
         {/* Background Pattern */}
-        <div className="absolute inset-0" style={{
+        <div className="absolute inset-0 opacity-30 dark:opacity-10" style={{
           backgroundImage: 'radial-gradient(circle at 1px 1px, rgb(254 202 202 / 0.3) 1px, transparent 0)',
           backgroundSize: '40px 40px'
         }}></div>
 
         {/* Decorative Blobs */}
-        <div className="absolute top-0 right-0 w-96 h-96 bg-red-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse"></div>
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-rose-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse" style={{ animationDelay: '2s' }}></div>
+        <div className="absolute top-0 right-0 w-96 h-96 bg-red-200 dark:bg-red-900/20 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse"></div>
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-rose-200 dark:bg-rose-900/20 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse" style={{ animationDelay: '2s' }}></div>
 
         <div className="relative container mx-auto px-4 max-w-7xl">
           <div className="text-center">
             {/* Badge */}
-            <div className="inline-flex items-center gap-2 bg-white border-2 border-red-100 px-5 py-3 rounded-full shadow-sm mb-8">
+            <div className="inline-flex items-center gap-2 bg-base-200 border-2 border-red-100 dark:border-red-900/50 px-5 py-3 rounded-full shadow-sm mb-8">
               <div className="w-8 h-8 bg-gradient-to-br from-red-500 to-red-600 rounded-full flex items-center justify-center shadow-sm">
                 <Droplet className="text-white" size={16} />
               </div>
-              <span className="text-red-600 font-bold text-sm">About Hemovia</span>
+              <span className="text-red-600 dark:text-red-400 font-bold text-sm">About Hemovia</span>
             </div>
 
             {/* Main Heading */}
             <div className="mb-8">
-              <h1 className="text-4xl md:text-5xl xl:text-6xl font-black text-gray-900 leading-none mb-5">
+              <h1 className="text-4xl md:text-5xl xl:text-6xl font-black text-base-content leading-none mb-5">
                 Connecting<span className="bg-gradient-to-r from-red-600 to-rose-600 bg-clip-text text-transparent"> Hearts</span>
               </h1>
               <div className="flex items-center justify-center gap-3 mb-6">
                 <div className="h-1 w-20 bg-gradient-to-r from-red-600 to-rose-600 rounded-full"></div>
-                <p className="text-xl md:text-2xl font-bold text-gray-700">Saving Lives</p>
+                <p className="text-xl md:text-2xl font-bold text-base-content/80">Saving Lives</p>
                 <div className="h-1 w-20 bg-gradient-to-r from-red-600 to-rose-600 rounded-full"></div>
               </div>
             </div>
 
             {/* Description */}
-            <p className="text-lg md:text-xl text-gray-600 leading-relaxed max-w-4xl mx-auto font-medium">
+            <p className="text-lg md:text-xl text-base-content/70 leading-relaxed max-w-4xl mx-auto font-medium">
               Hemovia is a growing blood donation platform in Bangladesh, connecting donors with those in urgent need. 
-              With <span className="font-bold text-red-600">{stats.totalDonors} registered donors</span> and{' '}
-              <span className="font-bold text-red-600">{stats.successfulDonations} lives saved</span>, we're building a community 
+              With <span className="font-bold text-red-600 dark:text-red-400">{stats.totalDonors} registered donors</span> and{' '}
+              <span className="font-bold text-red-600 dark:text-red-400">{stats.successfulDonations} lives saved</span>, we're building a community 
               where compassion meets technology to create real impact in Sylhet and across Bangladesh.
             </p>
           </div>
@@ -175,28 +176,28 @@ const About = () => {
       </div>
 
       {/* Stats Section */}
-      <div className="py-16 bg-white">
+      <div className="py-16 bg-base-100">
         <div className="container mx-auto px-4 max-w-7xl">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
             {displayStats.map((stat, index) => {
               const colorClasses = [
-                { bg: 'bg-gradient-to-br from-blue-500 to-blue-600', shadow: 'shadow-blue-200' }, // Users - Active Donors
-                { bg: 'bg-gradient-to-br from-red-500 to-red-600', shadow: 'shadow-red-200' }, // Heart - Lives Saved
-                { bg: 'bg-gradient-to-br from-green-500 to-green-600', shadow: 'shadow-green-200' }, // Activity - Blood Banks
-                { bg: 'bg-gradient-to-br from-red-500 to-red-600', shadow: 'shadow-red-200' } // Award - Cities Covered
+                { bg: 'bg-gradient-to-br from-blue-500 to-blue-600', shadow: 'shadow-blue-200 dark:shadow-blue-900/30' },
+                { bg: 'bg-gradient-to-br from-red-500 to-red-600', shadow: 'shadow-red-200 dark:shadow-red-900/30' },
+                { bg: 'bg-gradient-to-br from-green-500 to-green-600', shadow: 'shadow-green-200 dark:shadow-green-900/30' },
+                { bg: 'bg-gradient-to-br from-red-500 to-red-600', shadow: 'shadow-red-200 dark:shadow-red-900/30' }
               ];
               
               return (
-              <div key={index} className="bg-white border-2 border-gray-100 rounded-2xl p-6 text-center hover:border-red-200 transition-all shadow-sm hover:shadow-lg">
+              <div key={index} className="bg-base-200 border-2 border-base-300 rounded-2xl p-6 text-center hover:border-red-200 dark:hover:border-red-900/50 transition-all shadow-sm hover:shadow-lg">
                 <div className="flex items-center justify-center mb-4">
                   <div className={`w-16 h-16 ${colorClasses[index].bg} rounded-2xl flex items-center justify-center shadow-lg ${colorClasses[index].shadow}`}>
                     <stat.icon className="text-white" size={24} />
                   </div>
                 </div>
-                <p className="text-3xl md:text-4xl font-black text-gray-900 mb-2">
+                <p className="text-3xl md:text-4xl font-black text-base-content mb-2">
                   {stat.value}
                 </p>
-                <p className="text-gray-600 font-semibold">{stat.label}</p>
+                <p className="text-base-content/70 font-semibold">{stat.label}</p>
               </div>
               );
             })}
@@ -205,18 +206,18 @@ const About = () => {
       </div>
 
       {/* Mission & Vision Section */}
-      <div className="py-20 bg-gradient-to-br from-red-50 via-white to-rose-50">
+      <div className="py-20 bg-gradient-to-br from-red-50 via-white to-rose-50 dark:from-base-200 dark:via-base-100 dark:to-base-200">
         <div className="container mx-auto px-4 max-w-7xl">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Mission */}
-            <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-8 hover:shadow-2xl transition-all">
+            <div className="bg-base-200 rounded-2xl shadow-xl border border-base-300 p-8 hover:shadow-2xl transition-all">
               <div className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 bg-gradient-to-br from-red-500 to-red-600 rounded-xl flex items-center justify-center shadow-lg shadow-red-200">
+                <div className="w-12 h-12 bg-gradient-to-br from-red-500 to-red-600 rounded-xl flex items-center justify-center shadow-lg shadow-red-200 dark:shadow-red-900/30">
                   <Target className="text-white" size={20} />
                 </div>
-                <h2 className="text-2xl md:text-3xl font-black text-gray-900">Our Mission</h2>
+                <h2 className="text-2xl md:text-3xl font-black text-base-content">Our Mission</h2>
               </div>
-              <p className="text-gray-600 leading-relaxed text-lg">
+              <p className="text-base-content/70 leading-relaxed text-lg">
                 To create a reliable, trusted platform that connects blood donors with recipients in Sylhet and across Bangladesh, 
                 ensuring that no life is lost due to blood shortage. With {stats.totalDonors} registered donors and {stats.successfulDonations} lives saved, 
                 we're building a strong community of voluntary blood donors, making blood donation accessible, safe, and efficient for everyone.
@@ -224,14 +225,14 @@ const About = () => {
             </div>
 
             {/* Vision */}
-            <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-8 hover:shadow-2xl transition-all">
+            <div className="bg-base-200 rounded-2xl shadow-xl border border-base-300 p-8 hover:shadow-2xl transition-all">
               <div className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-200">
+                <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-200 dark:shadow-blue-900/30">
                   <Eye className="text-white" size={20} />
                 </div>
-                <h2 className="text-2xl md:text-3xl font-black text-gray-900">Our Vision</h2>
+                <h2 className="text-2xl md:text-3xl font-black text-base-content">Our Vision</h2>
               </div>
-              <p className="text-gray-600 leading-relaxed text-lg">
+              <p className="text-base-content/70 leading-relaxed text-lg">
                 A Bangladesh where every person in need of blood can find a donor quickly and easily. 
                 We envision expanding our platform to cover all major cities in Bangladesh, creating a 
                 nationwide network of donors and recipients that saves lives through the power of community and technology.
@@ -242,18 +243,18 @@ const About = () => {
       </div>
 
       {/* Values Section */}
-      <div className="py-20 bg-white">
+      <div className="py-20 bg-base-100">
         <div className="container mx-auto px-4 max-w-7xl">
           {/* Section Header */}
           <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 bg-red-100 px-4 py-2 rounded-full mb-4">
-              <Award className="text-red-600" size={16} />
-              <span className="text-red-600 font-bold text-sm">OUR VALUES</span>
+            <div className="inline-flex items-center gap-2 bg-red-100 dark:bg-red-900/30 px-4 py-2 rounded-full mb-4">
+              <Award className="text-red-600 dark:text-red-400" size={16} />
+              <span className="text-red-600 dark:text-red-400 font-bold text-sm">OUR VALUES</span>
             </div>
-            <h2 className="text-3xl md:text-4xl font-black text-gray-900 mb-4">
+            <h2 className="text-3xl md:text-4xl font-black text-base-content mb-4">
               What Drives Us Forward
             </h2>
-            <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+            <p className="text-base-content/70 text-lg max-w-2xl mx-auto">
               Our core values guide every decision we make and every feature we build
             </p>
           </div>
@@ -262,10 +263,10 @@ const About = () => {
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {values.map((value, index) => {
               const colorClasses = [
-                { bg: 'bg-gradient-to-br from-red-500 to-red-600', shadow: 'shadow-red-200' }, // Heart - Compassion
-                { bg: 'bg-gradient-to-br from-blue-500 to-blue-600', shadow: 'shadow-blue-200' }, // Shield - Trust & Safety  
-                { bg: 'bg-gradient-to-br from-green-500 to-green-600', shadow: 'shadow-green-200' }, // Users - Community
-                { bg: 'bg-gradient-to-br from-red-500 to-red-600', shadow: 'shadow-red-200' } // Target - Impact
+                { bg: 'bg-gradient-to-br from-red-500 to-red-600', shadow: 'shadow-red-200 dark:shadow-red-900/30' },
+                { bg: 'bg-gradient-to-br from-blue-500 to-blue-600', shadow: 'shadow-blue-200 dark:shadow-blue-900/30' },
+                { bg: 'bg-gradient-to-br from-green-500 to-green-600', shadow: 'shadow-green-200 dark:shadow-green-900/30' },
+                { bg: 'bg-gradient-to-br from-red-500 to-red-600', shadow: 'shadow-red-200 dark:shadow-red-900/30' }
               ];
               
               return (
@@ -273,8 +274,8 @@ const About = () => {
                 <div className={`w-20 h-20 ${colorClasses[index].bg} rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-all shadow-lg ${colorClasses[index].shadow}`}>
                   <value.icon className="text-white" size={28} />
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-3">{value.title}</h3>
-                <p className="text-gray-600 leading-relaxed">{value.description}</p>
+                <h3 className="text-xl font-bold text-base-content mb-3">{value.title}</h3>
+                <p className="text-base-content/70 leading-relaxed">{value.description}</p>
               </div>
               );
             })}
@@ -283,19 +284,19 @@ const About = () => {
       </div>
 
       {/* Centers Overview Section */}
-      <div className="py-20 bg-white">
+      <div className="py-20 bg-base-100">
         <div className="container mx-auto px-4 max-w-7xl">
           {/* Section Header */}
           <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 bg-red-100 px-4 py-2 rounded-full mb-4">
-              <MapPin className="text-red-600" size={16} />
-              <span className="text-red-600 font-bold text-sm">OUR NETWORK</span>
+            <div className="inline-flex items-center gap-2 bg-red-100 dark:bg-red-900/30 px-4 py-2 rounded-full mb-4">
+              <MapPin className="text-red-600 dark:text-red-400" size={16} />
+              <span className="text-red-600 dark:text-red-400 font-bold text-sm">OUR NETWORK</span>
             </div>
-            <h2 className="text-3xl md:text-4xl font-black text-gray-900 mb-4">
+            <h2 className="text-3xl md:text-4xl font-black text-base-content mb-4">
               Blood Centers Across Bangladesh
             </h2>
-            <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-              {stats.totalCenters} verified blood centers across {stats.totalCities} divisions
+            <p className="text-base-content/70 text-lg max-w-2xl mx-auto">
+              {stats.totalCenters} verified blood centers across {stats.totalDivisions} divisions
             </p>
           </div>
 
@@ -304,20 +305,20 @@ const About = () => {
             {divisions.map((division, index) => {
               const divisionCenters = getCentersByDivision(division);
               const colorClasses = [
-                { bg: 'bg-gradient-to-br from-red-500 to-red-600', shadow: 'shadow-red-200' },
-                { bg: 'bg-gradient-to-br from-blue-500 to-blue-600', shadow: 'shadow-blue-200' },
-                { bg: 'bg-gradient-to-br from-green-500 to-green-600', shadow: 'shadow-green-200' }
+                { bg: 'bg-gradient-to-br from-red-500 to-red-600', shadow: 'shadow-red-200 dark:shadow-red-900/30' },
+                { bg: 'bg-gradient-to-br from-blue-500 to-blue-600', shadow: 'shadow-blue-200 dark:shadow-blue-900/30' },
+                { bg: 'bg-gradient-to-br from-green-500 to-green-600', shadow: 'shadow-green-200 dark:shadow-green-900/30' }
               ];
               const colorIndex = index % colorClasses.length;
               
               return (
-                <div key={division} className="bg-white border-2 border-gray-100 rounded-2xl p-6 text-center hover:border-red-200 transition-all shadow-sm hover:shadow-lg">
+                <div key={division} className="bg-base-200 border-2 border-base-300 rounded-2xl p-6 text-center hover:border-red-200 dark:hover:border-red-900/50 transition-all shadow-sm hover:shadow-lg">
                   <div className={`w-16 h-16 ${colorClasses[colorIndex].bg} rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg ${colorClasses[colorIndex].shadow}`}>
                     <MapPin className="text-white" size={24} />
                   </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">{division}</h3>
-                  <p className="text-3xl font-black text-red-600 mb-2">{divisionCenters.length}</p>
-                  <p className="text-gray-600 font-semibold">Blood Centers</p>
+                  <h3 className="text-xl font-bold text-base-content mb-2">{division}</h3>
+                  <p className="text-3xl font-black text-red-600 dark:text-red-400 mb-2">{divisionCenters.length}</p>
+                  <p className="text-base-content/70 font-semibold">Blood Centers</p>
                 </div>
               );
             })}
@@ -326,61 +327,61 @@ const About = () => {
       </div>
 
       {/* Recent Activity Section */}
-      <div className="py-20 bg-gradient-to-br from-red-50 via-white to-rose-50">
+      <div className="py-20 bg-gradient-to-br from-red-50 via-white to-rose-50 dark:from-base-200 dark:via-base-100 dark:to-base-200">
         <div className="container mx-auto px-4 max-w-7xl">
           {/* Section Header */}
           <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 bg-red-100 px-4 py-2 rounded-full mb-4">
-              <Activity className="text-red-600" size={16} />
-              <span className="text-red-600 font-bold text-sm">PLATFORM ACTIVITY</span>
+            <div className="inline-flex items-center gap-2 bg-red-100 dark:bg-red-900/30 px-4 py-2 rounded-full mb-4">
+              <Activity className="text-red-600 dark:text-red-400" size={16} />
+              <span className="text-red-600 dark:text-red-400 font-bold text-sm">PLATFORM ACTIVITY</span>
             </div>
-            <h2 className="text-3xl md:text-4xl font-black text-gray-900 mb-4">
+            <h2 className="text-3xl md:text-4xl font-black text-base-content mb-4">
               Live Platform Statistics
             </h2>
-            <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+            <p className="text-base-content/70 text-lg max-w-2xl mx-auto">
               Real-time insights into our blood donation network
             </p>
           </div>
 
           {/* Activity Stats */}
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 text-center hover:shadow-xl transition-all">
-              <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-blue-200">
+            <div className="bg-base-200 rounded-2xl shadow-lg border border-base-300 p-6 text-center hover:shadow-xl transition-all">
+              <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-blue-200 dark:shadow-blue-900/30">
                 <Heart className="text-white" size={24} />
               </div>
-              <p className="text-2xl font-black text-gray-900 mb-2">{stats.totalRequests}</p>
-              <p className="text-gray-600 font-semibold">Total Requests</p>
+              <p className="text-2xl font-black text-base-content mb-2">{stats.totalRequests}</p>
+              <p className="text-base-content/70 font-semibold">Total Requests</p>
             </div>
 
-            <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 text-center hover:shadow-xl transition-all">
-              <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-green-200">
+            <div className="bg-base-200 rounded-2xl shadow-lg border border-base-300 p-6 text-center hover:shadow-xl transition-all">
+              <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-green-200 dark:shadow-green-900/30">
                 <CheckCircle className="text-white" size={24} />
               </div>
-              <p className="text-2xl font-black text-gray-900 mb-2">{stats.successRate}%</p>
-              <p className="text-gray-600 font-semibold">Success Rate</p>
+              <p className="text-2xl font-black text-base-content mb-2">{stats.successRate}%</p>
+              <p className="text-base-content/70 font-semibold">Success Rate</p>
             </div>
 
-            <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 text-center hover:shadow-xl transition-all">
-              <div className="w-16 h-16 bg-gradient-to-br from-red-500 to-red-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-red-200">
+            <div className="bg-base-200 rounded-2xl shadow-lg border border-base-300 p-6 text-center hover:shadow-xl transition-all">
+              <div className="w-16 h-16 bg-gradient-to-br from-red-500 to-red-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-red-200 dark:shadow-red-900/30">
                 <Users className="text-white" size={24} />
               </div>
-              <p className="text-2xl font-black text-gray-900 mb-2">{stats.totalDonors}</p>
-              <p className="text-gray-600 font-semibold">Active Donors</p>
+              <p className="text-2xl font-black text-base-content mb-2">{stats.totalDonors}</p>
+              <p className="text-base-content/70 font-semibold">Active Donors</p>
             </div>
 
-            <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 text-center hover:shadow-xl transition-all">
-              <div className="w-16 h-16 bg-gradient-to-br from-red-500 to-red-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-red-200">
+            <div className="bg-base-200 rounded-2xl shadow-lg border border-base-300 p-6 text-center hover:shadow-xl transition-all">
+              <div className="w-16 h-16 bg-gradient-to-br from-red-500 to-red-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-red-200 dark:shadow-red-900/30">
                 <Clock className="text-white" size={24} />
               </div>
-              <p className="text-2xl font-black text-gray-900 mb-2">{stats.pendingRequests}</p>
-              <p className="text-gray-600 font-semibold">Need Help Now</p>
+              <p className="text-2xl font-black text-base-content mb-2">{stats.pendingRequests}</p>
+              <p className="text-base-content/70 font-semibold">Need Help Now</p>
             </div>
           </div>
         </div>
       </div>
 
       {/* Contact Section */}
-      <div className="py-20 bg-white">
+      <div className="py-20 bg-base-100">
         <div className="container mx-auto px-4 max-w-7xl">
           <div className="bg-gradient-to-r from-red-600 to-red-700 rounded-3xl p-8 md:p-12 text-white text-center">
             <div className="max-w-3xl mx-auto">

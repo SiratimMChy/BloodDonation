@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import useAxiosSecure from '../../Hooks/useAxiosSecure';
-import { FaEdit, FaRegEye } from "react-icons/fa";
-import { MdDelete } from "react-icons/md";
+import { FaRegEye, FaTint, FaMapMarkerAlt, FaCalendarAlt, FaPhone, FaHospital, FaFilter, FaPlus } from "react-icons/fa";
 import { Link } from 'react-router';
 import Swal from 'sweetalert2';
+import { Heart, Clock, CheckCircle, XCircle, AlertCircle, Eye, Edit, Trash2 } from 'lucide-react';
+import { useDemoRestriction } from '../../Hooks/useDemoRestriction';
 
 const MyRequest = () => {
     const [totalRequests, setTotalRequests] = useState(0);
@@ -12,14 +12,39 @@ const MyRequest = () => {
     const [page] = useState(10);
     const [currentPage, setCurrentPage] = useState(1);
     const [statusFilter, setStatusFilter] = useState('all');
+    const [loading, setLoading] = useState(true);
+    const { checkDemoRestriction } = useDemoRestriction();
     const axiosSecure = useAxiosSecure();
 
     useEffect(() => {
-        axiosSecure.get(`/myRequests?page=${currentPage - 1}&size=${page}&status=${statusFilter}`)
-            .then(response => {
-                setMyRequests(response.data.requests);
-                setTotalRequests(response.data.totalRequests);
-            });
+        let isMounted = true;
+        
+        const fetchRequests = () => {
+            if (isMounted) {
+                setLoading(true);
+            }
+            
+            axiosSecure.get(`/myRequests?page=${currentPage - 1}&size=${page}&status=${statusFilter}`)
+                .then(response => {
+                    if (isMounted) {
+                        setMyRequests(response.data.requests);
+                        setTotalRequests(response.data.totalRequests);
+                        setLoading(false);
+                    }
+                })
+                .catch(err => {
+                    if (isMounted) {
+                        console.error(err);
+                        setLoading(false);
+                    }
+                });
+        };
+
+        fetchRequests();
+
+        return () => {
+            isMounted = false;
+        };
     }, [axiosSecure, currentPage, page, statusFilter]);
 
     const numberOfPages = Math.ceil(totalRequests / page);
@@ -38,137 +63,414 @@ const MyRequest = () => {
     }
 
     const handleDelete = (id) => {
+        // Check if user is demo user and restrict action
+        if (checkDemoRestriction()) {
+            return;
+        }
+        
         Swal.fire({
             title: "Are you sure?",
-            text: "You won't be able to revert this!",
+            text: "You won't be able to revert this donation request!",
             icon: "warning",
             showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, delete it!"
+            confirmButtonColor: "#dc2626",
+            cancelButtonColor: "#6b7280",
+            confirmButtonText: "Yes, delete it!",
+            cancelButtonText: "Cancel"
         }).then((result) => {
             if (result.isConfirmed) {
                 axiosSecure.delete(`/delete-request/${id}`)
                     .then(res => {
-                        console.log(res.data);
                         if (res.data.deletedCount == 1) {
                             const remaining = myRequests.filter(listing => listing._id !== id);
                             setMyRequests(remaining);
+                            setTotalRequests(prev => prev - 1);
+                            Swal.fire({
+                                title: "Deleted!",
+                                text: "Your donation request has been deleted.",
+                                icon: "success",
+                                confirmButtonColor: "#dc2626"
+                            });
                         }
-
                     })
                     .catch(err => {
-                        console.log(err)
+                        console.log(err);
+                        Swal.fire({
+                            title: "Error!",
+                            text: "Failed to delete the request. Please try again.",
+                            icon: "error",
+                            confirmButtonColor: "#dc2626"
+                        });
                     });
-                Swal.fire({
-                    title: "Deleted!",
-                    text: "Your file has been deleted.",
-                    icon: "success"
-                });
             }
         });
+    }
 
+    const getStatusIcon = (status) => {
+        switch (status) {
+            case 'pending':
+                return <AlertCircle className="w-4 h-4" />;
+            case 'inprogress':
+                return <Clock className="w-4 h-4" />;
+            case 'done':
+                return <CheckCircle className="w-4 h-4" />;
+            case 'canceled':
+                return <XCircle className="w-4 h-4" />;
+            default:
+                return <AlertCircle className="w-4 h-4" />;
+        }
+    };
+
+    const getStatusColor = (status) => {
+        switch (status) {
+            case 'pending':
+                return 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-400 border-yellow-200 dark:border-yellow-900/50';
+            case 'inprogress':
+                return 'bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-400 border-blue-200 dark:border-blue-900/50';
+            case 'done':
+                return 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400 border-green-200 dark:border-green-900/50';
+            case 'canceled':
+                return 'bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-400 border-red-200 dark:border-red-900/50';
+            default:
+                return 'bg-gray-100 dark:bg-gray-900/30 text-gray-800 dark:text-gray-400 border-gray-200 dark:border-gray-900/50';
+        }
+    };
+
+    if (loading) {
+        return (
+            <div className="min-h-screen bg-base-100 flex items-center justify-center p-4">
+                <div className="text-center">
+                    <div className="animate-spin rounded-full h-12 w-12 sm:h-16 sm:w-16 border-b-2 border-red-600 mx-auto mb-4"></div>
+                    <p className="text-base-content/70 text-sm sm:text-base">Loading your requests...</p>
+                </div>
+            </div>
+        );
     }
 
     return (
-        <div>
-            <div className="overflow-x-auto">
-                <select
-                    value={statusFilter}
-                    onChange={(e) => setStatusFilter(e.target.value)}
-                    className="select w-full max-w-40 mb-4"
-                >
-                    <option value="all">All</option>
-                    <option value="pending">Pending</option>
-                    <option value="inprogress">In Progress</option>
-                    <option value="done">Done</option>
-                    <option value="canceled">Canceled</option>
-                </select>
-               <div className="overflow-x-auto">
-                        <table className="table table-xs">
-                    <thead>
-                        <tr>
-                            <th className="border border-gray-300">#</th>
-                            <th className="border border-gray-300">Recipient Name</th>
-                            <th className="border border-gray-300">Blood Group</th>
-                            <th className="border border-gray-300">Hospital</th>
-                            <th className="border border-gray-300">Location</th>
-                            <th className="border border-gray-300">Donation Date</th>
-                            <th className="border border-gray-300">Mobile</th>
-                            <th className="border border-gray-300">Status</th>
-                            <th className="border border-gray-300">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            myRequests.map((request, index) =>
-                                <tr key={request._id}>
-                                    <th className="border border-gray-300">{(currentPage - 1) * page + (index + 1)}</th>
-                                    <td className="border border-gray-300">{request.recipientName}</td>
-                                    <td className="border border-gray-300 text-red-600 font-bold">{request.bloodGroup}</td>
-                                    <td className="border border-gray-300">{request.hospitalName}</td>
-                                    <td className="border border-gray-300">{request.fullAddress}</td>
-                                    <td className="border border-gray-300">{request.donationDate}</td>
-                                    <td className="border border-gray-300">{request.mobile}</td>
-                                    <td className="border border-gray-300">{request.donation_status}</td>
-                                    <td className="border border-gray-300">
-                                        <div className='flex gap-2'>
-                                            <Link
-                                                to={`/dashboard/edit-request/${request._id}`}
-                                                className="btn bg-linear-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white border-0 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 flex items-center gap-2"
-                                            >
-                                                <FaEdit /> Edit
-                                            </Link>
+        <div className="min-h-screen bg-base-100 p-4 sm:p-6 lg:p-8">
+            <div className="max-w-7xl mx-auto">
+                {/* Header */}
+                <div className="mb-6 sm:mb-8">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+                        <div>
+                            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-base-content mb-2">
+                                My Donation Requests
+                            </h1>
+                            <p className="text-base-content/70 text-sm sm:text-base">
+                                Manage and track your blood donation requests
+                            </p>
+                        </div>
+                        <Link
+                            to="/dashboard/addRequest"
+                            className="btn bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white border-0 shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 flex items-center gap-2 w-full sm:w-auto"
+                        >
+                            <FaPlus className="w-4 h-4" />
+                            <span>Add New Request</span>
+                        </Link>
+                    </div>
 
-                                            <Link
-                                                to={`/dashboard/view-request/${request._id}`}
-                                                className="btn bg-linear-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white border-0 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 flex items-center gap-2"
-                                            >
-                                                <FaRegEye size={20} /> View
-                                            </Link>
+                    {/* Stats Cards */}
+                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-6">
+                        <div className="bg-base-200 border-2 border-base-300 rounded-xl p-3 sm:p-4 text-center hover:border-red-200 dark:hover:border-red-900/50 transition-all">
+                            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-red-500 to-red-600 rounded-lg flex items-center justify-center mx-auto mb-2 shadow-lg">
+                                <Heart className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
+                            </div>
+                            <p className="text-lg sm:text-xl font-bold text-base-content">{totalRequests}</p>
+                            <p className="text-xs sm:text-sm text-base-content/70 font-semibold">Total Requests</p>
+                        </div>
+                        <div className="bg-base-200 border-2 border-base-300 rounded-xl p-3 sm:p-4 text-center hover:border-yellow-200 dark:hover:border-yellow-900/50 transition-all">
+                            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-yellow-500 to-yellow-600 rounded-lg flex items-center justify-center mx-auto mb-2 shadow-lg">
+                                <AlertCircle className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
+                            </div>
+                            <p className="text-lg sm:text-xl font-bold text-base-content">
+                                {myRequests.filter(r => r.donation_status === 'pending').length}
+                            </p>
+                            <p className="text-xs sm:text-sm text-base-content/70 font-semibold">Pending</p>
+                        </div>
+                        <div className="bg-base-200 border-2 border-base-300 rounded-xl p-3 sm:p-4 text-center hover:border-blue-200 dark:hover:border-blue-900/50 transition-all">
+                            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center mx-auto mb-2 shadow-lg">
+                                <Clock className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
+                            </div>
+                            <p className="text-lg sm:text-xl font-bold text-base-content">
+                                {myRequests.filter(r => r.donation_status === 'inprogress').length}
+                            </p>
+                            <p className="text-xs sm:text-sm text-base-content/70 font-semibold">In Progress</p>
+                        </div>
+                        <div className="bg-base-200 border-2 border-base-300 rounded-xl p-3 sm:p-4 text-center hover:border-green-200 dark:hover:border-green-900/50 transition-all">
+                            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-green-500 to-green-600 rounded-lg flex items-center justify-center mx-auto mb-2 shadow-lg">
+                                <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
+                            </div>
+                            <p className="text-lg sm:text-xl font-bold text-base-content">
+                                {myRequests.filter(r => r.donation_status === 'done').length}
+                            </p>
+                            <p className="text-xs sm:text-sm text-base-content/70 font-semibold">Completed</p>
+                        </div>
+                    </div>
 
-                                            <button 
-                                                onClick={() => handleDelete(request._id)} 
-                                                className='btn bg-linear-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white border-0 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 flex items-center gap-2'
-                                            >
-                                                <MdDelete size={20} /> Delete
-                                            </button>
-
-                                        </div>
-                                    </td>
-                                </tr>
-                            )
-                        }
-                    </tbody>
-                </table>
+                    {/* Filter */}
+                    <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
+                        <div className="flex items-center gap-3">
+                            <FaFilter className="text-base-content/60" />
+                            <select
+                                value={statusFilter}
+                                onChange={(e) => setStatusFilter(e.target.value)}
+                                className="select select-bordered bg-base-200 text-base-content border-base-300 focus:border-red-500 w-full sm:w-auto"
+                            >
+                                <option value="all">All Status</option>
+                                <option value="pending">Pending</option>
+                                <option value="inprogress">In Progress</option>
+                                <option value="done">Completed</option>
+                                <option value="canceled">Canceled</option>
+                            </select>
+                        </div>
+                        <div className="text-sm text-base-content/70">
+                            Showing {myRequests.length} of {totalRequests} requests
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div className='flex justify-center mt-12 gap-4'>
-                <button 
-                    onClick={handlePrevPage} 
-                    className="btn bg-linear-to-r from-gray-500 to-gray-600 hover:from-gray-600 hover:to-gray-700 text-white border-0 rounded-lg shadow-md hover:shadow-lg transition-all duration-200"
-                >
-                    Prev
-                </button>
-                {Pages.map(pg => (
-                    <button
-                        key={pg}
-                        className={`btn rounded-lg shadow-md hover:shadow-lg transition-all duration-200 border-0 ${
-                            pg === currentPage 
-                                ? 'bg-linear-to-r from-red-500 to-red-600 text-white' 
-                                : 'bg-white text-gray-700 hover:bg-gray-100'
-                        }`}
-                        onClick={() => setCurrentPage(pg)}
-                    >
-                        {pg}
-                    </button>
-                ))}
-                <button 
-                    onClick={handleNextPage} 
-                    className="btn bg-linear-to-r from-gray-500 to-gray-600 hover:from-gray-600 hover:to-gray-700 text-white border-0 rounded-lg shadow-md hover:shadow-lg transition-all duration-200"
-                >
-                    Next
-                </button>
+
+                {/* No Requests State */}
+                {myRequests.length === 0 && !loading && (
+                    <div className="text-center py-12 sm:py-16">
+                        <div className="w-16 h-16 sm:w-20 sm:h-20 bg-base-300 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <Heart className="w-8 h-8 sm:w-10 sm:h-10 text-base-content/40" />
+                        </div>
+                        <h3 className="text-xl sm:text-2xl font-bold text-base-content mb-2">No Requests Found</h3>
+                        <p className="text-base-content/70 mb-6 max-w-md mx-auto">
+                            {statusFilter === 'all' 
+                                ? "You haven't created any donation requests yet." 
+                                : `No requests found with status: ${statusFilter}`
+                            }
+                        </p>
+                        <Link
+                            to="/dashboard/addRequest"
+                            className="btn bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white border-0 shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
+                        >
+                            <FaPlus className="w-4 h-4 mr-2" />
+                            Create Your First Request
+                        </Link>
+                    </div>
+                )}
+
+                {/* Mobile Card View */}
+                {myRequests.length > 0 && (
+                    <div className="lg:hidden space-y-4">
+                        {myRequests.map((request, index) => (
+                            <div key={request._id} className="bg-base-200 border-2 border-base-300 rounded-xl shadow-lg p-4 sm:p-6 hover:border-red-200 dark:hover:border-red-900/50 transition-all">
+                                {/* Header */}
+                                <div className="flex justify-between items-start mb-4">
+                                    <div className="flex items-center gap-2">
+                                        <span className="bg-base-300 text-base-content px-3 py-1 rounded-full text-sm font-bold">
+                                            #{(currentPage - 1) * page + (index + 1)}
+                                        </span>
+                                        <div className="flex items-center gap-2 bg-red-100 dark:bg-red-900/30 px-3 py-1 rounded-full">
+                                            <FaTint className="w-3 h-3 text-red-600 dark:text-red-400" />
+                                            <span className="text-red-600 dark:text-red-400 font-bold text-sm">
+                                                {request.bloodGroup}
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full border text-xs font-semibold ${getStatusColor(request.donation_status)}`}>
+                                        {getStatusIcon(request.donation_status)}
+                                        <span className="capitalize">{request.donation_status}</span>
+                                    </div>
+                                </div>
+
+                                {/* Content */}
+                                <div className="space-y-3 mb-4">
+                                    <div className="flex items-start gap-3">
+                                        <FaRegEye className="w-4 h-4 text-base-content/60 mt-1 shrink-0" />
+                                        <div>
+                                            <p className="text-xs text-base-content/60 font-semibold">Recipient Name</p>
+                                            <p className="font-bold text-base-content">{request.recipientName}</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div className="flex items-start gap-3">
+                                        <FaHospital className="w-4 h-4 text-base-content/60 mt-1 shrink-0" />
+                                        <div>
+                                            <p className="text-xs text-base-content/60 font-semibold">Hospital</p>
+                                            <p className="font-semibold text-base-content">{request.hospitalName}</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div className="flex items-start gap-3">
+                                        <FaMapMarkerAlt className="w-4 h-4 text-base-content/60 mt-1 shrink-0" />
+                                        <div>
+                                            <p className="text-xs text-base-content/60 font-semibold">Location</p>
+                                            <p className="font-semibold text-base-content text-sm">{request.fullAddress}</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div className="grid grid-cols-2 gap-4">
+                                        <div className="flex items-start gap-3">
+                                            <FaCalendarAlt className="w-4 h-4 text-base-content/60 mt-1 shrink-0" />
+                                            <div>
+                                                <p className="text-xs text-base-content/60 font-semibold">Date</p>
+                                                <p className="font-semibold text-base-content text-sm">{request.donationDate}</p>
+                                            </div>
+                                        </div>
+                                        <div className="flex items-start gap-3">
+                                            <FaPhone className="w-4 h-4 text-base-content/60 mt-1 shrink-0" />
+                                            <div>
+                                                <p className="text-xs text-base-content/60 font-semibold">Mobile</p>
+                                                <p className="font-semibold text-base-content text-sm">{request.mobile}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Actions */}
+                                <div className="flex gap-2 pt-4 border-t border-base-300">
+                                    <Link
+                                        to={`/dashboard/view-request/${request._id}`}
+                                        className="btn btn-sm flex-1 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white border-0 shadow-md hover:shadow-lg transition-all duration-300"
+                                    >
+                                        <Eye className="w-4 h-4" />
+                                        <span className="hidden sm:inline">View</span>
+                                    </Link>
+                                    <Link
+                                        to={`/dashboard/edit-request/${request._id}`}
+                                        className="btn btn-sm flex-1 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white border-0 shadow-md hover:shadow-lg transition-all duration-300"
+                                    >
+                                        <Edit className="w-4 h-4" />
+                                        <span className="hidden sm:inline">Edit</span>
+                                    </Link>
+                                    <button
+                                        onClick={() => handleDelete(request._id)}
+                                        className="btn btn-sm flex-1 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white border-0 shadow-md hover:shadow-lg transition-all duration-300"
+                                    >
+                                        <Trash2 className="w-4 h-4" />
+                                        <span className="hidden sm:inline">Delete</span>
+                                    </button>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                )}
+
+                {/* Desktop Table View */}
+                {myRequests.length > 0 && (
+                    <div className="hidden lg:block overflow-x-auto bg-base-200 border-2 border-base-300 rounded-xl shadow-lg">
+                        <table className="table w-full">
+                            <thead>
+                                <tr className="bg-base-300">
+                                    <th className="border-r border-base-300 px-4 py-4 text-left font-bold text-base-content">#</th>
+                                    <th className="border-r border-base-300 px-4 py-4 text-left font-bold text-base-content">Recipient</th>
+                                    <th className="border-r border-base-300 px-4 py-4 text-left font-bold text-base-content">Blood Group</th>
+                                    <th className="border-r border-base-300 px-4 py-4 text-left font-bold text-base-content">Hospital</th>
+                                    <th className="border-r border-base-300 px-4 py-4 text-left font-bold text-base-content">Date</th>
+                                    <th className="border-r border-base-300 px-4 py-4 text-left font-bold text-base-content">Status</th>
+                                    <th className="px-4 py-4 text-center font-bold text-base-content">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {myRequests.map((request, index) => (
+                                    <tr key={request._id} className="hover:bg-base-300/50 border-b border-base-300">
+                                        <td className="border-r border-base-300 px-4 py-4 font-semibold text-base-content">
+                                            {(currentPage - 1) * page + (index + 1)}
+                                        </td>
+                                        <td className="border-r border-base-300 px-4 py-4">
+                                            <div>
+                                                <p className="font-bold text-base-content">{request.recipientName}</p>
+                                                <p className="text-sm text-base-content/70">{request.mobile}</p>
+                                            </div>
+                                        </td>
+                                        <td className="border-r border-base-300 px-4 py-4">
+                                            <div className="flex items-center gap-2 bg-red-100 dark:bg-red-900/30 px-3 py-1 rounded-full w-fit">
+                                                <FaTint className="w-3 h-3 text-red-600 dark:text-red-400" />
+                                                <span className="text-red-600 dark:text-red-400 font-bold text-sm">
+                                                    {request.bloodGroup}
+                                                </span>
+                                            </div>
+                                        </td>
+                                        <td className="border-r border-base-300 px-4 py-4">
+                                            <div>
+                                                <p className="font-semibold text-base-content">{request.hospitalName}</p>
+                                                <p className="text-sm text-base-content/70 truncate max-w-xs">{request.fullAddress}</p>
+                                            </div>
+                                        </td>
+                                        <td className="border-r border-base-300 px-4 py-4 font-semibold text-base-content">
+                                            {request.donationDate}
+                                        </td>
+                                        <td className="border-r border-base-300 px-4 py-4">
+                                            <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full border text-xs font-semibold ${getStatusColor(request.donation_status)}`}>
+                                                {getStatusIcon(request.donation_status)}
+                                                <span className="capitalize">{request.donation_status}</span>
+                                            </div>
+                                        </td>
+                                        <td className="px-4 py-4">
+                                            <div className="flex gap-2 justify-center">
+                                                <Link
+                                                    to={`/dashboard/view-request/${request._id}`}
+                                                    className="btn btn-sm bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white border-0 shadow-md hover:shadow-lg transition-all duration-300"
+                                                    title="View Details"
+                                                >
+                                                    <Eye className="w-4 h-4" />
+                                                </Link>
+                                                <Link
+                                                    to={`/dashboard/edit-request/${request._id}`}
+                                                    className="btn btn-sm bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white border-0 shadow-md hover:shadow-lg transition-all duration-300"
+                                                    title="Edit Request"
+                                                >
+                                                    <Edit className="w-4 h-4" />
+                                                </Link>
+                                                <button
+                                                    onClick={() => handleDelete(request._id)}
+                                                    className="btn btn-sm bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white border-0 shadow-md hover:shadow-lg transition-all duration-300"
+                                                    title="Delete Request"
+                                                >
+                                                    <Trash2 className="w-4 h-4" />
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                )}
+
+                {/* Pagination */}
+                {numberOfPages > 1 && (
+                    <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mt-8">
+                        <div className="text-sm text-base-content/70 order-2 sm:order-1">
+                            Showing page {currentPage} of {numberOfPages} ({totalRequests} total requests)
+                        </div>
+                        <div className="flex gap-2 order-1 sm:order-2">
+                            <button 
+                                onClick={handlePrevPage}
+                                disabled={currentPage === 1}
+                                className="btn btn-sm bg-base-300 hover:bg-base-400 text-base-content border-0 disabled:opacity-50 disabled:cursor-not-allowed"
+                            >
+                                Previous
+                            </button>
+                            <div className="flex gap-1">
+                                {Pages.map(pg => (
+                                    <button
+                                        key={pg}
+                                        className={`btn btn-sm border-0 ${
+                                            pg === currentPage 
+                                                ? 'bg-gradient-to-r from-red-600 to-red-700 text-white shadow-lg' 
+                                                : 'bg-base-200 text-base-content hover:bg-base-300'
+                                        }`}
+                                        onClick={() => setCurrentPage(pg)}
+                                    >
+                                        {pg}
+                                    </button>
+                                ))}
+                            </div>
+                            <button 
+                                onClick={handleNextPage}
+                                disabled={currentPage === numberOfPages}
+                                className="btn btn-sm bg-base-300 hover:bg-base-400 text-base-content border-0 disabled:opacity-50 disabled:cursor-not-allowed"
+                            >
+                                Next
+                            </button>
+                        </div>
+                    </div>
+                )}
             </div>
         </div>
     );

@@ -124,10 +124,10 @@ const EditRequest = () => {
     }
 
     return (
-        <div className="min-h-screen flex items-start sm:items-center justify-center px-3 sm:px-6 py-6">
-            <div className="w-full max-w-3xl bg-white rounded-xl sm:rounded-2xl shadow-md sm:shadow-lg p-4 sm:p-6 md:p-8">
-                <h2 className="flex items-center justify-center gap-1 text-sm sm:text-2xl font-semibold text-red-600 mb-6 text-center">
-                    <Droplet className="text-red-600" size={28} />
+        <div className="min-h-screen bg-base-100 flex items-start sm:items-center justify-center px-3 sm:px-6 py-6">
+            <div className="w-full max-w-3xl bg-base-200 rounded-xl sm:rounded-2xl shadow-lg border border-base-300 p-4 sm:p-6 md:p-8">
+                <h2 className="flex items-center justify-center gap-1 text-sm sm:text-2xl font-semibold text-red-600 dark:text-red-400 mb-6 text-center">
+                    <Droplet className="text-red-600 dark:text-red-400" size={28} />
                     Edit Blood Donation Request
                 </h2>
 
@@ -135,24 +135,24 @@ const EditRequest = () => {
                     {/* Requester Info */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Requester Name</label>
+                            <label className="block text-sm font-medium text-base-content mb-1">Requester Name</label>
                             <input
                                 name='requesterName'
                                 type="text"
                                 readOnly
                                 defaultValue={requestData.requesterName}
-                                className="w-full rounded-lg border border-gray-300 bg-gray-100 px-3 sm:px-4 py-2 text-gray-700 cursor-not-allowed text-sm"
+                                className="w-full rounded-lg border border-base-300 bg-base-100 px-3 sm:px-4 py-2 text-base-content/70 cursor-not-allowed text-sm"
                             />
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Requester Email</label>
+                            <label className="block text-sm font-medium text-base-content mb-1">Requester Email</label>
                             <input
                                 name='requesterEmail'
                                 type="email"
                                 readOnly
                                 defaultValue={requestData.requesterEmail}
-                                className="w-full rounded-lg border border-gray-300 bg-gray-100 px-3 sm:px-4 py-2 text-gray-700 cursor-not-allowed text-sm"
+                                className="w-full rounded-lg border border-base-300 bg-base-100 px-3 sm:px-4 py-2 text-base-content/70 cursor-not-allowed text-sm"
                             />
                         </div>
                     </div>
@@ -160,38 +160,38 @@ const EditRequest = () => {
                     {/* Recipient Info */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div className="flex flex-col">
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Recipient Name</label>
+                            <label className="block text-sm font-medium text-base-content mb-1">Recipient Name</label>
                             <input
                                 required
                                 name='recipientName'
                                 type="text"
                                 defaultValue={requestData.recipientName}
                                 placeholder="Enter recipient name"
-                                className="input w-full rounded-lg border border-gray-300 px-3 sm:px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-500 text-sm"
+                                className="input w-full rounded-lg border border-base-300 bg-base-100 text-base-content px-3 sm:px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-500 text-sm"
                             />
                         </div>
                         <div className="flex flex-col">
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Recipient Mobile No</label>
+                            <label className="block text-sm font-medium text-base-content mb-1">Recipient Mobile No</label>
                             <input
                                 required
                                 name='mobile'
                                 type="text"
                                 defaultValue={requestData.mobile}
                                 placeholder="Enter recipient Mobile No"
-                                className="input w-full rounded-lg border border-gray-300 px-3 sm:px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-500 text-sm"
+                                className="input w-full rounded-lg border border-base-300 bg-base-100 text-base-content px-3 sm:px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-500 text-sm"
                             />
                         </div>
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Recipient District</label>
+                            <label className="block text-sm font-medium text-base-content mb-1">Recipient District</label>
                             <select
                                 required
                                 name='recipientDistrict'
                                 value={district}
                                 onChange={(e) => setDistrict(e.target.value)}
-                                className="select w-full rounded-lg border border-gray-300 px-3 sm:px-4 py-2 focus:ring-2 focus:ring-red-500 text-sm"
+                                className="select w-full rounded-lg border border-base-300 bg-base-100 text-base-content px-3 sm:px-4 py-2 focus:ring-2 focus:ring-red-500 text-sm"
                             >
                                 <option value="">Select district</option>
                                 {
@@ -205,13 +205,13 @@ const EditRequest = () => {
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Recipient Upazila</label>
+                            <label className="block text-sm font-medium text-base-content mb-1">Recipient Upazila</label>
                             <select
                                 required
                                 name='recipientUpazila'
                                 value={upazila}
                                 onChange={(e) => setUpazila(e.target.value)}
-                                className="select w-full rounded-lg border border-gray-300 px-3 sm:px-4 py-2 focus:ring-2 focus:ring-red-500 text-sm"
+                                className="select w-full rounded-lg border border-base-300 bg-base-100 text-base-content px-3 sm:px-4 py-2 focus:ring-2 focus:ring-red-500 text-sm"
                             >
                                 <option value="">Select upazila</option>
                                 {
@@ -227,37 +227,37 @@ const EditRequest = () => {
 
                     {/* Hospital Info */}
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Hospital Name</label>
+                        <label className="block text-sm font-medium text-base-content mb-1">Hospital Name</label>
                         <input
                             required
                             type="text"
                             name='hospitalName'
                             defaultValue={requestData.hospitalName}
                             placeholder="e.g. Dhaka Medical College Hospital"
-                            className="input w-full rounded-lg border border-gray-300 px-3 sm:px-4 py-2 focus:ring-2 focus:ring-red-500 text-sm"
+                            className="input w-full rounded-lg border border-base-300 bg-base-100 text-base-content px-3 sm:px-4 py-2 focus:ring-2 focus:ring-red-500 text-sm"
                         />
                     </div>
 
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Full Address</label>
+                        <label className="block text-sm font-medium text-base-content mb-1">Full Address</label>
                         <input
                             name='fullAddress'
                             type="text"
                             defaultValue={requestData.fullAddress}
                             placeholder="e.g. Zahir Raihan Rd, Dhaka"
                             required
-                            className="input w-full rounded-lg border border-gray-300 px-3 sm:px-4 py-2 focus:ring-2 focus:ring-red-500 text-sm"
+                            className="input w-full rounded-lg border border-base-300 bg-base-100 text-base-content px-3 sm:px-4 py-2 focus:ring-2 focus:ring-red-500 text-sm"
                         />
                     </div>
 
                     {/* Blood Group */}
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Blood Group</label>
+                        <label className="block text-sm font-medium text-base-content mb-1">Blood Group</label>
                         <select
                             required
                             name='bloodGroup'
                             defaultValue={requestData.bloodGroup}
-                            className="w-full select rounded-lg border border-gray-300 px-3 text-red-600 font-bold sm:px-4 py-2 focus:ring-2 focus:ring-red-500 text-sm"
+                            className="w-full select rounded-lg border border-base-300 bg-base-100 px-3 text-red-600 dark:text-red-400 font-bold sm:px-4 py-2 focus:ring-2 focus:ring-red-500 text-sm"
                         >
                             <option disabled value="">Choose Blood Group</option>
                             <option value="A+">A+</option>
@@ -274,36 +274,36 @@ const EditRequest = () => {
                     {/* Date & Time */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Donation Date</label>
+                            <label className="block text-sm font-medium text-base-content mb-1">Donation Date</label>
                             <input
                                 required
                                 name='donationDate'
                                 type="date"
                                 defaultValue={requestData.donationDate}
-                                className="input w-full rounded-lg border border-gray-300 px-3 sm:px-4 py-2 focus:ring-2 focus:ring-red-500 text-sm"
+                                className="input w-full rounded-lg border border-base-300 bg-base-100 text-base-content px-3 sm:px-4 py-2 focus:ring-2 focus:ring-red-500 text-sm"
                             />
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Donation Time</label>
+                            <label className="block text-sm font-medium text-base-content mb-1">Donation Time</label>
                             <input
                                 name='donationTime'
                                 type="time"
                                 defaultValue={requestData.donationTime}
-                                className="input w-full rounded-lg border border-gray-300 px-3 sm:px-4 py-2 focus:ring-2 focus:ring-red-500 text-sm"
+                                className="input w-full rounded-lg border border-base-300 bg-base-100 text-base-content px-3 sm:px-4 py-2 focus:ring-2 focus:ring-red-500 text-sm"
                             />
                         </div>
                     </div>
 
                     {/* Request Message */}
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Request Message</label>
+                        <label className="block text-sm font-medium text-base-content mb-1">Request Message</label>
                         <textarea
                             rows="3"
                             name='requestMessage'
                             defaultValue={requestData.requestMessage}
                             placeholder="Write details about why blood is needed..."
-                            className="textarea w-full rounded-lg border border-gray-300 px-3 sm:px-4 py-2 focus:ring-2 focus:ring-red-500 text-sm"
+                            className="textarea w-full rounded-lg border border-base-300 bg-base-100 text-base-content px-3 sm:px-4 py-2 focus:ring-2 focus:ring-red-500 text-sm"
                         ></textarea>
                     </div>
 
