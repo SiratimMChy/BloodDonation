@@ -1,8 +1,5 @@
-// Hemovia Design System - Global UI Constants
-// 3 Primary Colors + Neutral System
 
 export const COLORS = {
-  // Primary Colors (Blood Theme)
   primary: {
     50: 'bg-red-50 dark:bg-red-950/20',
     100: 'bg-red-100 dark:bg-red-900/30',
@@ -14,7 +11,6 @@ export const COLORS = {
     hover: 'hover:bg-red-50 dark:hover:bg-red-900/20'
   },
   
-  // Secondary Colors (Success/Green)
   secondary: {
     50: 'bg-green-50 dark:bg-green-950/20',
     100: 'bg-green-100 dark:bg-green-900/30',
@@ -25,7 +21,6 @@ export const COLORS = {
     border: 'border-green-200 dark:border-green-900/50'
   },
 
-  // Accent Colors (Info/Blue)
   accent: {
     50: 'bg-blue-50 dark:bg-blue-950/20',
     100: 'bg-blue-100 dark:bg-blue-900/30',
@@ -36,7 +31,6 @@ export const COLORS = {
     border: 'border-blue-200 dark:border-blue-900/50'
   },
 
-  // Neutral Colors (Base Theme)
   neutral: {
     base: 'bg-base-100',
     surface: 'bg-base-200',
@@ -93,23 +87,23 @@ export const TRANSITIONS = {
 export const COMPONENT_STYLES = {
   // Card styles
   card: {
-    default: `${COLORS.neutral.surface} border-2 ${COLORS.neutral.border} ${BORDER_RADIUS.default} ${SPACING.md} ${SHADOWS.default}`,
-    elevated: `${COLORS.neutral.base} border-2 ${COLORS.neutral.border} ${BORDER_RADIUS.default} ${SPACING.md} ${SHADOWS.large}`,
-    interactive: `${COLORS.neutral.surface} border-2 ${COLORS.neutral.border} ${BORDER_RADIUS.default} ${SPACING.md} ${SHADOWS.default} ${SHADOWS.hover} ${TRANSITIONS.default}`
+    default: `${COLORS.neutral.surface} border border-base-300/50 ${BORDER_RADIUS.default} ${SPACING.md} ${SHADOWS.default}`,
+    elevated: `${COLORS.neutral.base} border border-base-300/30 ${BORDER_RADIUS.default} ${SPACING.md} ${SHADOWS.large}`,
+    interactive: `${COLORS.neutral.surface} border border-base-300/50 ${BORDER_RADIUS.default} ${SPACING.md} ${SHADOWS.default} ${SHADOWS.hover} ${TRANSITIONS.default}`
   },
 
   // Button styles
   button: {
     primary: `bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white px-6 py-3 ${BORDER_RADIUS.default} font-semibold ${SHADOWS.default} ${SHADOWS.hover} ${TRANSITIONS.default}`,
-    secondary: `${COLORS.neutral.surface} ${COLORS.neutral.border} border-2 ${COLORS.neutral.text} px-6 py-3 ${BORDER_RADIUS.default} font-semibold ${SHADOWS.small} hover:${COLORS.neutral.elevated} ${TRANSITIONS.default}`,
+    secondary: `${COLORS.neutral.surface} border border-base-300/50 ${COLORS.neutral.text} px-6 py-3 ${BORDER_RADIUS.default} font-semibold ${SHADOWS.small} hover:${COLORS.neutral.elevated} ${TRANSITIONS.default}`,
     success: `${COLORS.secondary[600]} hover:${COLORS.secondary[700]} text-white px-6 py-3 ${BORDER_RADIUS.default} font-semibold ${SHADOWS.default} ${TRANSITIONS.default}`,
     accent: `${COLORS.accent[600]} hover:${COLORS.accent[700]} text-white px-6 py-3 ${BORDER_RADIUS.default} font-semibold ${SHADOWS.default} ${TRANSITIONS.default}`
   },
 
   // Input styles
   input: {
-    default: `w-full px-4 py-3 border-2 ${COLORS.neutral.border} ${BORDER_RADIUS.default} ${COLORS.neutral.base} ${COLORS.neutral.text} focus:border-red-500 focus:outline-none ${TRANSITIONS.default}`,
-    error: `w-full px-4 py-3 border-2 border-red-300 ${BORDER_RADIUS.default} ${COLORS.neutral.base} ${COLORS.neutral.text} focus:border-red-500 focus:outline-none ${TRANSITIONS.default}`
+    default: `w-full px-4 py-3 border border-base-300/50 ${BORDER_RADIUS.default} ${COLORS.neutral.base} ${COLORS.neutral.text} focus:border-red-500 focus:outline-none ${TRANSITIONS.default}`,
+    error: `w-full px-4 py-3 border border-red-300 ${BORDER_RADIUS.default} ${COLORS.neutral.base} ${COLORS.neutral.text} focus:border-red-500 focus:outline-none ${TRANSITIONS.default}`
   },
 
   // Badge styles
@@ -117,7 +111,7 @@ export const COMPONENT_STYLES = {
     primary: `${COLORS.primary[100]} ${COLORS.primary.text} px-3 py-1 ${BORDER_RADIUS.full} text-sm font-semibold`,
     secondary: `${COLORS.secondary[100]} ${COLORS.secondary.text} px-3 py-1 ${BORDER_RADIUS.full} text-sm font-semibold`,
     accent: `${COLORS.accent[100]} ${COLORS.accent.text} px-3 py-1 ${BORDER_RADIUS.full} text-sm font-semibold`,
-    neutral: `${COLORS.neutral.surface} ${COLORS.neutral.text} px-3 py-1 ${BORDER_RADIUS.full} text-sm font-semibold border-2 ${COLORS.neutral.border}`
+    neutral: `${COLORS.neutral.surface} ${COLORS.neutral.text} px-3 py-1 ${BORDER_RADIUS.full} text-sm font-semibold border border-base-300/50`
   }
 };
 

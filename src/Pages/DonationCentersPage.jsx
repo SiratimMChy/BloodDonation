@@ -3,8 +3,6 @@ import { Link } from 'react-router';
 import { MapPin, Phone, Clock, Navigation, Search, Star, Award, Building, ChevronDown, ExternalLink, Droplet, Shield, CheckCircle, Globe, Users } from 'lucide-react';
 import axios from 'axios';
 import SkeletonLoader from '../Components/SkeletonLoader/SkeletonLoader';
-import { Card, Button } from '../Components/UI';
-import { TYPOGRAPHY, LAYOUT, SPACING } from '../styles/designSystem';
 
 const DonationCentersPage = () => {
   const [selectedDivision, setSelectedDivision] = useState('All');

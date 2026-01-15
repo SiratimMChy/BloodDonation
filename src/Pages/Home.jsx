@@ -320,35 +320,35 @@ const Home = () => {
               </p>
             </Card>
 
-            <div className="group bg-base-200 border-2 border-base-300 rounded-2xl p-6 hover:border-blue-200 hover:shadow-xl transition-all">
+            <Card className="group p-6 hover:border-blue-200 dark:hover:border-blue-900/50 hover:shadow-xl transition-all">
               <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-lg shadow-blue-200 dark:shadow-blue-900/30">
                 <Search className="text-white" size={24} />
               </div>
-              <h3 className="text-xl font-bold text-base-content mb-2">Find Blood Donors</h3>
-              <p className="text-base-content/70 leading-relaxed text-sm">
+              <h3 className={`${TYPOGRAPHY.heading.h4} mb-2`}>Find Blood Donors</h3>
+              <p className={`${TYPOGRAPHY.body.small} leading-relaxed`}>
                 Search for available donors by blood type, location, and district. Connect instantly when you need blood urgently.
               </p>
-            </div>
+            </Card>
 
-            <div className="group bg-base-200 border-2 border-base-300 rounded-2xl p-6 hover:border-green-200 hover:shadow-xl transition-all">
+            <Card className="group p-6 hover:border-green-200 dark:hover:border-green-900/50 hover:shadow-xl transition-all">
               <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-lg shadow-green-200 dark:shadow-green-900/30">
                 <Droplet className="text-white fill-white" size={24} />
               </div>
-              <h3 className="text-xl font-bold text-base-content mb-2">Donate & Save Lives</h3>
-              <p className="text-base-content/70 leading-relaxed text-sm">
+              <h3 className={`${TYPOGRAPHY.heading.h4} mb-2`}>Donate & Save Lives</h3>
+              <p className={`${TYPOGRAPHY.body.small} leading-relaxed`}>
                 Connect with recipients and schedule your donation. Every drop counts and can save up to three lives in your community.
               </p>
-            </div>
+            </Card>
 
-            <div className="group bg-base-200 border-2 border-base-300 rounded-2xl p-6 hover:border-purple-200 hover:shadow-xl transition-all">
+            <Card className="group p-6 hover:border-purple-200 dark:hover:border-purple-900/50 hover:shadow-xl transition-all">
               <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-lg shadow-purple-200 dark:shadow-purple-900/30">
                 <Award className="text-white" size={24} />
               </div>
-              <h3 className="text-xl font-bold text-base-content mb-2">Get Recognition</h3>
-              <p className="text-base-content/70 leading-relaxed text-sm">
+              <h3 className={`${TYPOGRAPHY.heading.h4} mb-2`}>Get Recognition</h3>
+              <p className={`${TYPOGRAPHY.body.small} leading-relaxed`}>
                 Receive certificates and recognition for your contributions. Join our donor appreciation program and inspire others to donate.
               </p>
-            </div>
+            </Card>
           </div>
 
           {/* Why Donate Section */}
@@ -531,7 +531,7 @@ const Home = () => {
           </div>
 
           {/* Main Counter Display */}
-          <div className="bg-base-200 rounded-3xl p-8 md:p-12 shadow-2xl border-2 border-red-100 dark:border-red-900/50 mb-12">
+          <Card className="p-8 md:p-12 shadow-2xl hover:border-red-200 dark:hover:border-red-900/50 mb-12">
             <div className="grid md:grid-cols-3 gap-8 items-center">
               {/* Animated Blood Drop */}
               <div className="flex justify-center">
@@ -547,30 +547,30 @@ const Home = () => {
 
               {/* Live Counter */}
               <div className="text-center md:col-span-2">
-                <div className="mb-6 bg-base-200 ">
+                <div className="mb-6">
                   <p className="text-6xl md:text-8xl font-black text-base-content mb-2">
                     {livesSaved}
                   </p>
-                  <p className="text-2xl md:text-3xl font-bold text-red-700 bg-base-200 dark:text-red-500">Lives Saved Today</p>
+                  <p className="text-2xl md:text-3xl font-bold text-red-700 dark:text-red-500">Lives Saved Today</p>
                 </div>
                 
                 <div className="grid grid-cols-2 gap-6 mt-8">
-                  <div className="bg-base-200 border-2 border-base-300 rounded-2xl p-4 text-center hover:border-red-200 dark:hover:border-red-900/50 transition-all shadow-sm hover:shadow-lg">
+                  <Card className="p-4 text-center hover:border-red-200 dark:hover:border-red-900/50 transition-all">
                     <p className="text-3xl md:text-4xl font-black text-red-600 dark:text-red-500">{formatCount(apiStats.totalDonors)}</p>
                     <p className="text-sm font-bold text-base-content/70">Active Heroes</p>
-                  </div>
-                  <div className="bg-base-200 border-2 border-base-300 rounded-2xl p-4 text-center hover:border-blue-200 dark:hover:border-blue-900/50 transition-all shadow-sm hover:shadow-lg">
+                  </Card>
+                  <Card className="p-4 text-center hover:border-blue-200 dark:hover:border-blue-900/50 transition-all">
                     <p className="text-3xl md:text-4xl font-black text-blue-600 dark:text-blue-500">{formatCount(apiStats.pendingRequests)}</p>
                     <p className="text-sm font-bold text-base-content/70">Pending Requests</p>
-                  </div>
+                  </Card>
                 </div>
               </div>
             </div>
-          </div>
+          </Card>
 
           {/* Impact Visualization */}
           <div className="grid md:grid-cols-4 gap-6">
-            <div className="bg-base-200 border border-base-300 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all group hover:border-red-200 dark:hover:border-red-900/50">
+            <Card className="group p-6 hover:border-red-200 dark:hover:border-red-900/50 transition-all">
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-12 h-12 bg-gradient-to-br from-red-500 to-red-600 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg shadow-red-200 dark:shadow-red-900/30">
                   <Heart className="text-white fill-white" size={24} />
@@ -583,9 +583,9 @@ const Home = () => {
               <div className="w-full bg-base-300 rounded-full h-2">
                 <div className="bg-gradient-to-r from-red-500 to-red-600 h-2 rounded-full" style={{ width: '80%' }}></div>
               </div>
-            </div>
+            </Card>
 
-            <div className="bg-base-200 border border-base-300 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all group hover:border-blue-200 dark:hover:border-blue-900/50">
+            <Card className="group p-6 hover:border-blue-200 dark:hover:border-blue-900/50 transition-all">
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg shadow-blue-200 dark:shadow-blue-900/30">
                   <Activity className="text-white" size={24} />
@@ -598,9 +598,9 @@ const Home = () => {
               <div className="w-full bg-base-300 rounded-full h-2">
                 <div className="bg-gradient-to-r from-blue-500 to-blue-600 h-2 rounded-full" style={{ width: '60%' }}></div>
               </div>
-            </div>
+            </Card>
 
-            <div className="bg-base-200 border border-base-300 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all group hover:border-green-200 dark:hover:border-green-900/50">
+            <Card className="group p-6 hover:border-green-200 dark:hover:border-green-900/50 transition-all">
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg shadow-green-200 dark:shadow-green-900/30">
                   <Users className="text-white" size={24} />
@@ -613,9 +613,9 @@ const Home = () => {
               <div className="w-full bg-base-300 rounded-full h-2">
                 <div className="bg-gradient-to-r from-green-500 to-green-600 h-2 rounded-full" style={{ width: '90%' }}></div>
               </div>
-            </div>
+            </Card>
 
-            <div className="bg-base-200 border border-base-300 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all group hover:border-purple-200 dark:hover:border-purple-900/50">
+            <Card className="group p-6 hover:border-purple-200 dark:hover:border-purple-900/50 transition-all">
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg shadow-purple-200 dark:shadow-purple-900/30">
                   <Award className="text-white" size={24} />
@@ -628,12 +628,12 @@ const Home = () => {
               <div className="w-full bg-base-300 rounded-full h-2">
                 <div className="bg-gradient-to-r from-purple-500 to-purple-600 h-2 rounded-full" style={{ width: `${apiStats.successRate}%` }}></div>
               </div>
-            </div>
+            </Card>
           </div>
 
           {/* Call to Action */}
           <div className="text-center mt-12">
-            <div className="bg-base-200 border-2 border-red-100 dark:border-red-900/50 rounded-2xl p-8 shadow-lg hover:border-red-200 dark:hover:border-red-900/70 transition-all">
+            <Card className="p-8 hover:border-red-200 dark:hover:border-red-900/70 transition-all">
               <h3 className="text-2xl md:text-3xl font-bold text-base-content mb-4">
                 Be Part of This Impact
               </h3>
@@ -656,7 +656,7 @@ const Home = () => {
                   Find Blood Now
                 </a>
               </div>
-            </div>
+            </Card>
           </div>
         </div>
       </div>
