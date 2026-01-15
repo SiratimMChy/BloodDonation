@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Heart, Search, Phone, Mail, MapPin, Droplet, Users, Activity, Award, Clock, Shield, Send, CheckCircle, AlertCircle } from 'lucide-react';
+import { Heart, Search, Phone, Mail, MapPin, Droplet, Users, Activity, Award, Clock, Shield, Send, CheckCircle, AlertCircle, Building } from 'lucide-react';
 import emailjs from '@emailjs/browser';
 import { EMAILJS_CONFIG } from '../config/emailjs';
 import BloodCompatibilitySection from './BloodCompatibilitySection';
@@ -7,6 +7,8 @@ import FAQPage from './FAQPage';
 import axios from 'axios';
 import useAxios from '../Hooks/useAxios';
 import SkeletonLoader from '../Components/SkeletonLoader/SkeletonLoader';
+import { Card, Button } from '../Components/UI';
+import { TYPOGRAPHY, LAYOUT, SPACING, COLORS } from '../styles/designSystem';
 
 const Home = () => {
   const [formData, setFormData] = useState({
@@ -140,7 +142,7 @@ const Home = () => {
       {/* Banner Section */}
      <div className="relative h-[60vh] md:h-[65vh] lg:h-[70vh] bg-base-100 overflow-hidden flex items-center">
         {/* Background Pattern */}
-        <div className="absolute inset-0 bg-linear-to-br from-red-50 via-white to-rose-50 dark:from-base-200 dark:via-base-100 dark:to-base-200">
+        <div className="absolute inset-0 bg-gradient-to-br from-red-50 via-white to-rose-50 dark:from-base-200 dark:via-base-100 dark:to-base-200">
           <div className="absolute inset-0 opacity-30 dark:opacity-10" style={{
             backgroundImage: 'radial-gradient(circle at 1px 1px, rgb(254 202 202 / 0.3) 1px, transparent 0)',
             backgroundSize: '40px 40px'
@@ -157,7 +159,7 @@ const Home = () => {
             <div className="space-y-3 md:space-y-4 lg:space-y-5">
               {/* Badge */}
               <div className="inline-flex items-center gap-2 bg-base-200 border-2 border-red-100 dark:border-red-900/50 px-3 md:px-4 py-1.5 md:py-2 rounded-full shadow-sm">
-                <div className="w-4 h-4 md:w-5 md:h-5 bg-linear-to-br from-red-500 to-red-600 rounded-full flex items-center justify-center shrink-0 shadow-sm">
+                <div className="w-4 h-4 md:w-5 md:h-5 bg-gradient-to-br from-red-500 to-red-600 rounded-full flex items-center justify-center shrink-0 shadow-sm">
                   <Droplet className="text-white" size={10} />
                 </div>
                 <span className="text-red-600 dark:text-red-400 font-bold text-xs">Save Lives • Make Impact</span>
@@ -166,10 +168,10 @@ const Home = () => {
               {/* Main Heading */}
               <div>
                 <h1 className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-black text-base-content leading-tight mb-1 md:mb-2">
-                  Donate<span className="bg-linear-to-r from-red-600 to-rose-600 bg-clip-text text-transparent">Blood</span>
+                  Donate<span className="bg-gradient-to-r from-red-600 to-rose-600 bg-clip-text text-transparent">Blood</span>
                 </h1>
                 <div className="flex items-center gap-2">
-                  <div className="h-0.5 w-8 md:w-12 bg-linear-to-r from-red-600 to-rose-600 rounded-full"></div>
+                  <div className="h-0.5 w-8 md:w-12 bg-gradient-to-r from-red-600 to-rose-600 rounded-full"></div>
                   <p className="text-sm md:text-base lg:text-lg font-bold text-base-content/80">Give Life</p>
                 </div>
               </div>
@@ -181,20 +183,24 @@ const Home = () => {
 
               {/* CTA Buttons */}
               <div className="flex flex-col sm:flex-row gap-2 md:gap-3">
-                <a
+                <Button
+                  as="a"
                   href="/signup"
-                  className="group inline-flex items-center justify-center gap-2 bg-linear-to-r from-red-600 to-red-700 text-white px-4 md:px-6 lg:px-7 py-2 md:py-2.5 lg:py-3 rounded-2xl font-bold text-xs md:text-sm hover:from-red-700 hover:to-red-800 transition-all shadow-lg hover:shadow-xl hover:scale-105"
+                  variant="primary"
+                  className="group inline-flex items-center justify-center gap-2 px-4 md:px-6 lg:px-7 py-2 md:py-2.5 lg:py-3 text-xs md:text-sm hover:scale-105"
                 >
                   <Heart size={16} className="md:w-4 md:h-4 group-hover:scale-110 transition-transform" />
                   <span>Join as a Donor</span>
-                </a>
-                <a
+                </Button>
+                <Button
+                  as="a"
                   href="/search"
-                  className="group inline-flex items-center justify-center gap-2 bg-base-200 text-red-600 px-4 md:px-6 lg:px-7 py-2 md:py-2.5 lg:py-3 rounded-2xl font-bold text-xs md:text-sm border-2 border-base-300 hover:border-red-200 dark:hover:border-red-900/50 hover:bg-red-50 dark:hover:bg-base-300 transition-all shadow-lg hover:shadow-xl hover:scale-105"
+                  variant="secondary"
+                  className="group inline-flex items-center justify-center gap-2 px-4 md:px-6 lg:px-7 py-2 md:py-2.5 lg:py-3 text-xs md:text-sm hover:scale-105"
                 >
                   <Search size={16} className="md:w-4 md:h-4 group-hover:scale-110 transition-transform" />
                   <span>Search Donors</span>
-                </a>
+                </Button>
               </div>
 
               {isStatsLoading ? (
@@ -210,28 +216,28 @@ const Home = () => {
                   ))}
                 </div>
               ) : (
-                <div className="grid grid-cols-3 gap-1.5 sm:gap-2 pt-1 md:pt-2">
-                  <div className="bg-base-200 border-2 border-base-300 rounded-2xl p-2 md:p-2.5 hover:border-red-200 dark:hover:border-red-900/50 transition shadow-sm hover:shadow-lg">
+                <div className={`${LAYOUT.grid.stats} pt-1 md:pt-2`}>
+                  <Card className="p-2 md:p-2.5 hover:border-red-200 dark:hover:border-red-900/50 transition shadow-sm hover:shadow-lg">
                     <div className="flex items-center gap-1 mb-1">
                       <Users className="text-red-600" size={12} />
                     </div>
                     <p className="text-base sm:text-lg md:text-xl font-black text-base-content">{formatCount(apiStats.totalDonors)}</p>
                     <p className="text-xs text-base-content/70 font-semibold">Active Donors</p>
-                  </div>
-                  <div className="bg-base-200 border-2 border-base-300 rounded-2xl p-2 md:p-2.5 hover:border-red-200 dark:hover:border-red-900/50 transition shadow-sm hover:shadow-lg">
+                  </Card>
+                  <Card className="p-2 md:p-2.5 hover:border-red-200 dark:hover:border-red-900/50 transition shadow-sm hover:shadow-lg">
                     <div className="flex items-center gap-1 mb-1">
                       <Heart className="text-red-600 fill-red-600" size={12} />
                     </div>
                     <p className="text-base sm:text-lg md:text-xl font-black text-base-content">{livesSaved}</p>
                     <p className="text-xs text-base-content/70 font-semibold">Lives Saved</p>
-                  </div>
-                  <div className="bg-base-200 border-2 border-base-300 rounded-2xl p-2 md:p-2.5 hover:border-red-200 dark:hover:border-red-900/50 transition shadow-sm hover:shadow-lg">
+                  </Card>
+                  <Card className="p-2 md:p-2.5 hover:border-red-200 dark:hover:border-red-900/50 transition shadow-sm hover:shadow-lg">
                     <div className="flex items-center gap-1 mb-1">
                       <Activity className="text-red-600" size={12} />
                     </div>
                     <p className="text-base sm:text-lg md:text-xl font-black text-base-content">{formatCount(centersData.length)}</p>
                     <p className="text-xs text-base-content/70 font-semibold">Blood Banks</p>
-                  </div>
+                  </Card>
                 </div>
               )}
             </div>
@@ -304,15 +310,15 @@ const Home = () => {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-            <div className="group bg-base-200 border-2 border-base-300 rounded-2xl p-6 hover:border-red-200 dark:hover:border-red-900/50 hover:shadow-xl transition-all">
+            <Card className="group p-6 hover:border-red-200 dark:hover:border-red-900/50 hover:shadow-xl transition-all">
               <div className="w-12 h-12 bg-gradient-to-br from-red-500 to-red-600 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-lg shadow-red-200 dark:shadow-red-900/30">
                 <Users className="text-white" size={24} />
               </div>
-              <h3 className="text-xl font-bold text-base-content mb-2">Register as Donor</h3>
-              <p className="text-base-content/70 leading-relaxed text-sm">
+              <h3 className={`${TYPOGRAPHY.heading.h4} mb-2`}>Register as Donor</h3>
+              <p className={`${TYPOGRAPHY.body.small} leading-relaxed`}>
                 Quick and easy registration process. Sign up with your details, blood type, and location to join our life-saving community.
               </p>
-            </div>
+            </Card>
 
             <div className="group bg-base-200 border-2 border-base-300 rounded-2xl p-6 hover:border-blue-200 hover:shadow-xl transition-all">
               <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-lg shadow-blue-200 dark:shadow-blue-900/30">
@@ -420,7 +426,7 @@ const Home = () => {
                   {/* Center Image */}
                   <div className="w-full h-48 bg-gradient-to-br from-red-100 to-rose-100 dark:from-red-900/20 dark:to-rose-900/20 rounded-lg mb-4 flex items-center justify-center overflow-hidden relative">
                     <div className="w-16 h-16 bg-gradient-to-br from-red-500 to-red-600 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
-                      <Heart className="text-white fill-white" size={32} />
+                      <Building className="text-white" size={32} />
                     </div>
                     {/* Featured Badge */}
                     <div className="absolute top-2 right-2 bg-gradient-to-r from-yellow-400 to-yellow-500 text-yellow-900 px-2 py-1 rounded-full text-xs font-bold shadow-md">

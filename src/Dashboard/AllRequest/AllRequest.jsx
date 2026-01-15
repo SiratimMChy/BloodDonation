@@ -7,6 +7,8 @@ import Swal from 'sweetalert2';
 import { AuthContext } from '../../Provider/AuthProvider';
 import SkeletonLoader from '../../Components/SkeletonLoader/SkeletonLoader';
 import { useDemoRestriction } from '../../Hooks/useDemoRestriction';
+import { Card, Button } from '../../Components/UI';
+import { TYPOGRAPHY, LAYOUT, SPACING } from '../../styles/designSystem';
 
 const AllRequest = () => {
     const { role } = useContext(AuthContext);
@@ -151,12 +153,12 @@ const AllRequest = () => {
             {/* Header */}
             <div className="text-center mb-12">
                 <div className="relative mb-8">
-                    <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-base-content mb-4 tracking-tight">
+                    <h1 className={`${TYPOGRAPHY.heading.h1} mb-4 tracking-tight`}>
                         All <span className="bg-gradient-to-r from-red-500 to-rose-600 bg-clip-text text-transparent">Requests</span>
                     </h1>
                     <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-gradient-to-r from-red-500 to-rose-600 rounded-full"></div>
                 </div>
-                <p className="text-base-content/60 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed">
+                <p className={`${TYPOGRAPHY.body.large} max-w-2xl mx-auto`}>
                     Manage and monitor all blood donation requests with comprehensive oversight
                 </p>
             </div>
@@ -185,7 +187,7 @@ const AllRequest = () => {
                     {/* Mobile Card View */}
                     <div className="lg:hidden space-y-4">
                         {myRequests.map((request, index) => (
-                            <div key={request._id} className="bg-base-200 border-2 border-base-300 rounded-lg shadow-lg p-4">
+                            <Card key={request._id} interactive className="p-4">
                                 <div className="flex justify-between items-start mb-3">
                                     <span className="badge badge-lg text-base-content font-bold bg-base-300">
                                         #{(currentPage - 1) * page + (index + 1)}
@@ -224,7 +226,7 @@ const AllRequest = () => {
                                     
                                     <div>
                                         <span className="text-xs text-base-content/70 font-semibold">Status:</span>
-                                        {(role === 'admin' || role === 'volunteer') ? (
+                                        {(role === 'admin' || role === 'demoadmin' || role === 'volunteer') ? (
                                             <select
                                                 value={request.donation_status}
                                                 onChange={(e) => handleStatusChange(request._id, e.target.value)}
@@ -241,23 +243,31 @@ const AllRequest = () => {
                                     </div>
                                 </div>
 
-                                {role === 'admin' && (
+                                {(role === 'admin' || role === 'demoadmin') && (
                                     <div className="flex gap-2 pt-3 border-t border-base-300">
-                                        <Link
-                                            to={`/dashboard/edit-request/${request._id}`}
-                                            className="btn btn-sm flex-1 bg-blue-500 hover:bg-blue-600 text-white border-0"
+                                        <Button
+                                            variant="accent"
+                                            size="sm"
+                                            onClick={() => {
+                                                if (!checkDemoRestriction()) {
+                                                    window.location.href = `/dashboard/edit-request/${request._id}`;
+                                                }
+                                            }}
+                                            className="flex-1"
                                         >
                                             <FaEdit /> Edit
-                                        </Link>
-                                        <button
+                                        </Button>
+                                        <Button
+                                            variant="primary"
+                                            size="sm"
                                             onClick={() => handleDelete(request._id)}
-                                            className="btn btn-sm flex-1 bg-red-500 hover:bg-red-600 text-white border-0"
+                                            className="flex-1"
                                         >
                                             <MdDelete size={20} /> Delete
-                                        </button>
+                                        </Button>
                                     </div>
                                 )}
-                            </div>
+                            </Card>
                         ))}
                     </div>
 
@@ -290,7 +300,7 @@ const AllRequest = () => {
                                         <td className="border-2 border-base-300 px-4 py-3 font-semibold text-base-content">{request.donationDate}</td>
                                         <td className="border-2 border-base-300 px-4 py-3 font-semibold text-base-content">{request.mobile}</td>
                                         <td className="border-2 border-base-300 px-4 py-3">
-                                            {(role === 'admin' || role === 'volunteer') ? (
+                                            {(role === 'admin' || role === 'demoadmin' || role === 'volunteer') ? (
                                                 <select
                                                     value={request.donation_status}
                                                     onChange={(e) => handleStatusChange(request._id, e.target.value)}
@@ -305,21 +315,27 @@ const AllRequest = () => {
                                                 <span className="font-semibold text-base-content">{request.donation_status}</span>
                                             )}
                                         </td>
-                                        {role === 'admin' && (
+                                        {(role === 'admin' || role === 'demoadmin') && (
                                             <td className="border-2 border-base-300 px-4 py-3">
                                                 <div className='flex gap-2'>
-                                                    <Link
-                                                        to={`/dashboard/edit-request/${request._id}`}
-                                                        className="btn bg-blue-500 hover:bg-blue-600 text-white border-0 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 flex items-center gap-2"
+                                                    <Button
+                                                        variant="accent"
+                                                        size="sm"
+                                                        onClick={() => {
+                                                            if (!checkDemoRestriction()) {
+                                                                window.location.href = `/dashboard/edit-request/${request._id}`;
+                                                            }
+                                                        }}
                                                     >
                                                         <FaEdit /> Edit
-                                                    </Link>
-                                                    <button
+                                                    </Button>
+                                                    <Button
+                                                        variant="primary"
+                                                        size="sm"
                                                         onClick={() => handleDelete(request._id)}
-                                                        className='btn bg-red-500 hover:bg-red-600 text-white border-0 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 flex items-center gap-2'
                                                     >
                                                         <MdDelete size={20} /> Delete
-                                                    </button>
+                                                    </Button>
                                                 </div>
                                             </td>
                                         )}

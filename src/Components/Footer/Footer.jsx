@@ -111,21 +111,10 @@ const Footer = () => {
         </div>
         
         {/* Bottom Section */}
-        <div className="border-t border-gray-700 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-gray-400 text-center md:text-left">
+        <div className="border-t border-gray-700 pt-8 justify-center align-center items-center gap-4">
+          <p className="text-gray-400 text-center">
             © {new Date().getFullYear()} Hemovia. All rights reserved.
           </p>
-          <div className="flex flex-wrap justify-center md:justify-end gap-6 text-sm">
-            <Link to="/donation-requests" className="text-gray-400 hover:text-white transition">
-              Privacy Policy
-            </Link>
-            <Link to="/donation-requests" className="text-gray-400 hover:text-white transition">
-              Terms of Service
-            </Link>
-            <Link to="/donation-requests" className="text-gray-400 hover:text-white transition">
-              Help Center
-            </Link>
-          </div>
         </div>
       </div>
     </footer>

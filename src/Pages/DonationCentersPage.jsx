@@ -3,6 +3,8 @@ import { Link } from 'react-router';
 import { MapPin, Phone, Clock, Navigation, Search, Star, Award, Building, ChevronDown, ExternalLink, Droplet, Shield, CheckCircle, Globe, Users } from 'lucide-react';
 import axios from 'axios';
 import SkeletonLoader from '../Components/SkeletonLoader/SkeletonLoader';
+import { Card, Button } from '../Components/UI';
+import { TYPOGRAPHY, LAYOUT, SPACING } from '../styles/designSystem';
 
 const DonationCentersPage = () => {
   const [selectedDivision, setSelectedDivision] = useState('All');
@@ -265,7 +267,7 @@ const DonationCentersPage = () => {
           ) : (
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
               <div className="group bg-base-200 border-2 border-base-300 rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 hover:border-red-200 dark:hover:border-red-900/50 hover:shadow-xl transition-all">
-                <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-linear-to-br from-red-500 to-red-600 rounded-xl sm:rounded-2xl flex items-center justify-center mb-3 sm:mb-4 md:mb-6 group-hover:scale-110 transition-transform shadow-lg shadow-red-200 dark:shadow-red-900/30">
+                <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-gradient-to-br from-red-500 to-red-600 rounded-xl sm:rounded-2xl flex items-center justify-center mb-3 sm:mb-4 md:mb-6 group-hover:scale-110 transition-transform shadow-lg shadow-red-200 dark:shadow-red-900/30">
                   <Building className="text-white" size={20} />
                 </div>
                 <h3 className="text-xl sm:text-2xl md:text-3xl font-black text-base-content mb-1 sm:mb-2 tabular-nums">{animatedStats.centers}</h3>
@@ -274,7 +276,7 @@ const DonationCentersPage = () => {
                 </p>
               </div>
               <div className="group bg-base-200 border-2 border-base-300 rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 hover:border-blue-200 dark:hover:border-blue-900/50 hover:shadow-xl transition-all">
-                <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-linear-to-br from-blue-500 to-blue-600 rounded-xl sm:rounded-2xl flex items-center justify-center mb-3 sm:mb-4 md:mb-6 group-hover:scale-110 transition-transform shadow-lg shadow-blue-200 dark:shadow-blue-900/30">
+                <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl sm:rounded-2xl flex items-center justify-center mb-3 sm:mb-4 md:mb-6 group-hover:scale-110 transition-transform shadow-lg shadow-blue-200 dark:shadow-blue-900/30">
                   <Globe className="text-white" size={20} />
                 </div>
                 <h3 className="text-xl sm:text-2xl md:text-3xl font-black text-base-content mb-1 sm:mb-2 tabular-nums">{animatedStats.divisions}</h3>
@@ -284,7 +286,7 @@ const DonationCentersPage = () => {
               </div>
 
               <div className="group bg-base-200 border-2 border-base-300 rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 hover:border-green-200 dark:hover:border-green-900/50 hover:shadow-xl transition-all">
-                <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-linear-to-br from-green-500 to-green-600 rounded-xl sm:rounded-2xl flex items-center justify-center mb-3 sm:mb-4 md:mb-6 group-hover:scale-110 transition-transform shadow-lg shadow-green-200 dark:shadow-green-900/30">
+                <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-gradient-to-br from-green-500 to-green-600 rounded-xl sm:rounded-2xl flex items-center justify-center mb-3 sm:mb-4 md:mb-6 group-hover:scale-110 transition-transform shadow-lg shadow-green-200 dark:shadow-green-900/30">
                   <Shield className="text-white" size={20} />
                 </div>
                 <h3 className="text-xl sm:text-2xl md:text-3xl font-black text-base-content mb-1 sm:mb-2 tabular-nums">{animatedStats.verified}</h3>

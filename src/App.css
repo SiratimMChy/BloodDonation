@@ -1,0 +1,29 @@
+/* Import Global Design System Styles */
+@import './styles/globals.css';
+
+/* App-specific styles */
+.App {
+  text-align: center;
+}
+
+/* Ensure consistent styling across the app */
+* {
+  box-sizing: border-box;
+}
+
+/* Remove default margins and paddings */
+body, html {
+  margin: 0;
+  padding: 0;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Focus styles for accessibility */
+*:focus {
+  outline: 2px solid var(--color-primary-600);
+  outline-offset: 2px;
+}

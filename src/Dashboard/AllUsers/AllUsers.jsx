@@ -3,6 +3,8 @@ import useAxiosSecure from '../../Hooks/useAxiosSecure';
 import { AuthContext } from '../../Provider/AuthProvider';
 import SkeletonLoader from '../../Components/SkeletonLoader/SkeletonLoader';
 import { useDemoRestriction } from '../../Hooks/useDemoRestriction';
+import { Card, Button } from '../../Components/UI';
+import { TYPOGRAPHY, LAYOUT, SPACING } from '../../styles/designSystem';
 
 const AllUsers = () => {
 
@@ -99,12 +101,12 @@ const AllUsers = () => {
             {/* Header */}
             <div className="text-center mb-12">
                 <div className="relative mb-8">
-                    <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-base-content mb-4 tracking-tight">
+                    <h1 className={`${TYPOGRAPHY.heading.h1} mb-4 tracking-tight`}>
                         All <span className="bg-gradient-to-r from-blue-500 to-indigo-600 bg-clip-text text-transparent">Users</span>
                     </h1>
                     <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full"></div>
                 </div>
-                <p className="text-base-content/60 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed">
+                <p className={`${TYPOGRAPHY.body.large} max-w-2xl mx-auto`}>
                     Manage user roles, permissions, and access control across the platform
                 </p>
             </div>
@@ -125,7 +127,7 @@ const AllUsers = () => {
                                     <th className="border-2 border-base-300 px-4 py-3 text-left font-bold text-base-content">Name</th>
                                     <th className="border-2 border-base-300 px-4 py-3 text-left font-bold text-base-content">Role</th>
                                     <th className="border-2 border-base-300 px-4 py-3 text-left font-bold text-base-content">Status</th>
-                                    {role === 'admin' && (
+                                    {(role === 'admin' || role === 'demoadmin') && (
                                         <>
                                             <th className="border-2 border-base-300 px-4 py-3 text-left font-bold text-base-content">Actions</th>
                                             <th className="border-2 border-base-300 px-4 py-3 text-left font-bold text-base-content">Role Management</th>
@@ -160,39 +162,44 @@ const AllUsers = () => {
                                         <td className="border-2 border-base-300 px-4 py-3 font-semibold text-base-content">{userItem?.role}</td>
                                         <td className="border-2 border-base-300 px-4 py-3 font-semibold text-base-content">{userItem?.status}</td>
 
-                                        {role === 'admin' && (
+                                        {(role === 'admin' || role === 'demoadmin') && (
                                             <td className="border-2 border-base-300 px-4 py-3">
                                                 <div className="flex gap-2">
                                                     {userItem?.status !== 'active' ? (
-                                                        <button
+                                                        <Button
+                                                            variant="success"
+                                                            size="sm"
                                                             onClick={() => handleStatusChange(userItem?.email, 'active')}
-                                                            className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg text-xs transition-colors duration-200"
                                                         >
                                                             Active
-                                                        </button>
+                                                        </Button>
                                                     ) : (
-                                                        <button
+                                                        <Button
+                                                            variant="primary"
+                                                            size="sm"
                                                             onClick={() => handleStatusChange(userItem?.email, 'blocked')}
-                                                            className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg text-xs transition-colors duration-200"
                                                         >
                                                             Block
-                                                        </button>
+                                                        </Button>
                                                     )}
                                                 </div>
                                             </td>
                                         )}
 
-                                        {role === 'admin' && (
+                                        {(role === 'admin' || role === 'demoadmin') && (
                                             <td className="border-2 border-base-300 px-4 py-3">
-                                                <button
-                                                    className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg text-xs transition-colors duration-200"
+                                                <Button
+                                                    variant="accent"
+                                                    size="sm"
                                                     onClick={() => {
-                                                        setSelectedUser(userItem);
-                                                        document.getElementById('my_modal_3').showModal();
+                                                        if (!checkDemoRestriction()) {
+                                                            setSelectedUser(userItem);
+                                                            document.getElementById('my_modal_3').showModal();
+                                                        }
                                                     }}
                                                 >
                                                     Edit Role
-                                                </button>
+                                                </Button>
                                             </td>
                                         )}
                                     </tr>
@@ -204,7 +211,7 @@ const AllUsers = () => {
                     {/* Mobile Card View */}
                     <div className="md:hidden space-y-4">
                         {users.map((userItem, index) => (
-                            <div key={userItem._id} className="bg-base-200 border-2 border-base-300 rounded-lg shadow-lg p-4">
+                            <Card key={userItem._id} interactive className="p-4">
                                 <div className="flex items-start gap-3 mb-3">
                                     <div className="avatar">
                                         <div className="mask mask-squircle h-12 w-12">
@@ -234,35 +241,43 @@ const AllUsers = () => {
                                     </div>
                                 </div>
 
-                                {role === 'admin' && (
+                                {(role === 'admin' || role === 'demoadmin') && (
                                     <div className="flex gap-2 flex-wrap">
                                         {userItem?.status !== 'active' ? (
-                                            <button
+                                            <Button
+                                                variant="success"
+                                                size="sm"
                                                 onClick={() => handleStatusChange(userItem?.email, 'active')}
-                                                className="flex-1 bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg text-xs transition-colors duration-200"
+                                                className="flex-1"
                                             >
                                                 Active
-                                            </button>
+                                            </Button>
                                         ) : (
-                                            <button
+                                            <Button
+                                                variant="primary"
+                                                size="sm"
                                                 onClick={() => handleStatusChange(userItem?.email, 'blocked')}
-                                                className="flex-1 bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg text-xs transition-colors duration-200"
+                                                className="flex-1"
                                             >
                                                 Block
-                                            </button>
+                                            </Button>
                                         )}
-                                        <button
-                                            className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg text-xs transition-colors duration-200"
+                                        <Button
+                                            variant="accent"
+                                            size="sm"
                                             onClick={() => {
-                                                setSelectedUser(userItem);
-                                                document.getElementById('my_modal_3').showModal();
+                                                if (!checkDemoRestriction()) {
+                                                    setSelectedUser(userItem);
+                                                    document.getElementById('my_modal_3').showModal();
+                                                }
                                             }}
+                                            className="flex-1"
                                         >
                                             Edit Role
-                                        </button>
+                                        </Button>
                                     </div>
                                 )}
-                            </div>
+                            </Card>
                         ))}
                     </div>
 
@@ -385,12 +400,13 @@ const AllUsers = () => {
                             </div>
 
                             <div className="flex justify-center">
-                                <button
+                                <Button
                                     type="submit"
-                                    className="btn bg-blue-600 hover:bg-blue-700 text-white w-full"
+                                    variant="accent"
+                                    className="w-full"
                                 >
                                     Update Role
-                                </button>
+                                </Button>
                             </div>
                         </form>
                     )}

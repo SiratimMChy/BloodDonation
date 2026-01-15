@@ -5,6 +5,8 @@ import { Link } from 'react-router';
 import Swal from 'sweetalert2';
 import { Heart, Clock, CheckCircle, XCircle, AlertCircle, Eye, Edit, Trash2 } from 'lucide-react';
 import { useDemoRestriction } from '../../Hooks/useDemoRestriction';
+import { Card, Button } from '../../Components/UI';
+import { TYPOGRAPHY, LAYOUT, SPACING } from '../../styles/designSystem';
 
 const MyRequest = () => {
     const [totalRequests, setTotalRequests] = useState(0);
@@ -149,37 +151,39 @@ const MyRequest = () => {
 
     return (
         <div className="min-h-screen bg-base-100 p-4 sm:p-6 lg:p-8">
-            <div className="max-w-7xl mx-auto">
+            <div className={LAYOUT.container}>
                 {/* Header */}
-                <div className="mb-6 sm:mb-8">
+                <div className={SPACING.marginXl}>
                     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
                         <div>
-                            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-base-content mb-2">
+                            <h1 className={`${TYPOGRAPHY.heading.h2} mb-2`}>
                                 My Donation Requests
                             </h1>
-                            <p className="text-base-content/70 text-sm sm:text-base">
+                            <p className={TYPOGRAPHY.body.default}>
                                 Manage and track your blood donation requests
                             </p>
                         </div>
-                        <Link
+                        <Button
+                            as={Link}
                             to="/dashboard/addRequest"
-                            className="btn bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white border-0 shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 flex items-center gap-2 w-full sm:w-auto"
+                            variant="primary"
+                            className="w-full sm:w-auto flex items-center gap-2"
                         >
                             <FaPlus className="w-4 h-4" />
                             <span>Add New Request</span>
-                        </Link>
+                        </Button>
                     </div>
 
                     {/* Stats Cards */}
-                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-6">
-                        <div className="bg-base-200 border-2 border-base-300 rounded-xl p-3 sm:p-4 text-center hover:border-red-200 dark:hover:border-red-900/50 transition-all">
+                    <div className={`${LAYOUT.grid.stats} ${SPACING.marginMd}`}>
+                        <Card className="text-center hover:border-red-200 dark:hover:border-red-900/50 transition-all">
                             <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-red-500 to-red-600 rounded-lg flex items-center justify-center mx-auto mb-2 shadow-lg">
                                 <Heart className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
                             </div>
                             <p className="text-lg sm:text-xl font-bold text-base-content">{totalRequests}</p>
                             <p className="text-xs sm:text-sm text-base-content/70 font-semibold">Total Requests</p>
-                        </div>
-                        <div className="bg-base-200 border-2 border-base-300 rounded-xl p-3 sm:p-4 text-center hover:border-yellow-200 dark:hover:border-yellow-900/50 transition-all">
+                        </Card>
+                        <Card className="text-center hover:border-yellow-200 dark:hover:border-yellow-900/50 transition-all">
                             <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-yellow-500 to-yellow-600 rounded-lg flex items-center justify-center mx-auto mb-2 shadow-lg">
                                 <AlertCircle className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
                             </div>
@@ -187,8 +191,8 @@ const MyRequest = () => {
                                 {myRequests.filter(r => r.donation_status === 'pending').length}
                             </p>
                             <p className="text-xs sm:text-sm text-base-content/70 font-semibold">Pending</p>
-                        </div>
-                        <div className="bg-base-200 border-2 border-base-300 rounded-xl p-3 sm:p-4 text-center hover:border-blue-200 dark:hover:border-blue-900/50 transition-all">
+                        </Card>
+                        <Card className="text-center hover:border-blue-200 dark:hover:border-blue-900/50 transition-all">
                             <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center mx-auto mb-2 shadow-lg">
                                 <Clock className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
                             </div>
@@ -196,8 +200,8 @@ const MyRequest = () => {
                                 {myRequests.filter(r => r.donation_status === 'inprogress').length}
                             </p>
                             <p className="text-xs sm:text-sm text-base-content/70 font-semibold">In Progress</p>
-                        </div>
-                        <div className="bg-base-200 border-2 border-base-300 rounded-xl p-3 sm:p-4 text-center hover:border-green-200 dark:hover:border-green-900/50 transition-all">
+                        </Card>
+                        <Card className="text-center hover:border-green-200 dark:hover:border-green-900/50 transition-all">
                             <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-green-500 to-green-600 rounded-lg flex items-center justify-center mx-auto mb-2 shadow-lg">
                                 <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
                             </div>
@@ -205,7 +209,7 @@ const MyRequest = () => {
                                 {myRequests.filter(r => r.donation_status === 'done').length}
                             </p>
                             <p className="text-xs sm:text-sm text-base-content/70 font-semibold">Completed</p>
-                        </div>
+                        </Card>
                     </div>
 
                     {/* Filter */}
@@ -257,7 +261,7 @@ const MyRequest = () => {
                 {myRequests.length > 0 && (
                     <div className="lg:hidden space-y-4">
                         {myRequests.map((request, index) => (
-                            <div key={request._id} className="bg-base-200 border-2 border-base-300 rounded-xl shadow-lg p-4 sm:p-6 hover:border-red-200 dark:hover:border-red-900/50 transition-all">
+                            <Card key={request._id} interactive className="p-4 sm:p-6 hover:border-red-200 dark:hover:border-red-900/50 transition-all">
                                 {/* Header */}
                                 <div className="flex justify-between items-start mb-4">
                                     <div className="flex items-center gap-2">
@@ -323,29 +327,40 @@ const MyRequest = () => {
 
                                 {/* Actions */}
                                 <div className="flex gap-2 pt-4 border-t border-base-300">
-                                    <Link
+                                    <Button
+                                        as={Link}
                                         to={`/dashboard/view-request/${request._id}`}
-                                        className="btn btn-sm flex-1 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white border-0 shadow-md hover:shadow-lg transition-all duration-300"
+                                        variant="success"
+                                        size="sm"
+                                        className="flex-1"
                                     >
                                         <Eye className="w-4 h-4" />
                                         <span className="hidden sm:inline">View</span>
-                                    </Link>
-                                    <Link
-                                        to={`/dashboard/edit-request/${request._id}`}
-                                        className="btn btn-sm flex-1 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white border-0 shadow-md hover:shadow-lg transition-all duration-300"
+                                    </Button>
+                                    <Button
+                                        variant="accent"
+                                        size="sm"
+                                        onClick={() => {
+                                            if (!checkDemoRestriction()) {
+                                                window.location.href = `/dashboard/edit-request/${request._id}`;
+                                            }
+                                        }}
+                                        className="flex-1"
                                     >
                                         <Edit className="w-4 h-4" />
                                         <span className="hidden sm:inline">Edit</span>
-                                    </Link>
-                                    <button
+                                    </Button>
+                                    <Button
+                                        variant="primary"
+                                        size="sm"
                                         onClick={() => handleDelete(request._id)}
-                                        className="btn btn-sm flex-1 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white border-0 shadow-md hover:shadow-lg transition-all duration-300"
+                                        className="flex-1"
                                     >
                                         <Trash2 className="w-4 h-4" />
                                         <span className="hidden sm:inline">Delete</span>
-                                    </button>
+                                    </Button>
                                 </div>
-                            </div>
+                            </Card>
                         ))}
                     </div>
                 )}
@@ -402,27 +417,35 @@ const MyRequest = () => {
                                         </td>
                                         <td className="px-4 py-4">
                                             <div className="flex gap-2 justify-center">
-                                                <Link
+                                                <Button
+                                                    as={Link}
                                                     to={`/dashboard/view-request/${request._id}`}
-                                                    className="btn btn-sm bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white border-0 shadow-md hover:shadow-lg transition-all duration-300"
+                                                    variant="success"
+                                                    size="sm"
                                                     title="View Details"
                                                 >
                                                     <Eye className="w-4 h-4" />
-                                                </Link>
-                                                <Link
-                                                    to={`/dashboard/edit-request/${request._id}`}
-                                                    className="btn btn-sm bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white border-0 shadow-md hover:shadow-lg transition-all duration-300"
+                                                </Button>
+                                                <Button
+                                                    variant="accent"
+                                                    size="sm"
+                                                    onClick={() => {
+                                                        if (!checkDemoRestriction()) {
+                                                            window.location.href = `/dashboard/edit-request/${request._id}`;
+                                                        }
+                                                    }}
                                                     title="Edit Request"
                                                 >
                                                     <Edit className="w-4 h-4" />
-                                                </Link>
-                                                <button
+                                                </Button>
+                                                <Button
+                                                    variant="primary"
+                                                    size="sm"
                                                     onClick={() => handleDelete(request._id)}
-                                                    className="btn btn-sm bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white border-0 shadow-md hover:shadow-lg transition-all duration-300"
                                                     title="Delete Request"
                                                 >
                                                     <Trash2 className="w-4 h-4" />
-                                                </button>
+                                                </Button>
                                             </div>
                                         </td>
                                     </tr>

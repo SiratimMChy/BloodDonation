@@ -3,6 +3,8 @@ import { AuthContext } from '../../Provider/AuthProvider';
 import useAxiosSecure from '../../Hooks/useAxiosSecure';
 import { Users, DollarSign, TrendingUp, Calendar, FileText, UserCheck, Heart, Activity } from 'lucide-react';
 import { MdBloodtype } from "react-icons/md";
+import { Card } from '../../Components/UI';
+import { COLORS, SPACING, TYPOGRAPHY, LAYOUT } from '../../styles/designSystem';
 
 const VolunteerDashboard = () => {
     const { user } = useContext(AuthContext);
@@ -102,119 +104,111 @@ const VolunteerDashboard = () => {
 
     return (
         <div className='mt-4 mb-3 bg-base-100 p-2 sm:p-4'>
-            <h1 className="font-bold text-center text-lg sm:text-xl md:text-2xl lg:text-3xl text-base-content/80 mb-6 sm:mb-8 lg:mb-12 px-2">
+            <h1 className={`${TYPOGRAPHY.heading.h2} font-bold text-center ${SPACING.marginXl} px-2`}>
                 Welcome, <span className='text-base-content font-extrabold'>{userData?.name}</span>! 
                 Support the life-saving mission as a volunteer.
             </h1>
 
             {/* Overview Cards */}
-            <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8 max-w-7xl mx-auto mb-6 sm:mb-8 lg:mb-12 px-2'>
-                {/* Total Donors Card */}
-                <div className='bg-base-200 rounded-lg sm:rounded-xl shadow-lg sm:shadow-xl border-2 border-base-300 p-4 sm:p-6 lg:p-8 hover:shadow-xl sm:hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1'>
-                    <div className='flex items-start justify-between mb-3 sm:mb-4 lg:mb-6'>
-                        <div className='bg-red-500 p-2 sm:p-3 lg:p-4 rounded-lg sm:rounded-xl shadow-lg'>
-                            <Users size={20} className='text-white sm:hidden' />
-                            <Users size={24} className='text-white hidden sm:block lg:hidden' />
-                            <Users size={28} className='text-white hidden lg:block' />
+            <div className={`${LAYOUT.grid.stats} ${LAYOUT.container} ${SPACING.marginXl} px-2`}>
+                {/* Lives Saved Card - Featured */}
+                <Card interactive className='hover:-translate-y-1 sm:col-span-2 lg:col-span-1'>
+                    <div className='flex items-start justify-between mb-6'>
+                        <div className='bg-gradient-to-br from-red-500 to-red-600 p-4 rounded-xl shadow-lg'>
+                            <MdBloodtype size={28} className='text-white' />
                         </div>
                     </div>
                     <div>
-                        <p className='text-base-content/60 text-xs sm:text-sm font-medium uppercase tracking-wide mb-1 sm:mb-2'>
+                        <p className='text-base-content/60 text-sm font-medium uppercase tracking-wide mb-2'>
+                            Lives Saved
+                        </p>
+                        <h2 className='text-4xl xl:text-5xl font-bold text-red-600 dark:text-red-400 mb-1'>
+                            {formatCount(requestStats.done)}
+                        </h2>
+                        <p className='text-base-content/50 text-sm'>Through volunteer support</p>
+                    </div>
+                    <div className='mt-6 pt-6 border-t-2 border-base-300'>
+                        <div className='flex items-center text-red-600 dark:text-red-400 text-sm font-semibold'>
+                            <span className='mr-1'>❤️</span> Life-saving impact
+                        </div>
+                    </div>
+                </Card>
+
+                {/* Total Donors Card */}
+                <Card interactive className='hover:-translate-y-1'>
+                    <div className='flex items-start justify-between mb-6'>
+                        <div className='bg-red-500 p-4 rounded-xl shadow-lg'>
+                            <Users size={28} className='text-white' />
+                        </div>
+                    </div>
+                    <div>
+                        <p className='text-base-content/60 text-sm font-medium uppercase tracking-wide mb-2'>
                             Total Donors
                         </p>
-                        <h2 className='text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-base-content mb-1'>
+                        <h2 className='text-4xl xl:text-5xl font-bold text-base-content mb-1'>
                             {formatCount(totalUsers)}
                         </h2>
-                        <p className='text-base-content/50 text-xs sm:text-sm'>Registered users</p>
+                        <p className='text-base-content/50 text-sm'>Registered users</p>
                     </div>
-                    <div className='mt-3 sm:mt-4 lg:mt-6 pt-3 sm:pt-4 lg:pt-6 border-t-2 border-base-300'>
-                        <div className='flex items-center text-green-600 dark:text-green-400 text-xs sm:text-sm font-semibold'>
+                    <div className='mt-6 pt-6 border-t-2 border-base-300'>
+                        <div className='flex items-center text-green-600 dark:text-green-400 text-sm font-semibold'>
                             <span className='mr-1'>●</span> Active
                         </div>
                     </div>
-                </div>
+                </Card>
 
                 {/* Total Volunteers Card */}
-                <div className='bg-base-200 rounded-lg sm:rounded-xl shadow-lg sm:shadow-xl border-2 border-base-300 p-4 sm:p-6 lg:p-8 hover:shadow-xl sm:hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1'>
-                    <div className='flex items-start justify-between mb-3 sm:mb-4 lg:mb-6'>
-                        <div className='bg-red-600 p-2 sm:p-3 lg:p-4 rounded-lg sm:rounded-xl shadow-lg'>
-                            <Heart size={20} className='text-white sm:hidden' />
-                            <Heart size={24} className='text-white hidden sm:block lg:hidden' />
-                            <Heart size={28} className='text-white hidden lg:block' />
+                <Card interactive className='hover:-translate-y-1'>
+                    <div className='flex items-start justify-between mb-6'>
+                        <div className='bg-blue-600 p-4 rounded-xl shadow-lg'>
+                            <Heart size={28} className='text-white' />
                         </div>
                     </div>
                     <div>
-                        <p className='text-base-content/60 text-xs sm:text-sm font-medium uppercase tracking-wide mb-1 sm:mb-2'>
+                        <p className='text-base-content/60 text-sm font-medium uppercase tracking-wide mb-2'>
                             Volunteers
                         </p>
-                        <h2 className='text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-base-content mb-1'>
+                        <h2 className='text-4xl xl:text-5xl font-bold text-base-content mb-1'>
                             {formatCount(volunteerStats.totalVolunteers)}
                         </h2>
-                        <p className='text-base-content/50 text-xs sm:text-sm'>Active volunteers</p>
+                        <p className='text-base-content/50 text-sm'>Active volunteers</p>
                     </div>
-                    <div className='mt-3 sm:mt-4 lg:mt-6 pt-3 sm:pt-4 lg:pt-6 border-t-2 border-base-300'>
-                        <div className='flex items-center text-red-600 dark:text-red-400 text-xs sm:text-sm font-semibold'>
-                            <span className='mr-1'>❤️</span> Helping
+                    <div className='mt-6 pt-6 border-t-2 border-base-300'>
+                        <div className='flex items-center text-blue-600 dark:text-blue-400 text-sm font-semibold'>
+                            <span className='mr-1'>🤝</span> Helping
                         </div>
                     </div>
-                </div>
+                </Card>
 
                 {/* Total Funding Card */}
-                <div className='bg-base-200 rounded-lg sm:rounded-xl shadow-lg sm:shadow-xl border-2 border-base-300 p-4 sm:p-6 lg:p-8 hover:shadow-xl sm:hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1'>
-                    <div className='flex items-start justify-between mb-3 sm:mb-4 lg:mb-6'>
-                        <div className='bg-green-600 p-2 sm:p-3 lg:p-4 rounded-lg sm:rounded-xl shadow-lg'>
-                            <DollarSign size={20} className='text-white sm:hidden' />
-                            <DollarSign size={24} className='text-white hidden sm:block lg:hidden' />
-                            <DollarSign size={28} className='text-white hidden lg:block' />
+                <Card interactive className='hover:-translate-y-1'>
+                    <div className='flex items-start justify-between mb-6'>
+                        <div className='bg-green-600 p-4 rounded-xl shadow-lg'>
+                            <DollarSign size={28} className='text-white' />
                         </div>
                     </div>
                     <div>
-                        <p className='text-base-content/60 text-xs sm:text-sm font-medium uppercase tracking-wide mb-1 sm:mb-2'>
+                        <p className='text-base-content/60 text-sm font-medium uppercase tracking-wide mb-2'>
                             Total Funding
                         </p>
-                        <h2 className='text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-base-content mb-1'>
+                        <h2 className='text-4xl xl:text-5xl font-bold text-base-content mb-1'>
                             ${totalFunding.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                         </h2>
-                        <p className='text-base-content/50 text-xs sm:text-sm'>Funds collected</p>
+                        <p className='text-base-content/50 text-sm'>Funds collected</p>
                     </div>
-                    <div className='mt-3 sm:mt-4 lg:mt-6 pt-3 sm:pt-4 lg:pt-6 border-t-2 border-base-300'>
-                        <div className='flex items-center text-green-600 dark:text-green-400 text-xs sm:text-sm font-semibold'>
+                    <div className='mt-6 pt-6 border-t-2 border-base-300'>
+                        <div className='flex items-center text-green-600 dark:text-green-400 text-sm font-semibold'>
                             <span className='mr-1'>↑</span> Growing
                         </div>
                     </div>
-                </div>
-
-                {/* Total Blood Donation Requests Card */}
-                <div className='bg-base-200 rounded-lg sm:rounded-xl shadow-lg sm:shadow-xl border-2 border-base-300 p-4 sm:p-6 lg:p-8 hover:shadow-xl sm:hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1'>
-                    <div className='flex items-start justify-between mb-3 sm:mb-4 lg:mb-6'>
-                        <div className='bg-red-600 p-2 sm:p-3 lg:p-4 rounded-lg sm:rounded-xl shadow-lg'>
-                            <MdBloodtype size={20} className='text-white sm:hidden' />
-                            <MdBloodtype size={24} className='text-white hidden sm:block lg:hidden' />
-                            <MdBloodtype size={28} className='text-white hidden lg:block' />
-                        </div>
-                    </div>
-                    <div>
-                        <p className='text-base-content/60 text-xs sm:text-sm font-medium uppercase tracking-wide mb-1 sm:mb-2'>
-                            Blood Requests
-                        </p>
-                        <h2 className='text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-base-content mb-1'>
-                            {formatCount(totalRequests)}
-                        </h2>
-                        <p className='text-base-content/50 text-xs sm:text-sm'>Total requests</p>
-                    </div>
-                    <div className='mt-3 sm:mt-4 lg:mt-6 pt-3 sm:pt-4 lg:pt-6 border-t-2 border-base-300'>
-                        <div className='flex items-center text-blue-600 dark:text-blue-400 text-xs sm:text-sm font-semibold'>
-                            <span className='mr-1'>📋</span> Tracking
-                        </div>
-                    </div>
-                </div>
+                </Card>
             </div>
 
             {/* Charts Section */}
-            <div className='grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 lg:gap-8 max-w-7xl mx-auto mb-6 sm:mb-8 lg:mb-12 px-2'>
+            <div className={`${LAYOUT.grid.cards} ${LAYOUT.container} ${SPACING.marginXl} px-2`}>
                 {/* Request Status Distribution Chart */}
-                <div className='bg-base-200 rounded-lg sm:rounded-xl shadow-lg sm:shadow-xl border-2 border-base-300 p-4 sm:p-6'>
-                    <h3 className='text-base sm:text-lg font-bold text-base-content mb-4 sm:mb-6 flex items-center gap-2'>
+                <Card className='hover:-translate-y-1'>
+                    <h3 className={`${TYPOGRAPHY.heading.h4} mb-4 sm:mb-6 flex items-center gap-2`}>
                         <TrendingUp className='text-red-600' size={20} />
                         <span className='hidden sm:inline'>Request Status Distribution</span>
                         <span className='sm:hidden'>Status Distribution</span>
@@ -281,11 +275,11 @@ const VolunteerDashboard = () => {
                             </div>
                         </div>
                     </div>
-                </div>
+                </Card>
 
                 {/* Volunteer Impact Overview */}
-                <div className='bg-base-200 rounded-lg sm:rounded-xl shadow-lg sm:shadow-xl border-2 border-base-300 p-4 sm:p-6'>
-                    <h3 className='text-base sm:text-lg font-bold text-base-content mb-4 sm:mb-6 flex items-center gap-2'>
+                <Card className='hover:-translate-y-1'>
+                    <h3 className={`${TYPOGRAPHY.heading.h4} mb-4 sm:mb-6 flex items-center gap-2`}>
                         <Activity className='text-red-600' size={20} />
                         <span className='hidden sm:inline'>Volunteer Impact</span>
                         <span className='sm:hidden'>Impact</span>
@@ -324,14 +318,14 @@ const VolunteerDashboard = () => {
                             </div>
                         </div>
                     </div>
-                </div>
+                </Card>
             </div>
 
             {/* Data Tables Section */}
-            <div className='grid grid-cols-1 xl:grid-cols-2 gap-4 sm:gap-6 lg:gap-8 max-w-7xl mx-auto px-2'>
+            <div className={`${LAYOUT.grid.cards} ${LAYOUT.container} px-2`}>
                 {/* Recent Requests Table */}
-                <div className='bg-base-200 rounded-lg sm:rounded-xl shadow-lg sm:shadow-xl border-2 border-base-300 p-4 sm:p-6'>
-                    <h3 className='text-base sm:text-lg font-bold text-base-content mb-4 sm:mb-6 flex items-center gap-2'>
+                <Card className='hover:-translate-y-1'>
+                    <h3 className={`${TYPOGRAPHY.heading.h4} mb-4 sm:mb-6 flex items-center gap-2`}>
                         <FileText className='text-red-600' size={20} />
                         <span className='hidden sm:inline'>Recent Blood Requests</span>
                         <span className='sm:hidden'>Recent Requests</span>
@@ -378,11 +372,11 @@ const VolunteerDashboard = () => {
                             <p className='text-base-content/60 font-medium text-sm sm:text-base'>No recent requests</p>
                         </div>
                     )}
-                </div>
+                </Card>
 
                 {/* Recent Users Table */}
-                <div className='bg-base-200 rounded-lg sm:rounded-xl shadow-lg sm:shadow-xl border-2 border-base-300 p-4 sm:p-6'>
-                    <h3 className='text-base sm:text-lg font-bold text-base-content mb-4 sm:mb-6 flex items-center gap-2'>
+                <Card className='hover:-translate-y-1'>
+                    <h3 className={`${TYPOGRAPHY.heading.h4} mb-4 sm:mb-6 flex items-center gap-2`}>
                         <UserCheck className='text-red-600' size={20} />
                         Recent Users
                     </h3>
@@ -426,7 +420,7 @@ const VolunteerDashboard = () => {
                             <p className='text-base-content/60 font-medium text-sm sm:text-base'>No recent users</p>
                         </div>
                     )}
-                </div>
+                </Card>
             </div>
         </div>
     );

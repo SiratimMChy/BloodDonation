@@ -313,7 +313,11 @@ const ViewRequest = () => {
                             {user?.email === requestData.requesterEmail && (
                                 <>
                                     <button
-                                        onClick={() => navigate(`/dashboard/edit-request/${id}`)}
+                                        onClick={() => {
+                                            if (!checkDemoRestriction()) {
+                                                navigate(`/dashboard/edit-request/${id}`);
+                                            }
+                                        }}
                                         className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white py-3 sm:py-4 px-4 sm:px-6 rounded-xl font-bold text-sm sm:text-base transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 flex items-center justify-center gap-2"
                                     >
                                         <Edit className="w-4 h-4 sm:w-5 sm:h-5" />
