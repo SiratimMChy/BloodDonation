@@ -140,7 +140,7 @@ const Home = () => {
   return (
    <div className="min-h-screen bg-base-100">
       {/* Banner Section */}
-     <div className="relative h-[60vh] md:h-[65vh] lg:h-[70vh] bg-base-100 overflow-hidden flex items-center">
+     <div className="relative min-h-[70vh] sm:h-[60vh] md:h-[65vh] lg:h-[70vh] bg-base-100 overflow-hidden flex items-center py-8 sm:py-0">
         {/* Background Pattern */}
         <div className="absolute inset-0 bg-gradient-to-br from-red-50 via-white to-rose-50 dark:from-base-200 dark:via-base-100 dark:to-base-200">
           <div className="absolute inset-0 opacity-30 dark:opacity-10" style={{
@@ -150,92 +150,92 @@ const Home = () => {
         </div>
 
         {/* Decorative Blobs */}
-        <div className="absolute top-0 right-0 w-64 h-64 md:w-96 md:h-96 bg-red-200 dark:bg-red-900/20 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse"></div>
-        <div className="absolute bottom-0 left-0 w-64 h-64 md:w-96 md:h-96 bg-rose-200 dark:bg-rose-900/20 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse" style={{ animationDelay: '2s' }}></div>
+        <div className="absolute top-0 right-0 w-48 h-48 sm:w-64 sm:h-64 md:w-96 md:h-96 bg-red-200 dark:bg-red-900/20 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse"></div>
+        <div className="absolute bottom-0 left-0 w-48 h-48 sm:w-64 sm:h-64 md:w-96 md:h-96 bg-rose-200 dark:bg-rose-900/20 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse" style={{ animationDelay: '2s' }}></div>
 
-        <div className="relative container mx-auto px-4 py-4 md:py-6 lg:py-8">
-          <div className="grid lg:grid-cols-2 gap-4 md:gap-6 lg:gap-8 items-center max-w-7xl mx-auto">
+        <div className="relative container mx-auto px-4 py-6 sm:py-4 md:py-6 lg:py-8">
+          <div className="grid md:grid-cols-2 gap-6 sm:gap-4 md:gap-6 lg:gap-8 items-center max-w-7xl mx-auto">
             {/* Left Content */}
-            <div className="space-y-3 md:space-y-4 lg:space-y-5">
+            <div className="space-y-4 sm:space-y-3 md:space-y-4 lg:space-y-5 text-center md:text-left">
               {/* Badge */}
-              <div className="inline-flex items-center gap-2 bg-base-200 border-2 border-red-100 dark:border-red-900/50 px-3 md:px-4 py-1.5 md:py-2 rounded-full shadow-sm">
+              <div className="inline-flex items-center gap-2 bg-base-200 border-2 border-red-100 dark:border-red-900/50 px-3 md:px-4 py-2 md:py-2 rounded-full shadow-sm">
                 <div className="w-4 h-4 md:w-5 md:h-5 bg-gradient-to-br from-red-500 to-red-600 rounded-full flex items-center justify-center shrink-0 shadow-sm">
                   <Droplet className="text-white" size={10} />
                 </div>
-                <span className="text-red-600 dark:text-red-400 font-bold text-xs">Save Lives • Make Impact</span>
+                <span className="text-red-600 dark:text-red-400 font-bold text-xs sm:text-xs">Save Lives • Make Impact</span>
               </div>
 
               {/* Main Heading */}
               <div>
-                <h1 className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-black text-base-content leading-tight mb-1 md:mb-2">
+                <h1 className="text-3xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-black text-base-content leading-tight mb-2 md:mb-2">
                   Donate<span className="bg-gradient-to-r from-red-600 to-rose-600 bg-clip-text text-transparent">Blood</span>
                 </h1>
-                <div className="flex items-center gap-2">
-                  <div className="h-0.5 w-8 md:w-12 bg-gradient-to-r from-red-600 to-rose-600 rounded-full"></div>
-                  <p className="text-sm md:text-base lg:text-lg font-bold text-base-content/80">Give Life</p>
+                <div className="flex items-center gap-2 justify-center md:justify-start">
+                  <div className="h-0.5 w-10 sm:w-8 md:w-12 bg-gradient-to-r from-red-600 to-rose-600 rounded-full"></div>
+                  <p className="text-base sm:text-sm md:text-base lg:text-lg font-bold text-base-content/80">Give Life</p>
                 </div>
               </div>
 
               {/* Description */}
-              <p className="text-xs md:text-sm lg:text-base text-base-content/70 leading-relaxed max-w-xl font-medium">
+              <p className="text-sm sm:text-xs md:text-sm lg:text-base text-base-content/70 leading-relaxed max-w-xl font-medium mx-auto md:mx-0">
                 Join our community of heroes making a real difference. Every donation saves up to three lives and brings hope to families in critical need.
               </p>
 
               {/* CTA Buttons */}
-              <div className="flex flex-col sm:flex-row gap-2 md:gap-3">
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-2 md:gap-3 justify-center md:justify-start">
                 <Button
                   as="a"
                   href="/signup"
                   variant="primary"
-                  className="group inline-flex items-center justify-center gap-2 px-4 md:px-6 lg:px-7 py-2 md:py-2.5 lg:py-3 text-xs md:text-sm hover:scale-105"
+                  className="group inline-flex items-center justify-center gap-2 px-6 sm:px-4 md:px-6 lg:px-7 py-3 sm:py-2 md:py-2.5 lg:py-3 text-sm sm:text-xs md:text-sm hover:scale-105"
                 >
-                  <Heart size={16} className="md:w-4 md:h-4 group-hover:scale-110 transition-transform" />
+                  <Heart size={16} className="sm:w-3 sm:h-3 md:w-4 md:h-4 group-hover:scale-110 transition-transform" />
                   <span>Join as a Donor</span>
                 </Button>
                 <Button
                   as="a"
                   href="/search"
                   variant="secondary"
-                  className="group inline-flex items-center justify-center gap-2 px-4 md:px-6 lg:px-7 py-2 md:py-2.5 lg:py-3 text-xs md:text-sm hover:scale-105"
+                  className="group inline-flex items-center justify-center gap-2 px-6 sm:px-4 md:px-6 lg:px-7 py-3 sm:py-2 md:py-2.5 lg:py-3 text-sm sm:text-xs md:text-sm hover:scale-105"
                 >
-                  <Search size={16} className="md:w-4 md:h-4 group-hover:scale-110 transition-transform" />
+                  <Search size={16} className="sm:w-3 sm:h-3 md:w-4 md:h-4 group-hover:scale-110 transition-transform" />
                   <span>Search Donors</span>
                 </Button>
               </div>
 
               {isStatsLoading ? (
-                <div className="grid grid-cols-3 gap-1.5 sm:gap-2 pt-1 md:pt-2">
+                <div className="grid grid-cols-3 gap-2 sm:gap-1.5 md:gap-2 pt-4 sm:pt-1 md:pt-2 max-w-md mx-auto lg:mx-0">
                   {Array.from({ length: 3 }).map((_, index) => (
-                    <div key={index} className="bg-base-200 border-2 border-base-300 rounded-2xl p-2 md:p-2.5 animate-pulse">
-                      <div className="flex items-center gap-1 mb-1">
-                        <div className="w-2.5 h-2.5 bg-base-300 rounded"></div>
+                    <div key={index} className="bg-base-200 border-2 border-base-300 rounded-xl p-3 sm:p-2 md:p-2.5 animate-pulse">
+                      <div className="flex items-center gap-1 mb-2 sm:mb-1">
+                        <div className="w-3 h-3 sm:w-2.5 sm:h-2.5 bg-base-300 rounded"></div>
                       </div>
-                      <div className="h-4 md:h-5 bg-base-300 rounded mb-1"></div>
-                      <div className="h-2 bg-base-300 rounded w-3/4"></div>
+                      <div className="h-5 sm:h-4 md:h-5 bg-base-300 rounded mb-1"></div>
+                      <div className="h-3 sm:h-2 bg-base-300 rounded w-3/4"></div>
                     </div>
                   ))}
                 </div>
               ) : (
-                <div className={`${LAYOUT.grid.stats} pt-1 md:pt-2`}>
-                  <Card className="p-2 md:p-2.5 hover:border-red-200 dark:hover:border-red-900/50 transition shadow-sm hover:shadow-lg">
-                    <div className="flex items-center gap-1 mb-1">
-                      <Users className="text-red-600" size={12} />
+                <div className="grid grid-cols-3 gap-2 sm:gap-1.5 md:gap-2 pt-4 sm:pt-1 md:pt-2 max-w-md mx-auto lg:mx-0">
+                  <Card className="p-3 sm:p-2 md:p-2.5 hover:border-red-200 dark:hover:border-red-900/50 transition shadow-sm hover:shadow-lg text-center">
+                    <div className="flex items-center justify-center gap-1 mb-2 sm:mb-1">
+                      <Users className="text-red-600" size={14} />
                     </div>
-                    <p className="text-base sm:text-lg md:text-xl font-black text-base-content">{formatCount(apiStats.totalDonors)}</p>
+                    <p className="text-lg sm:text-base md:text-lg lg:text-xl font-black text-base-content">{formatCount(apiStats.totalDonors)}</p>
                     <p className="text-xs text-base-content/70 font-semibold">Active Donors</p>
                   </Card>
-                  <Card className="p-2 md:p-2.5 hover:border-red-200 dark:hover:border-red-900/50 transition shadow-sm hover:shadow-lg">
-                    <div className="flex items-center gap-1 mb-1">
-                      <Heart className="text-red-600 fill-red-600" size={12} />
+                  <Card className="p-3 sm:p-2 md:p-2.5 hover:border-red-200 dark:hover:border-red-900/50 transition shadow-sm hover:shadow-lg text-center">
+                    <div className="flex items-center justify-center gap-1 mb-2 sm:mb-1">
+                      <Heart className="text-red-600 fill-red-600" size={14} />
                     </div>
-                    <p className="text-base sm:text-lg md:text-xl font-black text-base-content">{livesSaved}</p>
+                    <p className="text-lg sm:text-base md:text-lg lg:text-xl font-black text-base-content">{livesSaved}</p>
                     <p className="text-xs text-base-content/70 font-semibold">Lives Saved</p>
                   </Card>
-                  <Card className="p-2 md:p-2.5 hover:border-red-200 dark:hover:border-red-900/50 transition shadow-sm hover:shadow-lg">
-                    <div className="flex items-center gap-1 mb-1">
-                      <Activity className="text-red-600" size={12} />
+                  <Card className="p-3 sm:p-2 md:p-2.5 hover:border-red-200 dark:hover:border-red-900/50 transition shadow-sm hover:shadow-lg text-center">
+                    <div className="flex items-center justify-center gap-1 mb-2 sm:mb-1">
+                      <Activity className="text-red-600" size={14} />
                     </div>
-                    <p className="text-base sm:text-lg md:text-xl font-black text-base-content">{formatCount(centersData.length)}</p>
+                    <p className="text-lg sm:text-base md:text-lg lg:text-xl font-black text-base-content">{formatCount(centersData.length)}</p>
                     <p className="text-xs text-base-content/70 font-semibold">Blood Banks</p>
                   </Card>
                 </div>
@@ -243,7 +243,7 @@ const Home = () => {
             </div>
 
             {/* Right Side - Image Grid */}
-            <div className="relative hidden lg:block">
+            <div className="relative hidden md:block">
               {/* Main Image */}
               <div className="relative">
                 <div className="absolute inset-0 bg-gradient-to-br from-red-500 to-rose-500 rounded-2xl transform rotate-2"></div>
@@ -310,7 +310,7 @@ const Home = () => {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-            <Card className="group p-6 hover:border-red-200 dark:hover:border-red-900/50 hover:shadow-xl transition-all">
+            <Card className="group hover:border-red-200 dark:hover:border-red-900/50 hover:shadow-xl transition-all">
               <div className="w-12 h-12 bg-gradient-to-br from-red-500 to-red-600 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-lg shadow-red-200 dark:shadow-red-900/30">
                 <Users className="text-white" size={24} />
               </div>
@@ -320,7 +320,7 @@ const Home = () => {
               </p>
             </Card>
 
-            <Card className="group p-6 hover:border-blue-200 dark:hover:border-blue-900/50 hover:shadow-xl transition-all">
+            <Card className="group hover:border-blue-200 dark:hover:border-blue-900/50 hover:shadow-xl transition-all">
               <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-lg shadow-blue-200 dark:shadow-blue-900/30">
                 <Search className="text-white" size={24} />
               </div>
@@ -330,7 +330,7 @@ const Home = () => {
               </p>
             </Card>
 
-            <Card className="group p-6 hover:border-green-200 dark:hover:border-green-900/50 hover:shadow-xl transition-all">
+            <Card className="group hover:border-green-200 dark:hover:border-green-900/50 hover:shadow-xl transition-all">
               <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-lg shadow-green-200 dark:shadow-green-900/30">
                 <Droplet className="text-white fill-white" size={24} />
               </div>
@@ -340,7 +340,7 @@ const Home = () => {
               </p>
             </Card>
 
-            <Card className="group p-6 hover:border-purple-200 dark:hover:border-purple-900/50 hover:shadow-xl transition-all">
+            <Card className="group hover:border-purple-200 dark:hover:border-purple-900/50 hover:shadow-xl transition-all">
               <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-lg shadow-purple-200 dark:shadow-purple-900/30">
                 <Award className="text-white" size={24} />
               </div>

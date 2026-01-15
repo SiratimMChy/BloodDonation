@@ -1,1 +1,377 @@
-import { useContext, useState, useEffect } from 'react';import useAxiosSecure from '../../Hooks/useAxiosSecure';import { AuthContext } from '../../Provider/AuthProvider';import SkeletonLoader from '../../Components/SkeletonLoader/SkeletonLoader';import { useDemoRestriction } from '../../Hooks/useDemoRestriction';import { Card, Button } from '../../Components/UI';import { TYPOGRAPHY, LAYOUT, SPACING } from '../../styles/designSystem';const AllUsers = () => {    const axiosSecure = useAxiosSecure();    const [users, setUsers] = useState([]);    const [totalUsers, setTotalUsers] = useState(0);    const [isLoading, setIsLoading] = useState(true);    const { user, role } = useContext(AuthContext);    const [selectedUser, setSelectedUser] = useState(null);    const [page] = useState(8);    const [currentPage, setCurrentPage] = useState(1);    const { checkDemoRestriction } = useDemoRestriction();    useEffect(() => {        const fetchUsers = async () => {            setIsLoading(true);            try {                const res = await axiosSecure.get(`/users?page=${currentPage - 1}&size=${page}`);                setUsers(res.data.users);                setTotalUsers(res.data.totalUsers);            } catch (err) {                console.error('Error fetching users:', err);            } finally {                setIsLoading(false);            }        };        fetchUsers();    }, [axiosSecure, user, currentPage, page]);    const numberOfPages = Math.ceil(totalUsers / page);    const Pages = [...Array(numberOfPages).keys()].map(num => num + 1);    const handlePrevPage = () => {        if (currentPage > 1) {            setCurrentPage(currentPage - 1);        }    }    const handleNextPage = () => {        if (currentPage < Pages.length) {            setCurrentPage(currentPage + 1);        }    }    const handleStatusChange = (email, status) => {        if (checkDemoRestriction()) {            return;        }        axiosSecure.patch(`/update/user/status?email=${email}&status=${status}`)            .then(res => {                if (res.data.modifiedCount > 0) {                    setUsers(previousState =>                        previousState.map(User =>                            User.email === email ? { ...User, status } : User                        )                    );                }            });    };    const handleSubmit = (e) => {        e.preventDefault();        if (checkDemoRestriction()) {            return;        }        const form = e.target;        const email = form.email.value;        const role = form.role.value;        axiosSecure.patch(`/update/user/role?email=${email}&role=${role}`)            .then(res => {                if (res.data.modifiedCount > 0) {                    setUsers(previousRole =>                        previousRole.map(u =>                            u.email === email ? { ...u, role } : u                        )                    );                }            })            .catch(err => console.error(err));        form.reset();        document.getElementById('my_modal_3').close();    };    return (        <div className="p-4 md:p-6 bg-base-100 min-h-screen">            {}            <div className="text-center mb-12">                <div className="relative mb-8">                    <h1 className={`${TYPOGRAPHY.heading.h1} mb-4 tracking-tight`}>                        All <span className="bg-gradient-to-r from-blue-500 to-indigo-600 bg-clip-text text-transparent">Users</span>                    </h1>                    <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full"></div>                </div>                <p className={`${TYPOGRAPHY.body.large} max-w-2xl mx-auto`}>                    Manage user roles, permissions, and access control across the platform                </p>            </div>            {isLoading ? (                <div className="space-y-4">                    <div className="h-6 bg-base-300 rounded w-48 animate-pulse mb-6"></div>                    <SkeletonLoader type="list" count={8} />                </div>            ) : (                <>                    {}                    <div className="hidden md:block overflow-x-auto">                        <table className="w-full bg-base-200 border-2 border-base-300 rounded-lg shadow-lg">                            <thead>                                <tr className="bg-base-300">                                    <th className="border-2 border-base-300 px-4 py-3 text-left font-bold text-base-content">#</th>                                    <th className="border-2 border-base-300 px-4 py-3 text-left font-bold text-base-content">Name</th>                                    <th className="border-2 border-base-300 px-4 py-3 text-left font-bold text-base-content">Role</th>                                    <th className="border-2 border-base-300 px-4 py-3 text-left font-bold text-base-content">Status</th>                                    {(role === 'admin' || role === 'demoadmin') && (                                        <>                                            <th className="border-2 border-base-300 px-4 py-3 text-left font-bold text-base-content">Actions</th>                                            <th className="border-2 border-base-300 px-4 py-3 text-left font-bold text-base-content">Role Management</th>                                        </>                                    )}                                </tr>                            </thead>                            <tbody>                                {users.map((userItem, index) => (                                    <tr key={userItem._id} className="hover:bg-base-300/50">                                        <td className="border-2 border-base-300 px-4 py-3 font-semibold text-base-content">                                            {(currentPage - 1) * page + (index + 1)}                                        </td>                                        <td className="border-2 border-base-300 px-4 py-3">                                            <div className="flex items-center gap-3">                                                <div className="avatar">                                                    <div className="mask mask-squircle h-10 w-10">                                                        <img                                                            src={userItem?.imageUrl}                                                            alt="Avatar"                                                        />                                                    </div>                                                </div>                                                <div>                                                    <div className="font-bold text-base-content">{userItem?.name}</div>                                                    <div className="text-sm text-base-content/60">{userItem?.email}</div>                                                </div>                                            </div>                                        </td>                                        <td className="border-2 border-base-300 px-4 py-3 font-semibold text-base-content">{userItem?.role}</td>                                        <td className="border-2 border-base-300 px-4 py-3 font-semibold text-base-content">{userItem?.status}</td>                                        {(role === 'admin' || role === 'demoadmin') && (                                            <td className="border-2 border-base-300 px-4 py-3">                                                <div className="flex gap-2">                                                    {userItem?.status !== 'active' ? (                                                        <Button                                                            variant="success"                                                            size="sm"                                                            onClick={() => handleStatusChange(userItem?.email, 'active')}                                                        >                                                            Active                                                        </Button>                                                    ) : (                                                        <Button                                                            variant="primary"                                                            size="sm"                                                            onClick={() => handleStatusChange(userItem?.email, 'blocked')}                                                        >                                                            Block                                                        </Button>                                                    )}                                                </div>                                            </td>                                        )}                                        {(role === 'admin' || role === 'demoadmin') && (                                            <td className="border-2 border-base-300 px-4 py-3">                                                <Button                                                    variant="accent"                                                    size="sm"                                                    onClick={() => {                                                        if (!checkDemoRestriction()) {                                                            setSelectedUser(userItem);                                                            document.getElementById('my_modal_3').showModal();                                                        }                                                    }}                                                >                                                    Edit Role                                                </Button>                                            </td>                                        )}                                    </tr>                                ))}                            </tbody>                        </table>                    </div>                    {}                    <div className="md:hidden space-y-4">                        {users.map((userItem, index) => (                            <Card key={userItem._id} interactive className="p-4">                                <div className="flex items-start gap-3 mb-3">                                    <div className="avatar">                                        <div className="mask mask-squircle h-12 w-12">                                            <img                                                src={userItem?.imageUrl}                                                alt="Avatar"                                            />                                        </div>                                    </div>                                    <div className="flex-1">                                        <div className="font-bold text-base-content">{userItem?.name}</div>                                        <div className="text-sm text-base-content/60 break-all">{userItem?.email}</div>                                    </div>                                    <div className="text-sm font-semibold text-base-content/60">                                        #{(currentPage - 1) * page + (index + 1)}                                    </div>                                </div>                                <div className="grid grid-cols-2 gap-2 mb-3">                                    <div>                                        <div className="text-xs text-base-content/60 mb-1">Role</div>                                        <div className="font-semibold text-base-content">{userItem?.role}</div>                                    </div>                                    <div>                                        <div className="text-xs text-base-content/60 mb-1">Status</div>                                        <div className="font-semibold text-base-content">{userItem?.status}</div>                                    </div>                                </div>                                {(role === 'admin' || role === 'demoadmin') && (                                    <div className="flex gap-2 flex-wrap">                                        {userItem?.status !== 'active' ? (                                            <Button                                                variant="success"                                                size="sm"                                                onClick={() => handleStatusChange(userItem?.email, 'active')}                                                className="flex-1"                                            >                                                Active                                            </Button>                                        ) : (                                            <Button                                                variant="primary"                                                size="sm"                                                onClick={() => handleStatusChange(userItem?.email, 'blocked')}                                                className="flex-1"                                            >                                                Block                                            </Button>                                        )}                                        <Button                                            variant="accent"                                            size="sm"                                            onClick={() => {                                                if (!checkDemoRestriction()) {                                                    setSelectedUser(userItem);                                                    document.getElementById('my_modal_3').showModal();                                                }                                            }}                                            className="flex-1"                                        >                                            Edit Role                                        </Button>                                    </div>                                )}                            </Card>                        ))}                    </div>                    {}                    <div className='flex justify-center items-center mt-8 gap-1 md:gap-2'>                        <button                            onClick={handlePrevPage}                            disabled={currentPage === 1}                            className="bg-base-300 hover:bg-base-200 disabled:bg-base-100 disabled:cursor-not-allowed text-base-content font-bold py-2 px-2 md:px-4 rounded-lg transition-colors duration-200 text-xs md:text-sm border-2 border-base-300"                        >                            Prev                        </button>                        {}                        <div className="md:hidden flex items-center gap-2 px-3">                            <span className="text-sm font-semibold text-base-content">                                {currentPage} / {Pages.length}                            </span>                        </div>                        {}                        <div className="hidden md:flex gap-2">                            {Pages.map(pg => {                                const showPage = pg === 1 ||                                                 pg === Pages.length ||                                                 (pg >= currentPage - 1 && pg <= currentPage + 1);                                const showEllipsisBefore = pg === currentPage - 2 && currentPage > 3;                                const showEllipsisAfter = pg === currentPage + 2 && currentPage < Pages.length - 2;                                if (showEllipsisBefore || showEllipsisAfter) {                                    return (                                        <span key={pg} className="px-2 py-2 text-base-content">                                            ...                                        </span>                                    );                                }                                if (!showPage) return null;                                return (                                    <button                                        key={pg}                                        className={`font-bold py-2 px-3 md:px-4 rounded-lg transition-colors duration-200 text-sm ${pg === currentPage                                            ? 'bg-red-500 hover:bg-red-600 text-white'                                            : 'bg-base-200 hover:bg-base-300 text-base-content'                                            }`}                                        onClick={() => setCurrentPage(pg)}                                    >                                        {pg}                                    </button>                                );                            })}                        </div>                        <button                            onClick={handleNextPage}                            disabled={currentPage === Pages.length}                            className="bg-base-300 hover:bg-base-200 disabled:bg-base-100 disabled:cursor-not-allowed text-base-content font-bold py-2 px-2 md:px-4 rounded-lg transition-colors duration-200 text-xs md:text-sm border-2 border-base-300"                        >                            Next                        </button>                    </div>                </>            )}            {}            <dialog id="my_modal_3" className="modal">                <div className="modal-box m-auto max-w-sm bg-base-100">                    <form method="dialog">                        <button className="btn btn-sm btn-circle btn-ghost absolute right-1 top-1">✕</button>                    </form>                    {selectedUser && (                        <form key={selectedUser._id} onSubmit={handleSubmit}>                            <h1 className='text-center font-bold text-xl mb-4 text-base-content'>User Details</h1>                            <div className="flex flex-col mb-3">                                <label className="label">                                    <span className="label-text text-base-content">Name</span>                                </label>                                <input                                    name='name'                                    readOnly                                    defaultValue={selectedUser?.name}                                    type="text"                                    className="input input-bordered bg-base-200 text-base-content border-base-300"                                />                            </div>                            <div className="flex flex-col mb-3">                                <label className="label">                                    <span className="label-text text-base-content">Role</span>                                </label>                                <select                                    name="role"                                    defaultValue={selectedUser?.role}                                    className="select select-bordered bg-base-200 text-base-content border-base-300"                                    required                                >                                    <option>admin</option>                                    <option>volunteer</option>                                    <option>donor</option>                                </select>                            </div>                            <div className="flex flex-col mb-4">                                <label className="label">                                    <span className="label-text text-base-content">Email</span>                                </label>                                <input                                    name='email'                                    readOnly                                    defaultValue={selectedUser?.email}                                    type="email"                                    className="input input-bordered bg-base-200 text-base-content border-base-300"                                />                            </div>                            <div className="flex justify-center">                                <Button                                    type="submit"                                    variant="accent"                                    className="w-full"                                >                                    Update Role                                </Button>                            </div>                        </form>                    )}                </div>            </dialog>        </div>    );};export default AllUsers;
+import { useContext, useState, useEffect } from 'react';
+import useAxiosSecure from '../../Hooks/useAxiosSecure';
+import { AuthContext } from '../../Provider/AuthProvider';
+import SkeletonLoader from '../../Components/SkeletonLoader/SkeletonLoader';
+import { useDemoRestriction } from '../../Hooks/useDemoRestriction';
+import { Card, Button } from '../../Components/UI';
+import { TYPOGRAPHY, LAYOUT, SPACING } from '../../styles/designSystem';
+const AllUsers = () => {
+    const axiosSecure = useAxiosSecure();
+    const [users, setUsers] = useState([]);
+    const [totalUsers, setTotalUsers] = useState(0);
+    const [isLoading, setIsLoading] = useState(true);
+    const { user, role } = useContext(AuthContext);
+    const [selectedUser, setSelectedUser] = useState(null);
+    const [page] = useState(8);
+    const [currentPage, setCurrentPage] = useState(1);
+    const { checkDemoRestriction } = useDemoRestriction();
+    useEffect(() => {
+        const fetchUsers = async () => {
+            setIsLoading(true);
+            try {
+                const res = await axiosSecure.get(`/users?page=${currentPage - 1}&size=${page}`);
+                setUsers(res.data.users);
+                setTotalUsers(res.data.totalUsers);
+            } catch (err) {
+                console.error('Error fetching users:', err);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+        fetchUsers();
+    }, [axiosSecure, user, currentPage, page]);
+    const numberOfPages = Math.ceil(totalUsers / page);
+    const Pages = [...Array(numberOfPages).keys()].map(num => num + 1);
+    const handlePrevPage = () => {
+        if (currentPage > 1) {
+            setCurrentPage(currentPage - 1);
+        }
+    }
+    const handleNextPage = () => {
+        if (currentPage < Pages.length) {
+            setCurrentPage(currentPage + 1);
+        }
+    }
+    const handleStatusChange = (email, status) => {
+        if (checkDemoRestriction()) {
+            return;
+        }
+        axiosSecure.patch(`/update/user/status?email=${email}&status=${status}`)
+            .then(res => {
+                if (res.data.modifiedCount > 0) {
+                    setUsers(previousState =>
+                        previousState.map(User =>
+                            User.email === email ? { ...User, status } : User
+                        )
+                    );
+                }
+            });
+    };
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if (checkDemoRestriction()) {
+            return;
+        }
+        const form = e.target;
+        const email = form.email.value;
+        const role = form.role.value;
+        axiosSecure.patch(`/update/user/role?email=${email}&role=${role}`)
+            .then(res => {
+                if (res.data.modifiedCount > 0) {
+                    setUsers(previousRole =>
+                        previousRole.map(u =>
+                            u.email === email ? { ...u, role } : u
+                        )
+                    );
+                }
+            })
+            .catch(err => console.error(err));
+        form.reset();
+        document.getElementById('my_modal_3').close();
+    };
+    return (
+        <div className="p-4 md:p-6 bg-base-100 min-h-screen">
+            {}
+            <div className="text-center mb-12">
+                <div className="relative mb-8">
+                    <h1 className={`${TYPOGRAPHY.heading.h1} mb-4 tracking-tight`}>
+                        All <span className="bg-gradient-to-r from-blue-500 to-indigo-600 bg-clip-text text-transparent">Users</span>
+                    </h1>
+                    <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full"></div>
+                </div>
+                <p className={`${TYPOGRAPHY.body.large} max-w-2xl mx-auto`}>
+                    Manage user roles, permissions, and access control across the platform
+                </p>
+            </div>
+            {isLoading ? (
+                <div className="space-y-4">
+                    <div className="h-6 bg-base-300 rounded w-48 animate-pulse mb-6"></div>
+                    <SkeletonLoader type="list" count={8} />
+                </div>
+            ) : (
+                <>
+                    {}
+                    <div className="hidden md:block overflow-x-auto">
+                        <table className="w-full bg-base-200 border-2 border-base-300 rounded-lg shadow-lg">
+                            <thead>
+                                <tr className="bg-base-300">
+                                    <th className="border-2 border-base-300 px-4 py-3 text-left font-bold text-base-content">#</th>
+                                    <th className="border-2 border-base-300 px-4 py-3 text-left font-bold text-base-content">Name</th>
+                                    <th className="border-2 border-base-300 px-4 py-3 text-left font-bold text-base-content">Role</th>
+                                    <th className="border-2 border-base-300 px-4 py-3 text-left font-bold text-base-content">Status</th>
+                                    {(role === 'admin' || role === 'demoadmin') && (
+                                        <>
+                                            <th className="border-2 border-base-300 px-4 py-3 text-left font-bold text-base-content">Actions</th>
+                                            <th className="border-2 border-base-300 px-4 py-3 text-left font-bold text-base-content">Role Management</th>
+                                        </>
+                                    )}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {users.map((userItem, index) => (
+                                    <tr key={userItem._id} className="hover:bg-base-300/50">
+                                        <td className="border-2 border-base-300 px-4 py-3 font-semibold text-base-content">
+                                            {(currentPage - 1) * page + (index + 1)}
+                                        </td>
+                                        <td className="border-2 border-base-300 px-4 py-3">
+                                            <div className="flex items-center gap-3">
+                                                <div className="avatar">
+                                                    <div className="mask mask-squircle h-10 w-10">
+                                                        <img
+                                                            src={userItem?.imageUrl}
+                                                            alt="Avatar"
+                                                        />
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <div className="font-bold text-base-content">{userItem?.name}</div>
+                                                    <div className="text-sm text-base-content/60">{userItem?.email}</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td className="border-2 border-base-300 px-4 py-3 font-semibold text-base-content">{userItem?.role}</td>
+                                        <td className="border-2 border-base-300 px-4 py-3 font-semibold text-base-content">{userItem?.status}</td>
+                                        {(role === 'admin' || role === 'demoadmin') && (
+                                            <td className="border-2 border-base-300 px-4 py-3">
+                                                <div className="flex gap-2">
+                                                    {userItem?.status !== 'active' ? (
+                                                        <Button
+                                                            variant="success"
+                                                            size="sm"
+                                                            onClick={() => handleStatusChange(userItem?.email, 'active')}
+                                                        >
+                                                            Active
+                                                        </Button>
+                                                    ) : (
+                                                        <Button
+                                                            variant="primary"
+                                                            size="sm"
+                                                            onClick={() => handleStatusChange(userItem?.email, 'blocked')}
+                                                        >
+                                                            Block
+                                                        </Button>
+                                                    )}
+                                                </div>
+                                            </td>
+                                        )}
+                                        {(role === 'admin' || role === 'demoadmin') && (
+                                            <td className="border-2 border-base-300 px-4 py-3">
+                                                <Button
+                                                    variant="accent"
+                                                    size="sm"
+                                                    onClick={() => {
+                                                        if (!checkDemoRestriction()) {
+                                                            setSelectedUser(userItem);
+                                                            document.getElementById('my_modal_3').showModal();
+                                                        }
+                                                    }}
+                                                >
+                                                    Edit Role
+                                                </Button>
+                                            </td>
+                                        )}
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                    {}
+                    <div className="md:hidden space-y-4">
+                        {users.map((userItem, index) => (
+                            <Card key={userItem._id} interactive className="">
+                                <div className="flex items-start gap-3 mb-3">
+                                    <div className="avatar">
+                                        <div className="mask mask-squircle h-12 w-12">
+                                            <img
+                                                src={userItem?.imageUrl}
+                                                alt="Avatar"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className="flex-1">
+                                        <div className="font-bold text-base-content">{userItem?.name}</div>
+                                        <div className="text-sm text-base-content/60 break-all">{userItem?.email}</div>
+                                    </div>
+                                    <div className="text-sm font-semibold text-base-content/60">
+                                        #{(currentPage - 1) * page + (index + 1)}
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-2 gap-2 mb-3">
+                                    <div>
+                                        <div className="text-xs text-base-content/60 mb-1">Role</div>
+                                        <div className="font-semibold text-base-content">{userItem?.role}</div>
+                                    </div>
+                                    <div>
+                                        <div className="text-xs text-base-content/60 mb-1">Status</div>
+                                        <div className="font-semibold text-base-content">{userItem?.status}</div>
+                                    </div>
+                                </div>
+                                {(role === 'admin' || role === 'demoadmin') && (
+                                    <div className="flex gap-2 flex-wrap">
+                                        {userItem?.status !== 'active' ? (
+                                            <Button
+                                                variant="success"
+                                                size="sm"
+                                                onClick={() => handleStatusChange(userItem?.email, 'active')}
+                                                className="flex-1"
+                                            >
+                                                Active
+                                            </Button>
+                                        ) : (
+                                            <Button
+                                                variant="primary"
+                                                size="sm"
+                                                onClick={() => handleStatusChange(userItem?.email, 'blocked')}
+                                                className="flex-1"
+                                            >
+                                                Block
+                                            </Button>
+                                        )}
+                                        <Button
+                                            variant="accent"
+                                            size="sm"
+                                            onClick={() => {
+                                                if (!checkDemoRestriction()) {
+                                                    setSelectedUser(userItem);
+                                                    document.getElementById('my_modal_3').showModal();
+                                                }
+                                            }}
+                                            className="flex-1"
+                                        >
+                                            Edit Role
+                                        </Button>
+                                    </div>
+                                )}
+                            </Card>
+                        ))}
+                    </div>
+                    {}
+                    <div className='flex justify-center items-center mt-8 gap-1 md:gap-2'>
+                        <button
+                            onClick={handlePrevPage}
+                            disabled={currentPage === 1}
+                            className="bg-base-300 hover:bg-base-200 disabled:bg-base-100 disabled:cursor-not-allowed text-base-content font-bold py-2 px-2 md:px-4 rounded-lg transition-colors duration-200 text-xs md:text-sm border-2 border-base-300"
+                        >
+                            Prev
+                        </button>
+                        {}
+                        <div className="md:hidden flex items-center gap-2 px-3">
+                            <span className="text-sm font-semibold text-base-content">
+                                {currentPage} / {Pages.length}
+                            </span>
+                        </div>
+                        {}
+                        <div className="hidden md:flex gap-2">
+                            {Pages.map(pg => {
+                                const showPage = pg === 1 || 
+                                                pg === Pages.length || 
+                                                (pg >= currentPage - 1 && pg <= currentPage + 1);
+                                const showEllipsisBefore = pg === currentPage - 2 && currentPage > 3;
+                                const showEllipsisAfter = pg === currentPage + 2 && currentPage < Pages.length - 2;
+                                if (showEllipsisBefore || showEllipsisAfter) {
+                                    return (
+                                        <span key={pg} className="px-2 py-2 text-base-content">
+                                            ...
+                                        </span>
+                                    );
+                                }
+                                if (!showPage) return null;
+                                return (
+                                    <button
+                                        key={pg}
+                                        className={`font-bold py-2 px-3 md:px-4 rounded-lg transition-colors duration-200 text-sm ${pg === currentPage
+                                            ? 'bg-red-500 hover:bg-red-600 text-white'
+                                            : 'bg-base-200 hover:bg-base-300 text-base-content'
+                                            }`}
+                                        onClick={() => setCurrentPage(pg)}
+                                    >
+                                        {pg}
+                                    </button>
+                                );
+                            })}
+                        </div>
+                        <button
+                            onClick={handleNextPage}
+                            disabled={currentPage === Pages.length}
+                            className="bg-base-300 hover:bg-base-200 disabled:bg-base-100 disabled:cursor-not-allowed text-base-content font-bold py-2 px-2 md:px-4 rounded-lg transition-colors duration-200 text-xs md:text-sm border-2 border-base-300"
+                        >
+                            Next
+                        </button>
+                    </div>
+                </>
+            )}
+            {}
+            <dialog id="my_modal_3" className="modal">
+                <div className="modal-box m-auto max-w-sm bg-base-100">
+                    <form method="dialog">
+                        <button className="btn btn-sm btn-circle btn-ghost absolute right-1 top-1">✕</button>
+                    </form>
+                    {selectedUser && (
+                        <form key={selectedUser._id} onSubmit={handleSubmit}>
+                            <h1 className='text-center font-bold text-xl mb-4 text-base-content'>User Details</h1>
+                            <div className="flex flex-col mb-3">
+                                <label className="label">
+                                    <span className="label-text text-base-content">Name</span>
+                                </label>
+                                <input
+                                    name='name'
+                                    readOnly
+                                    defaultValue={selectedUser?.name}
+                                    type="text"
+                                    className="input input-bordered bg-base-200 text-base-content border-base-300"
+                                />
+                            </div>
+                            <div className="flex flex-col mb-3">
+                                <label className="label">
+                                    <span className="label-text text-base-content">Role</span>
+                                </label>
+                                <select
+                                    name="role"
+                                    defaultValue={selectedUser?.role}
+                                    className="select select-bordered bg-base-200 text-base-content border-base-300"
+                                    required
+                                >
+                                    <option>admin</option>
+                                    <option>volunteer</option>
+                                    <option>donor</option>
+                                </select>
+                            </div>
+                            <div className="flex flex-col mb-4">
+                                <label className="label">
+                                    <span className="label-text text-base-content">Email</span>
+                                </label>
+                                <input
+                                    name='email'
+                                    readOnly
+                                    defaultValue={selectedUser?.email}
+                                    type="email"
+                                    className="input input-bordered bg-base-200 text-base-content border-base-300"
+                                />
+                            </div>
+                            <div className="flex justify-center">
+                                <Button
+                                    type="submit"
+                                    variant="accent"
+                                    className="w-full"
+                                >
+                                    Update Role
+                                </Button>
+                            </div>
+                        </form>
+                    )}
+                </div>
+            </dialog>
+        </div>
+    );
+};
+export default AllUsers;

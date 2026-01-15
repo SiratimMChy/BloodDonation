@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router';
-import { MapPin, Phone, Clock, Star, Award, Building, ChevronLeft, ExternalLink, Shield, CheckCircle, Globe, Mail, Calendar, Users } from 'lucide-react';
+import { MapPin, Phone, Clock, Star, Building, ChevronLeft, CheckCircle, Mail, Calendar } from 'lucide-react';
 import axios from 'axios';
 
 const CenterDetails = () => {
@@ -11,7 +11,6 @@ const CenterDetails = () => {
 
   // Fetch center data from JSON file
   useEffect(() => {
-    setLoading(true);
     axios.get('/centers.json')
       .then(res => {
         const foundCenter = res.data.find(c => c.id === parseInt(id));
@@ -148,11 +147,11 @@ const CenterDetails = () => {
 
       {/* Content */}
       <div className="container mx-auto px-4 py-8">
-        <div className="grid lg:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
           {/* Main Content */}
-          <div className="lg:col-span-2 space-y-8">
+          <div className="md:col-span-2 lg:col-span-2 space-y-6 lg:space-y-8">
             {/* About */}
-            <div className="bg-base-100 border-2 border-base-300 rounded-xl p-6 shadow-sm">
+            <div className="bg-base-100 border-2 border-base-300 rounded-xl p-4 sm:p-6 shadow-sm">
               <h2 className="text-xl font-bold text-base-content mb-4">About This Center</h2>
               <p className="text-base-content/70 leading-relaxed">
                 {center.description || `${center.name} is a trusted blood donation center located in ${center.district}, ${center.division}. We provide safe and reliable blood donation services with professional medical staff and modern facilities. Our commitment is to ensure the highest standards of safety and care for all donors while serving the community's blood needs.`}
@@ -160,7 +159,7 @@ const CenterDetails = () => {
             </div>
 
             {/* Facilities */}
-            <div className="bg-base-100 border-2 border-base-300 rounded-xl p-6 shadow-sm">
+            <div className="bg-base-100 border-2 border-base-300 rounded-xl p-4 sm:p-6 shadow-sm">
               <h2 className="text-xl font-bold text-base-content mb-4">Facilities & Services</h2>
               <div className="grid sm:grid-cols-2 gap-3">
                 {center.facilities && center.facilities.length > 0 ? (
@@ -179,7 +178,7 @@ const CenterDetails = () => {
             </div>
 
             {/* Blood Types Available */}
-            <div className="bg-base-100 border-2 border-base-300 rounded-xl p-6 shadow-sm">
+            <div className="bg-base-100 border-2 border-base-300 rounded-xl p-4 sm:p-6 shadow-sm">
               <h2 className="text-xl font-bold text-base-content mb-4">Available Blood Types</h2>
               <div className="grid grid-cols-4 sm:grid-cols-8 gap-3">
                 {(center.bloodTypes || ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-']).map((type, index) => (
@@ -194,7 +193,7 @@ const CenterDetails = () => {
           {/* Sidebar */}
           <div className="space-y-6">
             {/* Contact Info */}
-            <div className="bg-base-100 border-2 border-base-300 rounded-xl p-6 shadow-sm">
+            <div className="bg-base-100 border-2 border-base-300 rounded-xl p-4 sm:p-6 shadow-sm">
               <h3 className="text-lg font-bold text-base-content mb-4">Contact Information</h3>
               <div className="space-y-4">
                 <div className="flex items-start gap-3">
@@ -230,7 +229,7 @@ const CenterDetails = () => {
             </div>
 
             {/* Operating Hours */}
-            <div className="bg-base-100 border-2 border-base-300 rounded-xl p-6 shadow-sm">
+            <div className="bg-base-100 border-2 border-base-300 rounded-xl p-4 sm:p-6 shadow-sm">
               <h3 className="text-lg font-bold text-base-content mb-4">Operating Hours</h3>
               <div className="space-y-3">
                 <div className="flex items-center gap-3">
@@ -256,7 +255,7 @@ const CenterDetails = () => {
             </div>
 
             {/* Quick Stats */}
-            <div className="bg-base-100 border-2 border-base-300 rounded-xl p-6 shadow-sm">
+            <div className="bg-base-100 border-2 border-base-300 rounded-xl p-4 sm:p-6 shadow-sm">
               <h3 className="text-lg font-bold text-base-content mb-4">Quick Stats</h3>
               <div className="space-y-4">
                 {center.established && (

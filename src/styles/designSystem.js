@@ -87,23 +87,25 @@ export const TRANSITIONS = {
 export const COMPONENT_STYLES = {
   // Card styles
   card: {
-    default: `${COLORS.neutral.surface} border border-base-300/50 ${BORDER_RADIUS.default} ${SPACING.md} ${SHADOWS.default}`,
-    elevated: `${COLORS.neutral.base} border border-base-300/30 ${BORDER_RADIUS.default} ${SPACING.md} ${SHADOWS.large}`,
-    interactive: `${COLORS.neutral.surface} border border-base-300/50 ${BORDER_RADIUS.default} ${SPACING.md} ${SHADOWS.default} ${SHADOWS.hover} ${TRANSITIONS.default}`
+    default: `${COLORS.neutral.surface} border border-base-300/50 ${BORDER_RADIUS.default} p-4 sm:p-5 md:p-6 lg:p-8 ${SHADOWS.default} w-full max-w-full min-h-[200px] sm:min-h-[220px]`,
+    elevated: `${COLORS.neutral.base} border border-base-300/30 ${BORDER_RADIUS.default} p-4 sm:p-5 md:p-6 lg:p-8 ${SHADOWS.large} w-full max-w-full min-h-[200px] sm:min-h-[220px]`,
+    interactive: `${COLORS.neutral.surface} border border-base-300/50 ${BORDER_RADIUS.default} p-4 sm:p-5 md:p-6 lg:p-8 ${SHADOWS.default} ${SHADOWS.hover} ${TRANSITIONS.default} w-full max-w-full min-h-[200px] sm:min-h-[220px]`
   },
 
   // Button styles
   button: {
-    primary: `bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white px-6 py-3 ${BORDER_RADIUS.default} font-semibold ${SHADOWS.default} ${SHADOWS.hover} ${TRANSITIONS.default}`,
-    secondary: `${COLORS.neutral.surface} border border-base-300/50 ${COLORS.neutral.text} px-6 py-3 ${BORDER_RADIUS.default} font-semibold ${SHADOWS.small} hover:${COLORS.neutral.elevated} ${TRANSITIONS.default}`,
-    success: `${COLORS.secondary[600]} hover:${COLORS.secondary[700]} text-white px-6 py-3 ${BORDER_RADIUS.default} font-semibold ${SHADOWS.default} ${TRANSITIONS.default}`,
-    accent: `${COLORS.accent[600]} hover:${COLORS.accent[700]} text-white px-6 py-3 ${BORDER_RADIUS.default} font-semibold ${SHADOWS.default} ${TRANSITIONS.default}`
+    primary: `bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white px-6 py-4 ${BORDER_RADIUS.default} font-semibold ${SHADOWS.default} ${SHADOWS.hover} ${TRANSITIONS.default} min-h-[3rem]`,
+    secondary: `${COLORS.neutral.surface} border border-base-300/50 ${COLORS.neutral.text} px-6 py-4 ${BORDER_RADIUS.default} font-semibold ${SHADOWS.small} hover:${COLORS.neutral.elevated} ${TRANSITIONS.default} min-h-[3rem]`,
+    success: `${COLORS.secondary[600]} hover:${COLORS.secondary[700]} text-white px-6 py-4 ${BORDER_RADIUS.default} font-semibold ${SHADOWS.default} ${TRANSITIONS.default} min-h-[3rem]`,
+    accent: `${COLORS.accent[600]} hover:${COLORS.accent[700]} text-white px-6 py-4 ${BORDER_RADIUS.default} font-semibold ${SHADOWS.default} ${TRANSITIONS.default} min-h-[3rem]`,
+    large: `bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white px-8 py-5 ${BORDER_RADIUS.default} font-semibold ${SHADOWS.default} ${SHADOWS.hover} ${TRANSITIONS.default} min-h-[4rem] text-lg`,
+    cancel: `bg-base-300 hover:bg-base-400 text-base-content px-6 py-4 ${BORDER_RADIUS.default} font-semibold ${SHADOWS.small} hover:shadow-xl ${TRANSITIONS.default} min-h-[3rem]`
   },
 
   // Input styles
   input: {
-    default: `w-full px-4 py-3 border border-base-300/50 ${BORDER_RADIUS.default} ${COLORS.neutral.base} ${COLORS.neutral.text} focus:border-red-500 focus:outline-none ${TRANSITIONS.default}`,
-    error: `w-full px-4 py-3 border border-red-300 ${BORDER_RADIUS.default} ${COLORS.neutral.base} ${COLORS.neutral.text} focus:border-red-500 focus:outline-none ${TRANSITIONS.default}`
+    default: `w-full px-2 sm:px-3 md:px-4 py-3 border border-base-300/50 ${BORDER_RADIUS.default} ${COLORS.neutral.base} ${COLORS.neutral.text} focus:border-red-500 focus:outline-none ${TRANSITIONS.default}`,
+    error: `w-full px-2 sm:px-3 md:px-4 py-3 border border-red-300 ${BORDER_RADIUS.default} ${COLORS.neutral.base} ${COLORS.neutral.text} focus:border-red-500 focus:outline-none ${TRANSITIONS.default}`
   },
 
   // Badge styles
@@ -130,13 +132,21 @@ export const TYPOGRAPHY = {
   }
 };
 
+// Button Height Utilities
+export const BUTTON_HEIGHTS = {
+  small: 'min-h-[2.5rem] py-2',
+  default: 'min-h-[3rem] py-3',
+  large: 'min-h-[4rem] py-4',
+  xlarge: 'min-h-[5rem] py-5'
+};
+
 // Layout System
 export const LAYOUT = {
-  container: 'container mx-auto px-4 max-w-7xl',
-  section: 'py-8 sm:py-12 md:py-16',
+  container: 'container mx-auto px-1 sm:px-3 md:px-4 max-w-7xl',
+  section: 'py-6 sm:py-8 md:py-12 lg:py-16',
   grid: {
-    responsive: 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4',
-    cards: 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6',
-    stats: 'grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6'
+    responsive: 'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4',
+    cards: 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6 lg:gap-8',
+    stats: 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 md:gap-6 lg:gap-8'
   }
 };

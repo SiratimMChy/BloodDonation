@@ -1,1 +1,474 @@
-import { useEffect, useState } from 'react';import useAxiosSecure from '../../Hooks/useAxiosSecure';import { FaRegEye, FaTint, FaMapMarkerAlt, FaCalendarAlt, FaPhone, FaHospital, FaFilter, FaPlus } from "react-icons/fa";import { Link } from 'react-router';import Swal from 'sweetalert2';import { Heart, Clock, CheckCircle, XCircle, AlertCircle, Eye, Edit, Trash2 } from 'lucide-react';import { useDemoRestriction } from '../../Hooks/useDemoRestriction';import { Card, Button } from '../../Components/UI';import { TYPOGRAPHY, LAYOUT, SPACING } from '../../styles/designSystem';const MyRequest = () => {    const [totalRequests, setTotalRequests] = useState(0);    const [myRequests, setMyRequests] = useState([]);    const [page] = useState(10);    const [currentPage, setCurrentPage] = useState(1);    const [statusFilter, setStatusFilter] = useState('all');    const [loading, setLoading] = useState(true);    const { checkDemoRestriction } = useDemoRestriction();    const axiosSecure = useAxiosSecure();    useEffect(() => {        let isMounted = true;        const fetchRequests = () => {            if (isMounted) {                setLoading(true);            }            axiosSecure.get(`/myRequests?page=${currentPage - 1}&size=${page}&status=${statusFilter}`)                .then(response => {                    if (isMounted) {                        setMyRequests(response.data.requests);                        setTotalRequests(response.data.totalRequests);                        setLoading(false);                    }                })                .catch(err => {                    if (isMounted) {                        console.error(err);                        setLoading(false);                    }                });        };        fetchRequests();        return () => {            isMounted = false;        };    }, [axiosSecure, currentPage, page, statusFilter]);    const numberOfPages = Math.ceil(totalRequests / page);    const Pages = [...Array(numberOfPages).keys()].map(num => num + 1);    const handlePrevPage = () => {        if (currentPage > 1) {            setCurrentPage(currentPage - 1);        }    }    const handleNextPage = () => {        if (currentPage < Pages.length) {            setCurrentPage(currentPage + 1);        }    }    const handleDelete = (id) => {        if (checkDemoRestriction()) {            return;        }        Swal.fire({            title: "Are you sure?",            text: "You won't be able to revert this donation request!",            icon: "warning",            showCancelButton: true,            confirmButtonColor: "#dc2626",            cancelButtonColor: "#6b7280",            confirmButtonText: "Yes, delete it!",            cancelButtonText: "Cancel"        }).then((result) => {            if (result.isConfirmed) {                axiosSecure.delete(`/delete-request/${id}`)                    .then(res => {                        if (res.data.deletedCount == 1) {                            const remaining = myRequests.filter(listing => listing._id !== id);                            setMyRequests(remaining);                            setTotalRequests(prev => prev - 1);                            Swal.fire({                                title: "Deleted!",                                text: "Your donation request has been deleted.",                                icon: "success",                                confirmButtonColor: "#dc2626"                            });                        }                    })                    .catch(err => {                        console.log(err);                        Swal.fire({                            title: "Error!",                            text: "Failed to delete the request. Please try again.",                            icon: "error",                            confirmButtonColor: "#dc2626"                        });                    });            }        });    }    const getStatusIcon = (status) => {        switch (status) {            case 'pending':                return <AlertCircle className="w-4 h-4" />;            case 'inprogress':                return <Clock className="w-4 h-4" />;            case 'done':                return <CheckCircle className="w-4 h-4" />;            case 'canceled':                return <XCircle className="w-4 h-4" />;            default:                return <AlertCircle className="w-4 h-4" />;        }    };    const getStatusColor = (status) => {        switch (status) {            case 'pending':                return 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-400 border-yellow-200 dark:border-yellow-900/50';            case 'inprogress':                return 'bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-400 border-blue-200 dark:border-blue-900/50';            case 'done':                return 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400 border-green-200 dark:border-green-900/50';            case 'canceled':                return 'bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-400 border-red-200 dark:border-red-900/50';            default:                return 'bg-gray-100 dark:bg-gray-900/30 text-gray-800 dark:text-gray-400 border-gray-200 dark:border-gray-900/50';        }    };    if (loading) {        return (            <div className="min-h-screen bg-base-100 flex items-center justify-center p-4">                <div className="text-center">                    <div className="animate-spin rounded-full h-12 w-12 sm:h-16 sm:w-16 border-b-2 border-red-600 mx-auto mb-4"></div>                    <p className="text-base-content/70 text-sm sm:text-base">Loading your requests...</p>                </div>            </div>        );    }    return (        <div className="min-h-screen bg-base-100 p-4 sm:p-6 lg:p-8">            <div className={LAYOUT.container}>                {}                <div className={SPACING.marginXl}>                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">                        <div>                            <h1 className={`${TYPOGRAPHY.heading.h2} mb-2`}>                                My Donation Requests                            </h1>                            <p className={TYPOGRAPHY.body.default}>                                Manage and track your blood donation requests                            </p>                        </div>                        <Button                            as={Link}                            to="/dashboard/addRequest"                            variant="primary"                            className="w-full sm:w-auto flex items-center gap-2"                        >                            <FaPlus className="w-4 h-4" />                            <span>Add New Request</span>                        </Button>                    </div>                    {}                    <div className={`${LAYOUT.grid.stats} ${SPACING.marginMd}`}>                        <Card className="text-center hover:border-red-200 dark:hover:border-red-900/50 transition-all">                            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-red-500 to-red-600 rounded-lg flex items-center justify-center mx-auto mb-2 shadow-lg">                                <Heart className="w-4 h-4 sm:w-5 sm:h-5 text-white" />                            </div>                            <p className="text-lg sm:text-xl font-bold text-base-content">{totalRequests}</p>                            <p className="text-xs sm:text-sm text-base-content/70 font-semibold">Total Requests</p>                        </Card>                        <Card className="text-center hover:border-yellow-200 dark:hover:border-yellow-900/50 transition-all">                            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-yellow-500 to-yellow-600 rounded-lg flex items-center justify-center mx-auto mb-2 shadow-lg">                                <AlertCircle className="w-4 h-4 sm:w-5 sm:h-5 text-white" />                            </div>                            <p className="text-lg sm:text-xl font-bold text-base-content">                                {myRequests.filter(r => r.donation_status === 'pending').length}                            </p>                            <p className="text-xs sm:text-sm text-base-content/70 font-semibold">Pending</p>                        </Card>                        <Card className="text-center hover:border-blue-200 dark:hover:border-blue-900/50 transition-all">                            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center mx-auto mb-2 shadow-lg">                                <Clock className="w-4 h-4 sm:w-5 sm:h-5 text-white" />                            </div>                            <p className="text-lg sm:text-xl font-bold text-base-content">                                {myRequests.filter(r => r.donation_status === 'inprogress').length}                            </p>                            <p className="text-xs sm:text-sm text-base-content/70 font-semibold">In Progress</p>                        </Card>                        <Card className="text-center hover:border-green-200 dark:hover:border-green-900/50 transition-all">                            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-green-500 to-green-600 rounded-lg flex items-center justify-center mx-auto mb-2 shadow-lg">                                <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-white" />                            </div>                            <p className="text-lg sm:text-xl font-bold text-base-content">                                {myRequests.filter(r => r.donation_status === 'done').length}                            </p>                            <p className="text-xs sm:text-sm text-base-content/70 font-semibold">Completed</p>                        </Card>                    </div>                    {}                    <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">                        <div className="flex items-center gap-3">                            <FaFilter className="text-base-content/60" />                            <select                                value={statusFilter}                                onChange={(e) => setStatusFilter(e.target.value)}                                className="select select-bordered bg-base-200 text-base-content border-base-300 focus:border-red-500 w-full sm:w-auto"                            >                                <option value="all">All Status</option>                                <option value="pending">Pending</option>                                <option value="inprogress">In Progress</option>                                <option value="done">Completed</option>                                <option value="canceled">Canceled</option>                            </select>                        </div>                        <div className="text-sm text-base-content/70">                            Showing {myRequests.length} of {totalRequests} requests                        </div>                    </div>                </div>                {}                {myRequests.length === 0 && !loading && (                    <div className="text-center py-12 sm:py-16">                        <div className="w-16 h-16 sm:w-20 sm:h-20 bg-base-300 rounded-full flex items-center justify-center mx-auto mb-4">                            <Heart className="w-8 h-8 sm:w-10 sm:h-10 text-base-content/40" />                        </div>                        <h3 className="text-xl sm:text-2xl font-bold text-base-content mb-2">No Requests Found</h3>                        <p className="text-base-content/70 mb-6 max-w-md mx-auto">                            {statusFilter === 'all'                                 ? "You haven't created any donation requests yet."                                 : `No requests found with status: ${statusFilter}`                            }                        </p>                        <Link                            to="/dashboard/addRequest"                            className="btn bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white border-0 shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"                        >                            <FaPlus className="w-4 h-4 mr-2" />                            Create Your First Request                        </Link>                    </div>                )}                {}                {myRequests.length > 0 && (                    <div className="lg:hidden space-y-4">                        {myRequests.map((request, index) => (                            <Card key={request._id} interactive className="p-4 sm:p-6 hover:border-red-200 dark:hover:border-red-900/50 transition-all">                                {}                                <div className="flex justify-between items-start mb-4">                                    <div className="flex items-center gap-2">                                        <span className="bg-base-300 text-base-content px-3 py-1 rounded-full text-sm font-bold">                                            #{(currentPage - 1) * page + (index + 1)}                                        </span>                                        <div className="flex items-center gap-2 bg-red-100 dark:bg-red-900/30 px-3 py-1 rounded-full">                                            <FaTint className="w-3 h-3 text-red-600 dark:text-red-400" />                                            <span className="text-red-600 dark:text-red-400 font-bold text-sm">                                                {request.bloodGroup}                                            </span>                                        </div>                                    </div>                                    <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full border text-xs font-semibold ${getStatusColor(request.donation_status)}`}>                                        {getStatusIcon(request.donation_status)}                                        <span className="capitalize">{request.donation_status}</span>                                    </div>                                </div>                                {}                                <div className="space-y-3 mb-4">                                    <div className="flex items-start gap-3">                                        <FaRegEye className="w-4 h-4 text-base-content/60 mt-1 shrink-0" />                                        <div>                                            <p className="text-xs text-base-content/60 font-semibold">Recipient Name</p>                                            <p className="font-bold text-base-content">{request.recipientName}</p>                                        </div>                                    </div>                                    <div className="flex items-start gap-3">                                        <FaHospital className="w-4 h-4 text-base-content/60 mt-1 shrink-0" />                                        <div>                                            <p className="text-xs text-base-content/60 font-semibold">Hospital</p>                                            <p className="font-semibold text-base-content">{request.hospitalName}</p>                                        </div>                                    </div>                                    <div className="flex items-start gap-3">                                        <FaMapMarkerAlt className="w-4 h-4 text-base-content/60 mt-1 shrink-0" />                                        <div>                                            <p className="text-xs text-base-content/60 font-semibold">Location</p>                                            <p className="font-semibold text-base-content text-sm">{request.fullAddress}</p>                                        </div>                                    </div>                                    <div className="grid grid-cols-2 gap-4">                                        <div className="flex items-start gap-3">                                            <FaCalendarAlt className="w-4 h-4 text-base-content/60 mt-1 shrink-0" />                                            <div>                                                <p className="text-xs text-base-content/60 font-semibold">Date</p>                                                <p className="font-semibold text-base-content text-sm">{request.donationDate}</p>                                            </div>                                        </div>                                        <div className="flex items-start gap-3">                                            <FaPhone className="w-4 h-4 text-base-content/60 mt-1 shrink-0" />                                            <div>                                                <p className="text-xs text-base-content/60 font-semibold">Mobile</p>                                                <p className="font-semibold text-base-content text-sm">{request.mobile}</p>                                            </div>                                        </div>                                    </div>                                </div>                                {}                                <div className="flex gap-2 pt-4 border-t border-base-300">                                    <Button                                        as={Link}                                        to={`/dashboard/view-request/${request._id}`}                                        variant="success"                                        size="sm"                                        className="flex-1"                                    >                                        <Eye className="w-4 h-4" />                                        <span className="hidden sm:inline">View</span>                                    </Button>                                    <Button                                        variant="accent"                                        size="sm"                                        onClick={() => {                                            if (!checkDemoRestriction()) {                                                window.location.href = `/dashboard/edit-request/${request._id}`;                                            }                                        }}                                        className="flex-1"                                    >                                        <Edit className="w-4 h-4" />                                        <span className="hidden sm:inline">Edit</span>                                    </Button>                                    <Button                                        variant="primary"                                        size="sm"                                        onClick={() => handleDelete(request._id)}                                        className="flex-1"                                    >                                        <Trash2 className="w-4 h-4" />                                        <span className="hidden sm:inline">Delete</span>                                    </Button>                                </div>                            </Card>                        ))}                    </div>                )}                {}                {myRequests.length > 0 && (                    <div className="hidden lg:block overflow-x-auto bg-base-200 border-2 border-base-300 rounded-xl shadow-lg">                        <table className="table w-full">                            <thead>                                <tr className="bg-base-300">                                    <th className="border-r border-base-300 px-4 py-4 text-left font-bold text-base-content">#</th>                                    <th className="border-r border-base-300 px-4 py-4 text-left font-bold text-base-content">Recipient</th>                                    <th className="border-r border-base-300 px-4 py-4 text-left font-bold text-base-content">Blood Group</th>                                    <th className="border-r border-base-300 px-4 py-4 text-left font-bold text-base-content">Hospital</th>                                    <th className="border-r border-base-300 px-4 py-4 text-left font-bold text-base-content">Date</th>                                    <th className="border-r border-base-300 px-4 py-4 text-left font-bold text-base-content">Status</th>                                    <th className="px-4 py-4 text-center font-bold text-base-content">Actions</th>                                </tr>                            </thead>                            <tbody>                                {myRequests.map((request, index) => (                                    <tr key={request._id} className="hover:bg-base-300/50 border-b border-base-300">                                        <td className="border-r border-base-300 px-4 py-4 font-semibold text-base-content">                                            {(currentPage - 1) * page + (index + 1)}                                        </td>                                        <td className="border-r border-base-300 px-4 py-4">                                            <div>                                                <p className="font-bold text-base-content">{request.recipientName}</p>                                                <p className="text-sm text-base-content/70">{request.mobile}</p>                                            </div>                                        </td>                                        <td className="border-r border-base-300 px-4 py-4">                                            <div className="flex items-center gap-2 bg-red-100 dark:bg-red-900/30 px-3 py-1 rounded-full w-fit">                                                <FaTint className="w-3 h-3 text-red-600 dark:text-red-400" />                                                <span className="text-red-600 dark:text-red-400 font-bold text-sm">                                                    {request.bloodGroup}                                                </span>                                            </div>                                        </td>                                        <td className="border-r border-base-300 px-4 py-4">                                            <div>                                                <p className="font-semibold text-base-content">{request.hospitalName}</p>                                                <p className="text-sm text-base-content/70 truncate max-w-xs">{request.fullAddress}</p>                                            </div>                                        </td>                                        <td className="border-r border-base-300 px-4 py-4 font-semibold text-base-content">                                            {request.donationDate}                                        </td>                                        <td className="border-r border-base-300 px-4 py-4">                                            <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full border text-xs font-semibold ${getStatusColor(request.donation_status)}`}>                                                {getStatusIcon(request.donation_status)}                                                <span className="capitalize">{request.donation_status}</span>                                            </div>                                        </td>                                        <td className="px-4 py-4">                                            <div className="flex gap-2 justify-center">                                                <Button                                                    as={Link}                                                    to={`/dashboard/view-request/${request._id}`}                                                    variant="success"                                                    size="sm"                                                    title="View Details"                                                >                                                    <Eye className="w-4 h-4" />                                                </Button>                                                <Button                                                    variant="accent"                                                    size="sm"                                                    onClick={() => {                                                        if (!checkDemoRestriction()) {                                                            window.location.href = `/dashboard/edit-request/${request._id}`;                                                        }                                                    }}                                                    title="Edit Request"                                                >                                                    <Edit className="w-4 h-4" />                                                </Button>                                                <Button                                                    variant="primary"                                                    size="sm"                                                    onClick={() => handleDelete(request._id)}                                                    title="Delete Request"                                                >                                                    <Trash2 className="w-4 h-4" />                                                </Button>                                            </div>                                        </td>                                    </tr>                                ))}                            </tbody>                        </table>                    </div>                )}                {}                {numberOfPages > 1 && (                    <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mt-8">                        <div className="text-sm text-base-content/70 order-2 sm:order-1">                            Showing page {currentPage} of {numberOfPages} ({totalRequests} total requests)                        </div>                        <div className="flex gap-2 order-1 sm:order-2">                            <button                                 onClick={handlePrevPage}                                disabled={currentPage === 1}                                className="btn btn-sm bg-base-300 hover:bg-base-400 text-base-content border-0 disabled:opacity-50 disabled:cursor-not-allowed"                            >                                Previous                            </button>                            <div className="flex gap-1">                                {Pages.map(pg => (                                    <button                                        key={pg}                                        className={`btn btn-sm border-0 ${                                            pg === currentPage                                                 ? 'bg-gradient-to-r from-red-600 to-red-700 text-white shadow-lg'                                                 : 'bg-base-200 text-base-content hover:bg-base-300'                                        }`}                                        onClick={() => setCurrentPage(pg)}                                    >                                        {pg}                                    </button>                                ))}                            </div>                            <button                                 onClick={handleNextPage}                                disabled={currentPage === numberOfPages}                                className="btn btn-sm bg-base-300 hover:bg-base-400 text-base-content border-0 disabled:opacity-50 disabled:cursor-not-allowed"                            >                                Next                            </button>                        </div>                    </div>                )}            </div>        </div>    );};export default MyRequest;
+import { useEffect, useState } from 'react';
+import useAxiosSecure from '../../Hooks/useAxiosSecure';
+import { FaRegEye, FaTint, FaMapMarkerAlt, FaCalendarAlt, FaPhone, FaHospital, FaFilter, FaPlus } from "react-icons/fa";
+import { Link } from 'react-router';
+import Swal from 'sweetalert2';
+import { Heart, Clock, CheckCircle, XCircle, AlertCircle, Eye, Edit, Trash2 } from 'lucide-react';
+import { useDemoRestriction } from '../../Hooks/useDemoRestriction';
+import { Card, Button } from '../../Components/UI';
+import { TYPOGRAPHY, LAYOUT, SPACING } from '../../styles/designSystem';
+const MyRequest = () => {
+    const [totalRequests, setTotalRequests] = useState(0);
+    const [myRequests, setMyRequests] = useState([]);
+    const [page] = useState(10);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [statusFilter, setStatusFilter] = useState('all');
+    const [loading, setLoading] = useState(true);
+    const { checkDemoRestriction } = useDemoRestriction();
+    const axiosSecure = useAxiosSecure();
+    useEffect(() => {
+        let isMounted = true;
+        const fetchRequests = () => {
+            if (isMounted) {
+                setLoading(true);
+            }
+            axiosSecure.get(`/myRequests?page=${currentPage - 1}&size=${page}&status=${statusFilter}`)
+                .then(response => {
+                    if (isMounted) {
+                        setMyRequests(response.data.requests);
+                        setTotalRequests(response.data.totalRequests);
+                        setLoading(false);
+                    }
+                })
+                .catch(err => {
+                    if (isMounted) {
+                        console.error(err);
+                        setLoading(false);
+                    }
+                });
+        };
+        fetchRequests();
+        return () => {
+            isMounted = false;
+        };
+    }, [axiosSecure, currentPage, page, statusFilter]);
+    const numberOfPages = Math.ceil(totalRequests / page);
+    const Pages = [...Array(numberOfPages).keys()].map(num => num + 1);
+    const handlePrevPage = () => {
+        if (currentPage > 1) {
+            setCurrentPage(currentPage - 1);
+        }
+    }
+    const handleNextPage = () => {
+        if (currentPage < Pages.length) {
+            setCurrentPage(currentPage + 1);
+        }
+    }
+    const handleDelete = (id) => {
+        if (checkDemoRestriction()) {
+            return;
+        }
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this donation request!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#dc2626",
+            cancelButtonColor: "#6b7280",
+            confirmButtonText: "Yes, delete it!",
+            cancelButtonText: "Cancel"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axiosSecure.delete(`/delete-request/${id}`)
+                    .then(res => {
+                        if (res.data.deletedCount == 1) {
+                            const remaining = myRequests.filter(listing => listing._id !== id);
+                            setMyRequests(remaining);
+                            setTotalRequests(prev => prev - 1);
+                            Swal.fire({
+                                title: "Deleted!",
+                                text: "Your donation request has been deleted.",
+                                icon: "success",
+                                confirmButtonColor: "#dc2626"
+                            });
+                        }
+                    })
+                    .catch(err => {
+                        console.log(err);
+                        Swal.fire({
+                            title: "Error!",
+                            text: "Failed to delete the request. Please try again.",
+                            icon: "error",
+                            confirmButtonColor: "#dc2626"
+                        });
+                    });
+            }
+        });
+    }
+    const getStatusIcon = (status) => {
+        switch (status) {
+            case 'pending':
+                return <AlertCircle className="w-4 h-4" />;
+            case 'inprogress':
+                return <Clock className="w-4 h-4" />;
+            case 'done':
+                return <CheckCircle className="w-4 h-4" />;
+            case 'canceled':
+                return <XCircle className="w-4 h-4" />;
+            default:
+                return <AlertCircle className="w-4 h-4" />;
+        }
+    };
+    const getStatusColor = (status) => {
+        switch (status) {
+            case 'pending':
+                return 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-400 border-yellow-200 dark:border-yellow-900/50';
+            case 'inprogress':
+                return 'bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-400 border-blue-200 dark:border-blue-900/50';
+            case 'done':
+                return 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400 border-green-200 dark:border-green-900/50';
+            case 'canceled':
+                return 'bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-400 border-red-200 dark:border-red-900/50';
+            default:
+                return 'bg-gray-100 dark:bg-gray-900/30 text-gray-800 dark:text-gray-400 border-gray-200 dark:border-gray-900/50';
+        }
+    };
+    if (loading) {
+        return (
+            <div className="min-h-screen bg-base-100 flex items-center justify-center p-4">
+                <div className="text-center">
+                    <div className="animate-spin rounded-full h-12 w-12 sm:h-16 sm:w-16 border-b-2 border-red-600 mx-auto mb-4"></div>
+                    <p className="text-base-content/70 text-sm sm:text-base">Loading your requests...</p>
+                </div>
+            </div>
+        );
+    }
+    return (
+        <div className="min-h-screen bg-base-100 p-4 sm:p-6 lg:p-8">
+            <div className={LAYOUT.container}>
+                {}
+                <div className={SPACING.marginXl}>
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+                        <div>
+                            <h1 className={`${TYPOGRAPHY.heading.h2} mb-2`}>
+                                My Donation Requests
+                            </h1>
+                            <p className={TYPOGRAPHY.body.default}>
+                                Manage and track your blood donation requests
+                            </p>
+                        </div>
+                        <Button
+                            as={Link}
+                            to="/dashboard/addRequest"
+                            variant="primary"
+                            className="w-full sm:w-auto flex items-center gap-2"
+                        >
+                            <FaPlus className="w-4 h-4" />
+                            <span>Add New Request</span>
+                        </Button>
+                    </div>
+                    {}
+                    <div className={`${LAYOUT.grid.stats} ${SPACING.marginMd}`}>
+                        <Card className="text-center hover:border-red-200 dark:hover:border-red-900/50 transition-all">
+                            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-red-500 to-red-600 rounded-lg flex items-center justify-center mx-auto mb-2 shadow-lg">
+                                <Heart className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
+                            </div>
+                            <p className="text-lg sm:text-xl font-bold text-base-content">{totalRequests}</p>
+                            <p className="text-xs sm:text-sm text-base-content/70 font-semibold">Total Requests</p>
+                        </Card>
+                        <Card className="text-center hover:border-yellow-200 dark:hover:border-yellow-900/50 transition-all">
+                            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-yellow-500 to-yellow-600 rounded-lg flex items-center justify-center mx-auto mb-2 shadow-lg">
+                                <AlertCircle className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
+                            </div>
+                            <p className="text-lg sm:text-xl font-bold text-base-content">
+                                {myRequests.filter(r => r.donation_status === 'pending').length}
+                            </p>
+                            <p className="text-xs sm:text-sm text-base-content/70 font-semibold">Pending</p>
+                        </Card>
+                        <Card className="text-center hover:border-blue-200 dark:hover:border-blue-900/50 transition-all">
+                            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center mx-auto mb-2 shadow-lg">
+                                <Clock className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
+                            </div>
+                            <p className="text-lg sm:text-xl font-bold text-base-content">
+                                {myRequests.filter(r => r.donation_status === 'inprogress').length}
+                            </p>
+                            <p className="text-xs sm:text-sm text-base-content/70 font-semibold">In Progress</p>
+                        </Card>
+                        <Card className="text-center hover:border-green-200 dark:hover:border-green-900/50 transition-all">
+                            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-green-500 to-green-600 rounded-lg flex items-center justify-center mx-auto mb-2 shadow-lg">
+                                <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
+                            </div>
+                            <p className="text-lg sm:text-xl font-bold text-base-content">
+                                {myRequests.filter(r => r.donation_status === 'done').length}
+                            </p>
+                            <p className="text-xs sm:text-sm text-base-content/70 font-semibold">Completed</p>
+                        </Card>
+                    </div>
+                    {}
+                    <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
+                        <div className="flex items-center gap-3">
+                            <FaFilter className="text-base-content/60" />
+                            <select
+                                value={statusFilter}
+                                onChange={(e) => setStatusFilter(e.target.value)}
+                                className="select select-bordered bg-base-200 text-base-content border-base-300 focus:border-red-500 w-full sm:w-auto"
+                            >
+                                <option value="all">All Status</option>
+                                <option value="pending">Pending</option>
+                                <option value="inprogress">In Progress</option>
+                                <option value="done">Completed</option>
+                                <option value="canceled">Canceled</option>
+                            </select>
+                        </div>
+                        <div className="text-sm text-base-content/70">
+                            Showing {myRequests.length} of {totalRequests} requests
+                        </div>
+                    </div>
+                </div>
+                {}
+                {myRequests.length === 0 && !loading && (
+                    <div className="text-center py-12 sm:py-16">
+                        <div className="w-16 h-16 sm:w-20 sm:h-20 bg-base-300 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <Heart className="w-8 h-8 sm:w-10 sm:h-10 text-base-content/40" />
+                        </div>
+                        <h3 className="text-xl sm:text-2xl font-bold text-base-content mb-2">No Requests Found</h3>
+                        <p className="text-base-content/70 mb-6 max-w-md mx-auto">
+                            {statusFilter === 'all' 
+                                ? "You haven't created any donation requests yet." 
+                                : `No requests found with status: ${statusFilter}`
+                            }
+                        </p>
+                        <Link
+                            to="/dashboard/addRequest"
+                            className="btn bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white border-0 shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
+                        >
+                            <FaPlus className="w-4 h-4 mr-2" />
+                            Create Your First Request
+                        </Link>
+                    </div>
+                )}
+                {}
+                {myRequests.length > 0 && (
+                    <div className="lg:hidden space-y-4">
+                        {myRequests.map((request, index) => (
+                            <Card key={request._id} interactive className="hover:border-red-200 dark:hover:border-red-900/50 transition-all">
+                                {}
+                                <div className="flex justify-between items-start mb-4">
+                                    <div className="flex items-center gap-2">
+                                        <span className="bg-base-300 text-base-content px-3 py-1 rounded-full text-sm font-bold">
+                                            #{(currentPage - 1) * page + (index + 1)}
+                                        </span>
+                                        <div className="flex items-center gap-2 bg-red-100 dark:bg-red-900/30 px-3 py-1 rounded-full">
+                                            <FaTint className="w-3 h-3 text-red-600 dark:text-red-400" />
+                                            <span className="text-red-600 dark:text-red-400 font-bold text-sm">
+                                                {request.bloodGroup}
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full border text-xs font-semibold ${getStatusColor(request.donation_status)}`}>
+                                        {getStatusIcon(request.donation_status)}
+                                        <span className="capitalize">{request.donation_status}</span>
+                                    </div>
+                                </div>
+                                {}
+                                <div className="space-y-3 mb-4">
+                                    <div className="flex items-start gap-3">
+                                        <FaRegEye className="w-4 h-4 text-base-content/60 mt-1 shrink-0" />
+                                        <div>
+                                            <p className="text-xs text-base-content/60 font-semibold">Recipient Name</p>
+                                            <p className="font-bold text-base-content">{request.recipientName}</p>
+                                        </div>
+                                    </div>
+                                    <div className="flex items-start gap-3">
+                                        <FaHospital className="w-4 h-4 text-base-content/60 mt-1 shrink-0" />
+                                        <div>
+                                            <p className="text-xs text-base-content/60 font-semibold">Hospital</p>
+                                            <p className="font-semibold text-base-content">{request.hospitalName}</p>
+                                        </div>
+                                    </div>
+                                    <div className="flex items-start gap-3">
+                                        <FaMapMarkerAlt className="w-4 h-4 text-base-content/60 mt-1 shrink-0" />
+                                        <div>
+                                            <p className="text-xs text-base-content/60 font-semibold">Location</p>
+                                            <p className="font-semibold text-base-content text-sm">{request.fullAddress}</p>
+                                        </div>
+                                    </div>
+                                    <div className="grid grid-cols-2 gap-4">
+                                        <div className="flex items-start gap-3">
+                                            <FaCalendarAlt className="w-4 h-4 text-base-content/60 mt-1 shrink-0" />
+                                            <div>
+                                                <p className="text-xs text-base-content/60 font-semibold">Date</p>
+                                                <p className="font-semibold text-base-content text-sm">{request.donationDate}</p>
+                                            </div>
+                                        </div>
+                                        <div className="flex items-start gap-3">
+                                            <FaPhone className="w-4 h-4 text-base-content/60 mt-1 shrink-0" />
+                                            <div>
+                                                <p className="text-xs text-base-content/60 font-semibold">Mobile</p>
+                                                <p className="font-semibold text-base-content text-sm">{request.mobile}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {}
+                                <div className="flex gap-2 pt-4 border-t border-base-300">
+                                    <Button
+                                        as={Link}
+                                        to={`/dashboard/view-request/${request._id}`}
+                                        variant="success"
+                                        size="sm"
+                                        className="flex-1"
+                                    >
+                                        <Eye className="w-4 h-4" />
+                                        <span className="hidden sm:inline">View</span>
+                                    </Button>
+                                    <Button
+                                        variant="accent"
+                                        size="sm"
+                                        onClick={() => {
+                                            if (!checkDemoRestriction()) {
+                                                window.location.href = `/dashboard/edit-request/${request._id}`;
+                                            }
+                                        }}
+                                        className="flex-1"
+                                    >
+                                        <Edit className="w-4 h-4" />
+                                        <span className="hidden sm:inline">Edit</span>
+                                    </Button>
+                                    <Button
+                                        variant="primary"
+                                        size="sm"
+                                        onClick={() => handleDelete(request._id)}
+                                        className="flex-1"
+                                    >
+                                        <Trash2 className="w-4 h-4" />
+                                        <span className="hidden sm:inline">Delete</span>
+                                    </Button>
+                                </div>
+                            </Card>
+                        ))}
+                    </div>
+                )}
+                {}
+                {myRequests.length > 0 && (
+                    <div className="hidden lg:block overflow-x-auto bg-base-200 border-2 border-base-300 rounded-xl shadow-lg">
+                        <table className="table w-full">
+                            <thead>
+                                <tr className="bg-base-300">
+                                    <th className="border-r border-base-300 px-4 py-4 text-left font-bold text-base-content">#</th>
+                                    <th className="border-r border-base-300 px-4 py-4 text-left font-bold text-base-content">Recipient</th>
+                                    <th className="border-r border-base-300 px-4 py-4 text-left font-bold text-base-content">Blood Group</th>
+                                    <th className="border-r border-base-300 px-4 py-4 text-left font-bold text-base-content">Hospital</th>
+                                    <th className="border-r border-base-300 px-4 py-4 text-left font-bold text-base-content">Date</th>
+                                    <th className="border-r border-base-300 px-4 py-4 text-left font-bold text-base-content">Status</th>
+                                    <th className="px-4 py-4 text-center font-bold text-base-content">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {myRequests.map((request, index) => (
+                                    <tr key={request._id} className="hover:bg-base-300/50 border-b border-base-300">
+                                        <td className="border-r border-base-300 px-4 py-4 font-semibold text-base-content">
+                                            {(currentPage - 1) * page + (index + 1)}
+                                        </td>
+                                        <td className="border-r border-base-300 px-4 py-4">
+                                            <div>
+                                                <p className="font-bold text-base-content">{request.recipientName}</p>
+                                                <p className="text-sm text-base-content/70">{request.mobile}</p>
+                                            </div>
+                                        </td>
+                                        <td className="border-r border-base-300 px-4 py-4">
+                                            <div className="flex items-center gap-2 bg-red-100 dark:bg-red-900/30 px-3 py-1 rounded-full w-fit">
+                                                <FaTint className="w-3 h-3 text-red-600 dark:text-red-400" />
+                                                <span className="text-red-600 dark:text-red-400 font-bold text-sm">
+                                                    {request.bloodGroup}
+                                                </span>
+                                            </div>
+                                        </td>
+                                        <td className="border-r border-base-300 px-4 py-4">
+                                            <div>
+                                                <p className="font-semibold text-base-content">{request.hospitalName}</p>
+                                                <p className="text-sm text-base-content/70 truncate max-w-xs">{request.fullAddress}</p>
+                                            </div>
+                                        </td>
+                                        <td className="border-r border-base-300 px-4 py-4 font-semibold text-base-content">
+                                            {request.donationDate}
+                                        </td>
+                                        <td className="border-r border-base-300 px-4 py-4">
+                                            <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full border text-xs font-semibold ${getStatusColor(request.donation_status)}`}>
+                                                {getStatusIcon(request.donation_status)}
+                                                <span className="capitalize">{request.donation_status}</span>
+                                            </div>
+                                        </td>
+                                        <td className="px-4 py-4">
+                                            <div className="flex gap-2 justify-center">
+                                                <Button
+                                                    as={Link}
+                                                    to={`/dashboard/view-request/${request._id}`}
+                                                    variant="success"
+                                                    size="sm"
+                                                    title="View Details"
+                                                >
+                                                    <Eye className="w-4 h-4" />
+                                                </Button>
+                                                <Button
+                                                    variant="accent"
+                                                    size="sm"
+                                                    onClick={() => {
+                                                        if (!checkDemoRestriction()) {
+                                                            window.location.href = `/dashboard/edit-request/${request._id}`;
+                                                        }
+                                                    }}
+                                                    title="Edit Request"
+                                                >
+                                                    <Edit className="w-4 h-4" />
+                                                </Button>
+                                                <Button
+                                                    variant="primary"
+                                                    size="sm"
+                                                    onClick={() => handleDelete(request._id)}
+                                                    title="Delete Request"
+                                                >
+                                                    <Trash2 className="w-4 h-4" />
+                                                </Button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                )}
+                {}
+                {numberOfPages > 1 && (
+                    <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mt-8">
+                        <div className="text-sm text-base-content/70 order-2 sm:order-1">
+                            Showing page {currentPage} of {numberOfPages} ({totalRequests} total requests)
+                        </div>
+                        <div className="flex gap-2 order-1 sm:order-2">
+                            <button 
+                                onClick={handlePrevPage}
+                                disabled={currentPage === 1}
+                                className="btn btn-sm bg-base-300 hover:bg-base-400 text-base-content border-0 disabled:opacity-50 disabled:cursor-not-allowed"
+                            >
+                                Previous
+                            </button>
+                            <div className="flex gap-1">
+                                {Pages.map(pg => (
+                                    <button
+                                        key={pg}
+                                        className={`btn btn-sm border-0 ${
+                                            pg === currentPage 
+                                                ? 'bg-gradient-to-r from-red-600 to-red-700 text-white shadow-lg' 
+                                                : 'bg-base-200 text-base-content hover:bg-base-300'
+                                        }`}
+                                        onClick={() => setCurrentPage(pg)}
+                                    >
+                                        {pg}
+                                    </button>
+                                ))}
+                            </div>
+                            <button 
+                                onClick={handleNextPage}
+                                disabled={currentPage === numberOfPages}
+                                className="btn btn-sm bg-base-300 hover:bg-base-400 text-base-content border-0 disabled:opacity-50 disabled:cursor-not-allowed"
+                            >
+                                Next
+                            </button>
+                        </div>
+                    </div>
+                )}
+            </div>
+        </div>
+    );
+};
+export default MyRequest;

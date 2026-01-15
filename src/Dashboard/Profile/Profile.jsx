@@ -268,7 +268,7 @@ const Profile = () => {
                                 <button
                                     type="button"
                                     onClick={handleEdit}
-                                    className="btn bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white border-0 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 flex-1"
+                                    className="btn bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white border-0 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 flex-1 min-h-[4rem] py-4 px-8 text-lg font-semibold"
                                 >
                                     Edit Profile
                                 </button>
@@ -277,7 +277,7 @@ const Profile = () => {
                                     <button
                                         type="submit"
                                         disabled={uploading}
-                                        className="btn bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white border-0 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 flex-1"
+                                        className="btn bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white border-0 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 flex-1 min-h-[4rem] py-4 px-8 text-lg font-semibold"
                                     >
                                         {uploading ? (
                                             <>
@@ -291,7 +291,7 @@ const Profile = () => {
                                     <button
                                         type="button"
                                         onClick={handleCancel}
-                                        className="btn bg-base-300 hover:bg-base-400 text-base-content border-0 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 flex-1"
+                                        className="btn bg-base-300 hover:bg-base-400 text-base-content border-0 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 flex-1 min-h-[4rem] py-4 px-8 text-lg font-semibold"
                                     >
                                         Cancel
                                     </button>

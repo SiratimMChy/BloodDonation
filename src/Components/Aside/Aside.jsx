@@ -83,9 +83,14 @@ const Aside = () => {
     }
   }
 
+  const navLinkClass = ({ isActive }) =>
+    `flex items-center gap-2 sm:gap-3 px-2 sm:px-4 py-3 rounded-xl transition-all duration-200 ${isActive
+      ? 'bg-red-500 hover:bg-red-600 text-white shadow-md'
+      : 'text-base-content hover:bg-red-50 dark:hover:bg-base-300 hover:text-red-600'
+    } ${isCollapsed ? 'justify-center' : ''}`;
 
   return (
-    <aside className={`min-h-screen ${isCollapsed ? 'w-20' : 'w-max-xl'} bg-base-200 border-r-2 border-base-300 flex flex-col shadow-lg transition-all duration-300 relative`}>
+    <aside className={`min-h-screen ${isCollapsed ? 'w-16 sm:w-20' : 'w-48 sm:w-56 md:w-64 lg:w-72'} bg-base-200 border-r-2 border-base-300 flex flex-col shadow-lg transition-all duration-300 relative`}>
       {/* Toggle Button */}
       <button
         onClick={() => setIsCollapsed(!isCollapsed)}
@@ -94,14 +99,14 @@ const Aside = () => {
         {isCollapsed ? <ChevronRight size={16} className="text-base-content/60" /> : <ChevronLeft size={16} className="text-base-content/60" />}
       </button>
 
-      <div className="px-6 pt-8 pb-6 border-b-2 border-base-300 bg-base-100">
-        <div className={`flex items-center gap-3 mb-2 ${isCollapsed ? 'justify-center' : ''}`}>
-          <div className="mt-1.5 w-8 h-8 lg:w-12 lg:h-12 bg-red-500 rounded-lg flex items-center justify-center shadow-md shrink-0">
-            <MdBloodtype className="text-white" size={18} />
+      <div className="px-3 sm:px-6 pt-8 pb-6 border-b-2 border-base-300 bg-base-100">
+        <div className={`flex items-center gap-2 sm:gap-3 mb-2 ${isCollapsed ? 'justify-center' : ''}`}>
+          <div className="mt-1.5 w-6 h-6 sm:w-8 sm:h-8 lg:w-12 lg:h-12 bg-red-500 rounded-lg flex items-center justify-center shadow-md shrink-0">
+            <MdBloodtype className="text-white" size={14} />
           </div>
           {!isCollapsed && (
             <div>
-              <h1 className="text-lg font-bold tracking-tight text-base-content">
+              <h1 className="text-sm sm:text-lg font-bold tracking-tight text-base-content">
                 {getDashboardTitle()}
               </h1>
             </div>
@@ -110,125 +115,82 @@ const Aside = () => {
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 flex flex-col gap-1.5 px-4 py-6">
+      <nav className="flex-1 flex flex-col gap-1.5 px-2 sm:px-4 py-6">
 
         {
           role === 'admin' && (
             <>
               <NavLink
                 to="/dashboard/admindashboard"
-                className={({ isActive }) =>
-                  `flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${isActive
-                    ? 'bg-red-500 hover:bg-red-600 text-white shadow-md'
-                    : 'text-base-content hover:bg-red-50 dark:hover:bg-base-300 hover:text-red-600'
-                  } ${isCollapsed ? 'justify-center' : ''}`
-                }
+                className={navLinkClass}
                 title={isCollapsed ? 'Dashboard' : ''}
               >
-                <Activity className='w-5 h-5' />
-                {!isCollapsed && <span className="font-medium text-sm">Dashboard</span>}
+                <Activity className='w-4 h-4 sm:w-5 sm:h-5' />
+                {!isCollapsed && <span className="font-medium text-xs sm:text-sm">Dashboard</span>}
               </NavLink>
               <NavLink
                 to="/dashboard/profile"
-                className={({ isActive }) =>
-                  `flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${isActive
-                    ? 'bg-red-500 hover:bg-red-600 text-white shadow-md'
-                    : 'text-base-content hover:bg-red-50 dark:hover:bg-base-300 hover:text-red-600'
-                  } ${isCollapsed ? 'justify-center' : ''}`
-                }
+                className={navLinkClass}
                 title={isCollapsed ? 'Profile' : ''}
               >
-                <User className='w-5 h-5' />
-                {!isCollapsed && <span className="font-medium text-sm">Profile</span>}
+                <User className='w-4 h-4 sm:w-5 sm:h-5' />
+                {!isCollapsed && <span className="font-medium text-xs sm:text-sm">Profile</span>}
               </NavLink>
               <NavLink
                 to="/dashboard/all-users"
-                className={({ isActive }) =>
-                  `flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${isActive
-                    ? 'bg-red-500 hover:bg-red-600 text-white shadow-md'
-                    : 'text-base-content hover:bg-red-50 dark:hover:bg-base-300 hover:text-red-600'
-                  } ${isCollapsed ? 'justify-center' : ''}`
-                }
+                className={navLinkClass}
                 title={isCollapsed ? 'All Users' : ''}
               >
-                <Users className='w-5 h-5' />
-                {!isCollapsed && <span className="font-medium text-sm">All Users</span>}
+                <Users className='w-4 h-4 sm:w-5 sm:h-5' />
+                {!isCollapsed && <span className="font-medium text-xs sm:text-sm">All Users</span>}
               </NavLink>
-
               <NavLink
                 to="/dashboard/allRequest"
-                className={({ isActive }) =>
-                  `flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${isActive
-                    ? 'bg-red-500 hover:bg-red-600 text-white shadow-md'
-                    : 'text-base-content hover:bg-red-50 dark:hover:bg-base-300 hover:text-red-600'
-                  } ${isCollapsed ? 'justify-center' : ''}`
-                }
+                className={navLinkClass}
                 title={isCollapsed ? 'All Requests' : ''}
               >
-                <VscRequestChanges className='w-5 h-5' />
-                {!isCollapsed && <span className="font-medium text-sm">All Requests</span>}
+                <VscRequestChanges className='w-4 h-4 sm:w-5 sm:h-5' />
+                {!isCollapsed && <span className="font-medium text-xs sm:text-sm">All Requests</span>}
               </NavLink>
             </>
-
           )}
-              {
+
+        {
           role === 'volunteer' && (
             <>
               <NavLink
                 to="/dashboard/volunteerdashboard"
-                className={({ isActive }) =>
-                  `flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${isActive
-                    ? 'bg-red-500 hover:bg-red-600 text-white shadow-md'
-                    : 'text-base-content hover:bg-red-50 dark:hover:bg-base-300 hover:text-red-600'
-                  } ${isCollapsed ? 'justify-center' : ''}`
-                }
+                className={navLinkClass}
                 title={isCollapsed ? 'Dashboard' : ''}
               >
-                <Heart className='w-5 h-5' />
-                {!isCollapsed && <span className="font-medium text-sm">Dashboard</span>}
+                <Heart className='w-4 h-4 sm:w-5 sm:h-5' />
+                {!isCollapsed && <span className="font-medium text-xs sm:text-sm">Dashboard</span>}
               </NavLink>
               <NavLink
                 to="/dashboard/profile"
-                className={({ isActive }) =>
-                  `flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${isActive
-                    ? 'bg-red-500 hover:bg-red-600 text-white shadow-md'
-                    : 'text-base-content hover:bg-red-50 dark:hover:bg-base-300 hover:text-red-600'
-                  } ${isCollapsed ? 'justify-center' : ''}`
-                }
+                className={navLinkClass}
                 title={isCollapsed ? 'Profile' : ''}
               >
-                <User className='w-5 h-5' />
-                {!isCollapsed && <span className="font-medium text-sm">Profile</span>}
+                <User className='w-4 h-4 sm:w-5 sm:h-5' />
+                {!isCollapsed && <span className="font-medium text-xs sm:text-sm">Profile</span>}
               </NavLink>
               <NavLink
                 to="/dashboard/all-users"
-                className={({ isActive }) =>
-                  `flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${isActive
-                    ? 'bg-red-500 hover:bg-red-600 text-white shadow-md'
-                    : 'text-base-content hover:bg-red-50 dark:hover:bg-base-300 hover:text-red-600'
-                  } ${isCollapsed ? 'justify-center' : ''}`
-                }
+                className={navLinkClass}
                 title={isCollapsed ? 'All Users' : ''}
               >
-                <Users className='w-5 h-5' />
-                {!isCollapsed && <span className="font-medium text-sm">All Users</span>}
+                <Users className='w-4 h-4 sm:w-5 sm:h-5' />
+                {!isCollapsed && <span className="font-medium text-xs sm:text-sm">All Users</span>}
               </NavLink>
-
               <NavLink
                 to="/dashboard/allRequest"
-                className={({ isActive }) =>
-                  `flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${isActive
-                    ? 'bg-red-500 hover:bg-red-600 text-white shadow-md'
-                    : 'text-base-content hover:bg-red-50 dark:hover:bg-base-300 hover:text-red-600'
-                  } ${isCollapsed ? 'justify-center' : ''}`
-                }
+                className={navLinkClass}
                 title={isCollapsed ? 'All Requests' : ''}
               >
-                <VscRequestChanges className='w-5 h-5' />
-                {!isCollapsed && <span className="font-medium text-sm">All Requests</span>}
+                <VscRequestChanges className='w-4 h-4 sm:w-5 sm:h-5' />
+                {!isCollapsed && <span className="font-medium text-xs sm:text-sm">All Requests</span>}
               </NavLink>
             </>
-
           )}
 
         {
@@ -236,55 +198,35 @@ const Aside = () => {
             <>
               <NavLink
                 to="/dashboard/donordashboard"
-                className={({ isActive }) =>
-                  `flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${isActive
-                    ? 'bg-red-500 hover:bg-red-600 text-white shadow-md'
-                    : 'text-base-content hover:bg-red-50 dark:hover:bg-base-300 hover:text-red-600'
-                  } ${isCollapsed ? 'justify-center' : ''}`
-                }
+                className={navLinkClass}
                 title={isCollapsed ? 'Dashboard' : ''}
               >
-                <Home className='w-5 h-5' />
-                {!isCollapsed && <span className="font-medium text-sm">Dashboard</span>}
+                <Home className='w-4 h-4 sm:w-5 sm:h-5' />
+                {!isCollapsed && <span className="font-medium text-xs sm:text-sm">Dashboard</span>}
               </NavLink>
               <NavLink
                 to="/dashboard/profile"
-                className={({ isActive }) =>
-                  `flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${isActive
-                    ? 'bg-red-500 hover:bg-red-600 text-white shadow-md'
-                    : 'text-base-content hover:bg-red-50 dark:hover:bg-base-300 hover:text-red-600'
-                  } ${isCollapsed ? 'justify-center' : ''}`
-                }
+                className={navLinkClass}
                 title={isCollapsed ? 'Profile' : ''}
               >
-                <User className='w-5 h-5' />
-                {!isCollapsed && <span className="font-medium text-sm">Profile</span>}
+                <User className='w-4 h-4 sm:w-5 sm:h-5' />
+                {!isCollapsed && <span className="font-medium text-xs sm:text-sm">Profile</span>}
               </NavLink>
               <NavLink
                 to="/dashboard/addRequest"
-                className={({ isActive }) =>
-                  `flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${isActive
-                    ? 'bg-red-500 hover:bg-red-600 text-white shadow-md'
-                    : 'text-base-content hover:bg-red-50 dark:hover:bg-base-300 hover:text-red-600'
-                  } ${isCollapsed ? 'justify-center' : ''}`
-                }
+                className={navLinkClass}
                 title={isCollapsed ? 'Add Requests' : ''}
               >
-                <Plus className='w-5 h-5' />
-                {!isCollapsed && <span className="font-medium text-sm">Add Requests</span>}
+                <Plus className='w-4 h-4 sm:w-5 sm:h-5' />
+                {!isCollapsed && <span className="font-medium text-xs sm:text-sm">Add Requests</span>}
               </NavLink>
               <NavLink
                 to="/dashboard/myRequest"
-                className={({ isActive }) =>
-                  `flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${isActive
-                    ? 'bg-red-500 hover:bg-red-600 text-white shadow-md'
-                    : 'text-base-content hover:bg-red-50 dark:hover:bg-base-300 hover:text-red-600'
-                  } ${isCollapsed ? 'justify-center' : ''}`
-                }
+                className={navLinkClass}
                 title={isCollapsed ? 'My Requests' : ''}
               >
-                <FileText className='w-5 h-5' />
-                {!isCollapsed && <span className="font-medium text-sm">My Requests</span>}
+                <FileText className='w-4 h-4 sm:w-5 sm:h-5' />
+                {!isCollapsed && <span className="font-medium text-xs sm:text-sm">My Requests</span>}
               </NavLink>
             </>
           )
@@ -293,24 +235,24 @@ const Aside = () => {
       </nav>
 
       {/* Footer / Theme Toggle & Home */}
-      <div className="p-4 border-t-2 border-base-300 bg-base-100 space-y-2">
+      <div className="p-2 sm:p-4 border-t-2 border-base-300 bg-base-100 space-y-2">
         {/* Theme Toggle */}
         <button
           onClick={handleThemeToggle}
-          className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-base-content hover:bg-base-200 hover:text-red-600 border-2 border-base-300 hover:border-red-200 transition-all duration-200 ${isCollapsed ? 'justify-center' : ''}`}
+          className={`w-full flex items-center gap-2 sm:gap-3 px-2 sm:px-4 py-3 rounded-xl text-xs sm:text-sm font-medium text-base-content hover:bg-base-200 hover:text-red-600 border-2 border-base-300 hover:border-red-200 transition-all duration-200 ${isCollapsed ? 'justify-center' : ''}`}
           title={isCollapsed ? (isDark ? 'Switch to Light' : 'Switch to Dark') : ''}
         >
-          {isDark ? <Sun size={18} /> : <Moon size={18} />}
+          {isDark ? <Sun size={16} className="sm:w-[18px] sm:h-[18px]" /> : <Moon size={16} className="sm:w-[18px] sm:h-[18px]" />}
           {!isCollapsed && <span>{isDark ? 'Light Mode' : 'Dark Mode'}</span>}
         </button>
         
         {/* Home Button */}
         <button
           onClick={() => navigate('/')}
-          className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-base-content hover:bg-red-50 dark:hover:bg-base-300 hover:text-red-600 border-2 border-base-300 hover:border-red-200 transition-all duration-200 ${isCollapsed ? 'justify-center' : ''}`}
+          className={`w-full flex items-center gap-2 sm:gap-3 px-2 sm:px-4 py-3 rounded-xl text-xs sm:text-sm font-medium text-base-content hover:bg-red-50 dark:hover:bg-base-300 hover:text-red-600 border-2 border-base-300 hover:border-red-200 transition-all duration-200 ${isCollapsed ? 'justify-center' : ''}`}
           title={isCollapsed ? 'Go to Home' : ''}
         >
-          <Home size={18} />
+          <Home size={16} className="sm:w-[18px] sm:h-[18px]" />
           {!isCollapsed && <span>Go to Home</span>}
         </button>
       </div>
