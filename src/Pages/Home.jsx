@@ -206,36 +206,36 @@ const Home = () => {
               {isStatsLoading ? (
                 <div className="grid grid-cols-3 gap-2 sm:gap-1.5 md:gap-2 pt-4 sm:pt-1 md:pt-2 max-w-md mx-auto lg:mx-0">
                   {Array.from({ length: 3 }).map((_, index) => (
-                    <div key={index} className="bg-base-200 border-2 border-base-300 rounded-xl p-3 sm:p-2 md:p-2.5 animate-pulse min-h-[100px] sm:min-h-[90px] md:min-h-[100px] flex flex-col justify-center">
-                      <div className="flex items-center justify-center gap-1 mb-2 sm:mb-1">
-                        <div className="w-3 h-3 sm:w-2.5 sm:h-2.5 bg-base-300 rounded"></div>
+                    <div key={index} className="bg-base-200 border-2 border-base-300 rounded-xl p-2 sm:p-1.5 md:p-2 animate-pulse min-h-[45px] sm:min-h-[50px] md:min-h-[60px] flex flex-col justify-center">
+                      <div className="flex items-center justify-center gap-1 mb-1">
+                        <div className="w-2.5 h-2.5 bg-base-300 rounded"></div>
                       </div>
-                      <div className="h-5 sm:h-4 md:h-5 bg-base-300 rounded mb-1"></div>
-                      <div className="h-3 sm:h-2 bg-base-300 rounded w-3/4 mx-auto"></div>
+                      <div className="h-4 bg-base-300 rounded mb-1"></div>
+                      <div className="h-2.5 bg-base-300 rounded w-3/4 mx-auto"></div>
                     </div>
                   ))}
                 </div>
               ) : (
                 <div className="grid grid-cols-3 gap-2 sm:gap-1.5 md:gap-2 pt-4 sm:pt-1 md:pt-2 max-w-md mx-auto lg:mx-0">
-                  <Card className="p-3 sm:p-2 md:p-2.5 hover:border-red-200 dark:hover:border-red-900/50 transition shadow-sm hover:shadow-lg text-center min-h-[100px] sm:min-h-[90px] md:min-h-[100px] flex flex-col justify-center">
-                    <div className="flex items-center justify-center gap-1 mb-2 sm:mb-1">
-                      <Users className="text-red-600" size={14} />
+                  <Card className="p-2 sm:p-1.5 md:p-2 hover:border-red-200 dark:hover:border-red-900/50 transition shadow-sm hover:shadow-lg text-center min-h-[45px] sm:min-h-[50px] md:min-h-[60px] flex flex-col justify-center">
+                    <div className="flex items-center justify-center gap-1 mb-1">
+                      <Users className="text-red-600" size={12} />
                     </div>
-                    <p className="text-lg sm:text-base md:text-lg lg:text-xl font-black text-base-content">{formatCount(apiStats.totalDonors)}</p>
+                    <p className="text-base sm:text-sm md:text-base font-black text-base-content">{formatCount(apiStats.totalDonors)}</p>
                     <p className="text-xs text-base-content/70 font-semibold">Active Donors</p>
                   </Card>
-                  <Card className="p-3 sm:p-2 md:p-2.5 hover:border-red-200 dark:hover:border-red-900/50 transition shadow-sm hover:shadow-lg text-center min-h-[100px] sm:min-h-[90px] md:min-h-[100px] flex flex-col justify-center">
-                    <div className="flex items-center justify-center gap-1 mb-2 sm:mb-1">
-                      <Heart className="text-red-600 fill-red-600" size={14} />
+                  <Card className="p-2 sm:p-1.5 md:p-2 hover:border-red-200 dark:hover:border-red-900/50 transition shadow-sm hover:shadow-lg text-center min-h-[45px] sm:min-h-[50px] md:min-h-[60px] flex flex-col justify-center">
+                    <div className="flex items-center justify-center gap-1 mb-1">
+                      <Heart className="text-red-600 fill-red-600" size={12} />
                     </div>
-                    <p className="text-lg sm:text-base md:text-lg lg:text-xl font-black text-base-content">{livesSaved}</p>
+                    <p className="text-base sm:text-sm md:text-base font-black text-base-content">{livesSaved}</p>
                     <p className="text-xs text-base-content/70 font-semibold">Lives Saved</p>
                   </Card>
-                  <Card className="p-3 sm:p-2 md:p-2.5 hover:border-red-200 dark:hover:border-red-900/50 transition shadow-sm hover:shadow-lg text-center min-h-[100px] sm:min-h-[90px] md:min-h-[100px] flex flex-col justify-center">
-                    <div className="flex items-center justify-center gap-1 mb-2 sm:mb-1">
-                      <Activity className="text-red-600" size={14} />
+                  <Card className="p-2 sm:p-1.5 md:p-2 hover:border-red-200 dark:hover:border-red-900/50 transition shadow-sm hover:shadow-lg text-center min-h-[45px] sm:min-h-[50px] md:min-h-[60px] flex flex-col justify-center">
+                    <div className="flex items-center justify-center gap-1 mb-1">
+                      <Activity className="text-red-600" size={12} />
                     </div>
-                    <p className="text-lg sm:text-base md:text-lg lg:text-xl font-black text-base-content">{formatCount(centersData.length)}</p>
+                    <p className="text-base sm:text-sm md:text-base font-black text-base-content">{formatCount(centersData.length)}</p>
                     <p className="text-xs text-base-content/70 font-semibold">Blood Banks</p>
                   </Card>
                 </div>
