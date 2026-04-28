@@ -7,7 +7,9 @@ const Input = ({
   ...props 
 }) => {
   const getInputStyle = () => {
-    return error ? COMPONENT_STYLES.input.error : COMPONENT_STYLES.input.default;
+    const baseStyle = error ? COMPONENT_STYLES.input.error : COMPONENT_STYLES.input.default;
+    // Replace subtle border with more visible border-2
+    return baseStyle.replace('border border-base-300/50', 'border-2 border-base-300').replace('border border-red-300', 'border-2 border-red-300');
   };
   return (
     <div className="w-full">

@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router';
 import axios from 'axios';
 import { FaUser, FaEnvelope, FaLock, FaImage, FaTint, FaMapMarkerAlt, FaEye, FaEyeSlash } from 'react-icons/fa';
+import { TYPOGRAPHY, SPACING, BORDER_RADIUS } from '../styles/designSystem';
 
 const Register = () => {
     const { registrationWithEmailAndPassword, setUser } = useContext(AuthContext);
@@ -120,21 +121,19 @@ const Register = () => {
                     </p>
                 </div>
 
-                <form onSubmit={handleSubmit} className="bg-base-200 border-2 border-base-300 rounded-2xl shadow-xl p-6 md:p-8">
+                <form onSubmit={handleSubmit} className="bg-base-100 border-2 border-base-300 rounded-xl shadow-lg p-6 md:p-8">
                     <fieldset className="space-y-6">
                         {/* Name */}
                         <div>
-                            <label className="label" htmlFor="name">
-                                <span className="label-text text-base-content font-semibold flex items-center gap-2">
-                                    <FaUser className="text-base-content/60" /> Full Name
-                                </span>
+                            <label className="block text-sm font-semibold text-base-content mb-2">
+                                <FaUser className="inline mr-2 text-base-content/60" /> Full Name
                             </label>
                             <input 
                                 id="name"
                                 name='name' 
                                 type="text" 
                                 autoComplete="name"
-                                className="input input-bordered w-full bg-base-100 text-base-content border-base-300 focus:border-red-500 focus:outline-none" 
+                                className="w-full px-4 py-3 border-2 border-base-300 rounded-xl bg-base-100 text-base-content focus:border-red-500 focus:outline-none transition-all duration-300" 
                                 placeholder="Enter your full name" 
                                 required 
                             />
@@ -142,17 +141,15 @@ const Register = () => {
 
                         {/* Email */}
                         <div>
-                            <label className="label" htmlFor="email">
-                                <span className="label-text text-base-content font-semibold flex items-center gap-2">
-                                    <FaEnvelope className="text-base-content/60" /> Email Address
-                                </span>
+                            <label className="block text-sm font-semibold text-base-content mb-2">
+                                <FaEnvelope className="inline mr-2 text-base-content/60" /> Email Address
                             </label>
                             <input 
                                 id="email"
                                 name='email' 
                                 type="email" 
                                 autoComplete="email"
-                                className="input input-bordered w-full bg-base-100 text-base-content border-base-300 focus:border-red-500 focus:outline-none" 
+                                className="w-full px-4 py-3 border-2 border-base-300 rounded-xl bg-base-100 text-base-content focus:border-red-500 focus:outline-none transition-all duration-300" 
                                 placeholder="Enter your email address" 
                                 required 
                             />
@@ -161,32 +158,28 @@ const Register = () => {
                         {/* Photo and Blood Group */}
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
-                                <label className="label" htmlFor="photoUrl">
-                                    <span className="label-text text-base-content font-semibold flex items-center gap-2">
-                                        <FaImage className="text-base-content/60" /> Profile Photo
-                                    </span>
+                                <label className="block text-sm font-semibold text-base-content mb-2">
+                                    <FaImage className="inline mr-2 text-base-content/60" /> Profile Photo
                                 </label>
                                 <input 
                                     id="photoUrl"
                                     name="photoUrl" 
                                     type="file" 
-                                    className="file-input file-input-bordered w-full bg-base-100 text-base-content border-base-300 focus:border-red-500" 
+                                    className="w-full px-4 py-3 border-2 border-base-300 rounded-xl bg-base-100 text-base-content focus:border-red-500 transition-all duration-300" 
                                     accept="image/*"
                                     required
                                 />
                             </div>
 
                             <div>
-                                <label className="label" htmlFor="bloodGroup">
-                                    <span className="label-text text-base-content font-semibold flex items-center gap-2">
-                                        <FaTint className="text-red-500" /> Blood Group
-                                    </span>
+                                <label className="block text-sm font-semibold text-base-content mb-2">
+                                    <FaTint className="inline mr-2 text-red-500" /> Blood Group
                                 </label>
                                 <select
                                     id="bloodGroup"
                                     name="bloodGroup"
                                     defaultValue=""
-                                    className="select select-bordered w-full bg-base-100 text-base-content border-base-300 focus:border-red-500 focus:outline-none"
+                                    className="w-full px-4 py-3 border-2 border-base-300 rounded-xl bg-base-100 text-base-content focus:border-red-500 focus:outline-none transition-all duration-300"
                                     required
                                 >
                                     <option disabled value="">Choose Blood Group</option>
@@ -205,16 +198,14 @@ const Register = () => {
                         {/* District and Upazila */}
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
-                                <label className="label" htmlFor="district">
-                                    <span className="label-text text-base-content font-semibold flex items-center gap-2">
-                                        <FaMapMarkerAlt className="text-base-content/60" /> District
-                                    </span>
+                                <label className="block text-sm font-semibold text-base-content mb-2">
+                                    <FaMapMarkerAlt className="inline mr-2 text-base-content/60" /> District
                                 </label>
                                 <select 
                                     id="district"
                                     value={district} 
                                     onChange={(e) => setDistrict(e.target.value)} 
-                                    className="select select-bordered w-full bg-base-100 text-base-content border-base-300 focus:border-red-500 focus:outline-none"
+                                    className="w-full px-4 py-3 border-2 border-base-300 rounded-xl bg-base-100 text-base-content focus:border-red-500 focus:outline-none transition-all duration-300"
                                     required
                                 >
                                     <option disabled value="">Choose District</option>
@@ -229,16 +220,14 @@ const Register = () => {
                             </div>
 
                             <div>
-                                <label className="label" htmlFor="upazila">
-                                    <span className="label-text text-base-content font-semibold flex items-center gap-2">
-                                        <FaMapMarkerAlt className="text-base-content/60" /> Upazila
-                                    </span>
+                                <label className="block text-sm font-semibold text-base-content mb-2">
+                                    <FaMapMarkerAlt className="inline mr-2 text-base-content/60" /> Upazila
                                 </label>
                                 <select 
                                     id="upazila"
                                     value={upazila} 
                                     onChange={(e) => setUpazila(e.target.value)} 
-                                    className="select select-bordered w-full bg-base-100 text-base-content border-base-300 focus:border-red-500 focus:outline-none"
+                                    className="w-full px-4 py-3 border-2 border-base-300 rounded-xl bg-base-100 text-base-content focus:border-red-500 focus:outline-none transition-all duration-300"
                                     required
                                 >
                                     <option disabled value="">Choose Upazila</option>
@@ -256,10 +245,8 @@ const Register = () => {
                         {/* Password and Confirm Password */}
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
-                                <label className="label" htmlFor="password">
-                                    <span className="label-text text-base-content font-semibold flex items-center gap-2">
-                                        <FaLock className="text-base-content/60" /> Password
-                                    </span>
+                                <label className="block text-sm font-semibold text-base-content mb-2">
+                                    <FaLock className="inline mr-2 text-base-content/60" /> Password
                                 </label>
                                 <div className="relative">
                                     <input 
@@ -267,7 +254,7 @@ const Register = () => {
                                         name='password' 
                                         type={showPassword ? "text" : "password"}
                                         autoComplete="new-password"
-                                        className="input input-bordered w-full bg-base-100 text-base-content border-base-300 focus:border-red-500 focus:outline-none pr-12" 
+                                        className="w-full px-4 py-3 border-2 border-base-300 rounded-xl bg-base-100 text-base-content focus:border-red-500 focus:outline-none transition-all duration-300 pr-12" 
                                         placeholder="Enter password" 
                                         required 
                                     />
@@ -282,10 +269,8 @@ const Register = () => {
                                 </div>
                             </div>
                             <div>
-                                <label className="label" htmlFor="confirmPassword">
-                                    <span className="label-text text-base-content font-semibold flex items-center gap-2">
-                                        <FaLock className="text-base-content/60" /> Confirm Password
-                                    </span>
+                                <label className="block text-sm font-semibold text-base-content mb-2">
+                                    <FaLock className="inline mr-2 text-base-content/60" /> Confirm Password
                                 </label>
                                 <div className="relative">
                                     <input 
@@ -293,7 +278,7 @@ const Register = () => {
                                         name="confirmPassword" 
                                         type={showConfirmPassword ? "text" : "password"}
                                         autoComplete="new-password"
-                                        className="input input-bordered w-full bg-base-100 text-base-content border-base-300 focus:border-red-500 focus:outline-none pr-12" 
+                                        className="w-full px-4 py-3 border-2 border-base-300 rounded-xl bg-base-100 text-base-content focus:border-red-500 focus:outline-none transition-all duration-300 pr-12" 
                                         placeholder="Confirm password" 
                                         required 
                                     />
@@ -310,7 +295,7 @@ const Register = () => {
                         </div>
 
                         {/* Password Requirements */}
-                        <div className="bg-base-100 border border-base-300 rounded-lg p-4">
+                        <div className="bg-base-100 border border-base-300 rounded-xl p-4">
                             <h4 className="text-sm font-semibold text-base-content mb-2">Password Requirements:</h4>
                             <ul className="text-xs text-base-content/70 space-y-1">
                                 <li>• At least 6 characters long</li>
@@ -323,7 +308,7 @@ const Register = () => {
                     {/* Register Button */}
                     <button 
                         type="submit" 
-                        className="btn w-full bg-gradient-to-r from-red-500 to-rose-600 hover:from-red-600 hover:to-rose-700 text-white font-bold border-0 shadow-lg hover:shadow-xl transition-all duration-200 mt-6"
+                        className="btn w-full bg-gradient-to-r from-red-500 to-rose-600 hover:from-red-600 hover:to-rose-700 text-white font-bold border-0 shadow-lg hover:shadow-xl transition-all duration-200 mt-6 rounded-xl py-3 min-h-12"
                     >
                         Create Account
                     </button>
@@ -333,7 +318,7 @@ const Register = () => {
                         <p className="text-base-content/60">
                             Already have an account?{' '}
                             <Link 
-                                className='text-red-500 hover:text-red-600 font-semibold hover:underline transition-colors' 
+                                className='text-red-600 hover:text-red-700 font-bold hover:font-bold transition-colors' 
                                 to="/login"
                             >
                                 Sign In
