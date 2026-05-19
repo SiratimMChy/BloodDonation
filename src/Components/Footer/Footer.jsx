@@ -152,7 +152,7 @@ const Footer = () => {
         </div>
 
         {/* Bottom Section */}
-        <div className="border-t border-gray-700 pt-8">
+        <div className="border-t border-gray-700 pt-6">
           <p className="text-gray-400 text-center text-sm">
             © {new Date().getFullYear()} Hemovia. All rights reserved.
           </p>
