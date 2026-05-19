@@ -278,6 +278,11 @@ const Navbar = () => {
                                 <img
                                     alt="User Avatar"
                                     src={user?.photoURL || user?.imageUrl || "https://via.placeholder.com/150"}
+                                    referrerPolicy="no-referrer"
+                                    onError={(e) => {
+                                        e.target.onerror = null;
+                                        e.target.src = "https://ui-avatars.com/api/?name=" + encodeURIComponent(user?.displayName || user?.name || 'User') + "&background=dc2626&color=fff&size=150";
+                                    }}
                                 />
                             </div>
                         </div>
