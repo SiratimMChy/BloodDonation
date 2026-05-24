@@ -1,6 +1,3 @@
-// Quick EmailJS Setup Script
-// Run this script to check your EmailJS configuration
-
 import { EMAILJS_CONFIG, getConfigStatus } from './src/config/emailjs.js';
 
 console.log('=== EmailJS Configuration Status ===');
