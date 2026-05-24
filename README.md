@@ -10,7 +10,7 @@
 [![TailwindCSS](https://img.shields.io/badge/Tailwind-4.0-38B2AC?style=flat&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
 [![DaisyUI](https://img.shields.io/badge/DaisyUI-5.5-5A0EF8?style=flat&logo=daisyui&logoColor=white)](https://daisyui.com/)
 [![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-47A248?style=flat&logo=mongodb&logoColor=white)](https://www.mongodb.com/)
-[![License](https://img.shields.io/badge/License-Proprietary-orange?style=flat)](#license)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](#-license--contributions)
 
 <div align="center">
 <a href="https://blooddonation-f6367.web.app" target="_blank">
@@ -43,7 +43,7 @@
 - [Deployment](#-deployment)
 - [Future Roadmap](#-future-roadmap)
 - [Acknowledgments](#-acknowledgments)
-- [License](#-license)
+- [License & Contributions](#-license--contributions)
 
 ---
 
@@ -630,22 +630,20 @@ firebase deploy
 
 ---
 
-## 📄 License
+## 📄 License & Contributions
 
-This software and its documentation are **proprietary and confidential**. Unauthorized copying, distribution, modification, or public deployment of this system via any medium is strictly prohibited.
+This project is open-source and welcoming. Anyone is free to view, explore, and contribute to this repository. However, proper credit and attribution must be given to the original creator.
 
-&copy; 2026 Hemovia Management Platform. All rights reserved.
+Distributed under the **MIT License**. See the license details for more information.
 
----
+*Copyright © 2026 Hemovia Management Platform. All rights reserved.*
 
 <div align="center">
 
-**Made with ❤️ by Siratim Mustakim Chowdhury**
+**Made by Siratim Mustakim Chowdhury**
 
 [![GitHub](https://img.shields.io/badge/GitHub-SiratimMChy-181717?style=flat&logo=github)](https://github.com/SiratimMChy)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Siratim%20Mustakim-0077B5?style=flat&logo=linkedin)](https://www.linkedin.com/in/siratim-mustakim-chowdhury/)
 [![Email](https://img.shields.io/badge/Email-chowdhurysiratimmustakim@gmail.com-D14836?style=flat&logo=gmail&logoColor=white)](mailto:chowdhurysiratimmustakim@gmail.com)
-
-⭐ Star this repository if you find it helpful!
 
 </div>
