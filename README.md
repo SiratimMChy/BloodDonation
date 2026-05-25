@@ -175,24 +175,8 @@ Hemovia digitizes the entire donation pipeline:
 
 Hemovia follows a **Component-Based Architecture** with clear separation of concerns, built on modern React patterns.
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                    Presentation Layer                        │
-│  (React Components, Pages, Role-Based Dashboard Views)      │
-├─────────────────────────────────────────────────────────────┤
-│                    State Management Layer                    │
-│  (AuthProvider Context, Local useState, Theme Events)       │
-├─────────────────────────────────────────────────────────────┤
-│                    Business Logic Layer                      │
-│  (RBAC Guards, Demo Restrictions, Data Aggregations)        │
-├─────────────────────────────────────────────────────────────┤
-│                    API Integration Layer                     │
-│  (Axios Secure Interceptor, Firebase Auth SDK)              │
-├─────────────────────────────────────────────────────────────┤
-│                    External Services                         │
-│  (Firebase Auth, MongoDB/Express API, Stripe, EmailJS, ImgBB)│
-└─────────────────────────────────────────────────────────────┘
-```
+<img width="1440" height="1240" alt="image" src="https://github.com/user-attachments/assets/92ae2606-2e1d-441d-b583-38d68778e101" />
+
 
 ### Key Data Flows
 
