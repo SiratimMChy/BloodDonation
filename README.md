@@ -1,4 +1,4 @@
-# 🩸 Hemovia – Blood Donation Management Platform
+# 🩸 Hemovia - Blood Donation Management Platform
 
 <div align="center">
 
