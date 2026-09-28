@@ -41,7 +41,7 @@ const Navbar = () => {
     
     const handleSignOut = () => {
         signOut(auth);
-        navigate("/signup");
+        navigate("/login");
     }
     
     const getDashboardPath = () => {
@@ -57,7 +57,7 @@ const Navbar = () => {
     }
     
     return (
-        <div className="navbar bg-base-100 shadow-sm border-b border-base-300 h-20 lg:px-30 mx-auto">
+        <div className="navbar bg-base-100 shadow-sm border-b border-base-300 h-15 lg:px-30 mx-auto">
             <div className="navbar-start">
                 <div className="dropdown">
                     <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -169,10 +169,10 @@ const Navbar = () => {
                     </ul>
                 </div>
                 <div className="flex items-center gap-2">
-                    <div className="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-br from-red-500 to-red-600 rounded-xl flex items-center justify-center shadow-md">
+                    <div className="w-8 h-8 md:w-10 md:h-10 bg-gradient-to-br from-red-500 to-red-600 rounded-xl flex items-center justify-center shadow-md">
                         <MdBloodtype className="text-white" size={18} />
                     </div>
-                    <span className="text-xl md:text-2xl font-extrabold tracking-tight text-base-content">
+                    <span className="text-lg md:text-xl font-extrabold tracking-tight text-base-content">
                         Hemovia
                     </span>
                 </div>
@@ -254,7 +254,7 @@ const Navbar = () => {
                         />
                         {/* sun icon */}
                         <svg
-                            className={`h-8 w-8 fill-current transition-all duration-300 ${isChecked ? 'opacity-0 rotate-180' : 'opacity-100 rotate-0'}`}
+                            className={`h-6 w-6 fill-current transition-all duration-300 ${isChecked ? 'opacity-0 rotate-180' : 'opacity-100 rotate-0'}`}
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 24 24">
                             <path
@@ -262,7 +262,7 @@ const Navbar = () => {
                         </svg>
                         {/* moon icon */}
                         <svg
-                            className={`h-8 w-8 fill-current transition-all duration-300 absolute top-0 left-0 ${isChecked ? 'opacity-100 rotate-0' : 'opacity-0 -rotate-180'}`}
+                            className={`h-6 w-6 fill-current transition-all duration-300 absolute top-0 left-0 ${isChecked ? 'opacity-100 rotate-0' : 'opacity-0 -rotate-180'}`}
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 24 24">
                             <path

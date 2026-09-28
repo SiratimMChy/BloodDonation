@@ -12,7 +12,7 @@ import {
   Sun,
   Moon
 } from 'lucide-react';
-import { NavLink, useNavigate } from 'react-router';
+import { NavLink, useNavigate, Link } from 'react-router';
 import { AuthContext } from '../../Provider/AuthProvider';
 import { MdBloodtype } from 'react-icons/md';
 import { VscRequestChanges } from 'react-icons/vsc';
@@ -100,7 +100,11 @@ const Aside = () => {
       </button>
 
       <div className="px-3 sm:px-6 pt-8 pb-6 border-b-2 border-base-300 bg-base-100">
-        <div className={`flex items-center gap-2 sm:gap-3 mb-2 ${isCollapsed ? 'justify-center' : ''}`}>
+        <Link
+          to="/"
+          className={`flex items-center gap-2 sm:gap-3 mb-2 ${isCollapsed ? 'justify-center' : ''}`}
+          title="Go to Home"
+        >
           <div className="mt-1.5 w-6 h-6 sm:w-8 sm:h-8 lg:w-12 lg:h-12 bg-red-500 rounded-lg flex items-center justify-center shadow-md shrink-0">
             <MdBloodtype className="text-white" size={14} />
           </div>
@@ -111,7 +115,7 @@ const Aside = () => {
               </h1>
             </div>
           )}
-        </div>
+        </Link>
       </div>
 
       {/* Navigation */}

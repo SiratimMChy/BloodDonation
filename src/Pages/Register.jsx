@@ -10,7 +10,7 @@ import { FaUser, FaEnvelope, FaLock, FaImage, FaTint, FaMapMarkerAlt, FaEye, FaE
 import { TYPOGRAPHY, SPACING, BORDER_RADIUS } from '../styles/designSystem';
 
 const Register = () => {
-    const { registrationWithEmailAndPassword, setUser } = useContext(AuthContext);
+    const { createUser, logOut } = useContext(AuthContext);
     const [upazilas, setUpazilas] = useState([]);
     const [districts, setDistricts] = useState([]);
     const [district, setDistrict] = useState('');
@@ -80,12 +80,11 @@ const Register = () => {
         }
 
         if (res.data.success === true) {
-            registrationWithEmailAndPassword(email, password)
+            createUser(email, password)
                 .then((userCredential) => {
                     updateProfile(auth.currentUser, {
                         displayName: name, photoURL: imageUrl
                     }).then(() => {
-                        setUser(userCredential.user)
                         axios.post('https://blood-donation-backend-theta.vercel.app/users', formData)
                             .then(res => {
                                 console.log(res.data);
@@ -93,9 +92,11 @@ const Register = () => {
                             .catch(err => {
                                 console.error(err);
                             });
-                        toast.success('Registration successful!');
-                        navigate('/login');
-
+                        
+                        logOut().then(() => {
+                            toast.success('Registration successful! Please login.');
+                            navigate('/login');
+                        });
                     }).catch((error) => {
                         console.log(error);
                     });

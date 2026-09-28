@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import { Link } from 'react-router'; // or 'react-router-dom' if your app uses that
 import { Heart, Search, Phone, Mail, MapPin, Droplet, Users, Activity, Award, Clock, Shield, Send, CheckCircle, AlertCircle, Building } from 'lucide-react';
 import emailjs from '@emailjs/browser';
 import { EMAILJS_CONFIG } from '../config/emailjs';
@@ -9,8 +10,23 @@ import useAxios from '../Hooks/useAxios';
 import SkeletonLoader from '../Components/SkeletonLoader/SkeletonLoader';
 import { Card, Button } from '../Components/UI';
 import { TYPOGRAPHY, LAYOUT, SPACING, COLORS } from '../styles/designSystem';
+import { AuthContext } from '../Provider/AuthProvider';
 
 const Home = () => {
+  const { user, role } = useContext(AuthContext);
+
+  const getDashboardPath = () => {
+    if (!user) return '/signup';
+
+    const routes = {
+      admin: '/dashboard/admindashboard',
+      volunteer: '/dashboard/volunteerdashboard',
+      donor: '/dashboard/donordashboard'
+    };
+
+    return routes[role] || '/dashboard';
+  };
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -53,24 +69,24 @@ const Home = () => {
         // Fetch main stats
         const response = await axiosInstance.get('/public-stats');
         const { successRate, totalRequests, totalDonors } = response.data;
-        
+
         // Fetch request message stats for Performance Metrics only
         const messageStatsResponse = await axiosInstance.get('/request-message-stats');
         const { emergencyCases, surgeriesEnabled, familiesHelped } = messageStatsResponse.data;
-        
+
         // Calculate done requests from success rate
         const estimatedDone = Math.round((successRate / (100 - successRate)) * totalRequests);
         setLivesSaved(estimatedDone > 0 ? estimatedDone : 0);
-        
+
         // Update API stats with real data
         setApiStats({
           totalDonors: totalDonors,
           totalRequests: totalRequests + estimatedDone,
           successRate: successRate,
-          pendingRequests: totalRequests, 
-          emergencyCases: emergencyCases || 0, 
-          surgeriesEnabled: surgeriesEnabled || 0, 
-          chronicCare: familiesHelped || 0 
+          pendingRequests: totalRequests,
+          emergencyCases: emergencyCases || 0,
+          surgeriesEnabled: surgeriesEnabled || 0,
+          chronicCare: familiesHelped || 0
         });
       } catch (err) {
         console.error(err);
@@ -138,9 +154,9 @@ const Home = () => {
   };
 
   return (
-   <div className="min-h-screen bg-base-100">
+    <div className="min-h-screen bg-base-100">
       {/* Banner Section */}
-     <div className="relative min-h-[70vh] sm:h-[60vh] md:h-[65vh] lg:h-[70vh] bg-base-100 overflow-hidden flex items-center py-8 sm:py-0">
+      <div className="relative min-h-[70vh] sm:h-[60vh] md:h-[65vh] lg:h-[70vh] bg-base-100 overflow-hidden flex items-center py-8 sm:py-0">
         {/* Background Pattern */}
         <div className="absolute inset-0 bg-gradient-to-br from-red-50 via-white to-rose-50 dark:from-base-200 dark:via-base-100 dark:to-base-200">
           <div className="absolute inset-0 opacity-30 dark:opacity-10" style={{
@@ -184,13 +200,19 @@ const Home = () => {
               {/* CTA Buttons */}
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-2 md:gap-3 justify-center md:justify-start">
                 <Button
-                  as="a"
-                  href="/signup"
+                  key={user ? 'dashboard' : 'signup'}
+                  as={Link}
+                  to={getDashboardPath()}
                   variant="primary"
                   className="group inline-flex items-center justify-center gap-2 px-6 sm:px-4 md:px-6 lg:px-7 py-3 sm:py-2 md:py-2.5 lg:py-3 text-sm sm:text-xs md:text-sm hover:scale-105"
                 >
-                  <Heart size={16} className="sm:w-3 sm:h-3 md:w-4 md:h-4 group-hover:scale-110 transition-transform" />
-                  <span>Join as a Donor</span>
+                  <Heart
+                    size={16}
+                    className="sm:w-3 sm:h-3 md:w-4 md:h-4 group-hover:scale-110 transition-transform"
+                  />
+                  <span>
+                    {user ? "Dashboard" : "Join as a Donor"}
+                  </span>
                 </Button>
                 <Button
                   as="a"
@@ -433,12 +455,12 @@ const Home = () => {
                       ⭐ Featured
                     </div>
                   </div>
-                  
+
                   {/* Center Name */}
                   <h3 className="text-lg md:text-xl font-bold text-base-content mb-3 group-hover:text-red-600 dark:group-hover:text-red-400 transition-colors duration-300 line-clamp-2">
                     {center.name}
                   </h3>
-                  
+
                   {/* Center Details */}
                   <div className="space-y-2 mb-4">
                     <div className="flex items-center gap-2 text-sm text-base-content/70">
@@ -454,7 +476,7 @@ const Home = () => {
                       <span className="truncate">{center.openHours}</span>
                     </div>
                   </div>
-                  
+
                   {/* Rating */}
                   <div className="flex items-center gap-2 mb-4">
                     <div className="flex items-center gap-1">
@@ -467,9 +489,9 @@ const Home = () => {
                     <span className="text-sm font-semibold text-base-content">{center.rating}</span>
                     <span className="text-xs text-base-content/60">({center.reviews} reviews)</span>
                   </div>
-                  
+
                   {/* View Details Button */}
-                  <a 
+                  <a
                     href={`/center/${center.id}`}
                     className="block w-full bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white py-2.5 md:py-3 rounded-lg font-bold text-sm md:text-base transition-all duration-300 hover:scale-105 shadow-md hover:shadow-lg text-center"
                   >
@@ -507,9 +529,9 @@ const Home = () => {
                 animationDuration: `${2 + Math.random() * 2}s`
               }}
             >
-              <Droplet 
-                className="text-red-200 fill-red-200 opacity-30" 
-                size={20 + Math.random() * 20} 
+              <Droplet
+                className="text-red-200 fill-red-200 opacity-30"
+                size={20 + Math.random() * 20}
               />
             </div>
           ))}
@@ -553,7 +575,7 @@ const Home = () => {
                   </p>
                   <p className="text-2xl md:text-3xl font-bold text-red-700 dark:text-red-500">Lives Saved Today</p>
                 </div>
-                
+
                 <div className="grid grid-cols-2 gap-6 mt-8">
                   <Card className="p-4 text-center hover:border-red-200 dark:hover:border-red-900/50 transition-all">
                     <p className="text-3xl md:text-4xl font-black text-red-600 dark:text-red-500">{formatCount(apiStats.totalDonors)}</p>
@@ -681,7 +703,7 @@ const Home = () => {
           <div className="grid lg:grid-cols-2 gap-12">
             {/* Enhanced Contact Form */}
             <div className="bg-base-200 border-2 border-base-300 rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 group">
-                <div className="flex items-center gap-3 mb-6">
+              <div className="flex items-center gap-3 mb-6">
                 <div className="w-10 h-10 bg-gradient-to-br from-red-500 to-red-600 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                   <Send className="text-white" size={20} />
                 </div>
@@ -763,8 +785,8 @@ const Home = () => {
                   type="submit"
                   disabled={isSubmitting}
                   className={`w-full px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-3 ${isSubmitting
-                      ? 'bg-gray-400 cursor-not-allowed'
-                      : 'bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 shadow-lg shadow-red-200 hover:shadow-xl active:scale-95 dark:shadow-sm dark:hover:shadow-lg'
+                    ? 'bg-gray-400 cursor-not-allowed'
+                    : 'bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 shadow-lg shadow-red-200 hover:shadow-xl active:scale-95 dark:shadow-sm dark:hover:shadow-lg'
                     } text-white`}
                 >
                   {isSubmitting ? (
