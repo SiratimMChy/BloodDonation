@@ -156,20 +156,16 @@ const Home = () => {
   return (
     <div className="min-h-screen bg-base-100">
       {/* Banner Section */}
-      <div className="relative min-h-[70vh] sm:h-[60vh] md:h-[65vh] lg:h-[70vh] bg-base-100 overflow-hidden flex items-center py-8 sm:py-0">
+      <div className="relative min-h-[75vh] sm:min-h-[65vh] md:min-h-[70vh] lg:min-h-[80vh] bg-base-100 overflow-hidden flex items-center py-8 sm:py-12">
         {/* Background Pattern */}
         <div className="absolute inset-0 bg-gradient-to-br from-red-50 via-white to-rose-50 dark:from-base-200 dark:via-base-100 dark:to-base-200">
-          <div className="absolute inset-0 opacity-30 dark:opacity-10" style={{
-            backgroundImage: 'radial-gradient(circle at 1px 1px, rgb(254 202 202 / 0.3) 1px, transparent 0)',
-            backgroundSize: '40px 40px'
-          }}></div>
         </div>
 
         {/* Decorative Blobs */}
         <div className="absolute top-0 right-0 w-48 h-48 sm:w-64 sm:h-64 md:w-96 md:h-96 bg-red-200 dark:bg-red-900/20 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse"></div>
         <div className="absolute bottom-0 left-0 w-48 h-48 sm:w-64 sm:h-64 md:w-96 md:h-96 bg-rose-200 dark:bg-rose-900/20 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse" style={{ animationDelay: '2s' }}></div>
 
-        <div className="relative container mx-auto px-4 py-6 sm:py-4 md:py-6 lg:py-8">
+        <div className="relative container mx-auto px-4 pt-6 sm:pt-8 md:pt-10 pb-12 sm:pb-16 lg:pb-20">
           <div className="grid md:grid-cols-2 gap-6 sm:gap-4 md:gap-6 lg:gap-8 items-center max-w-7xl mx-auto">
             {/* Left Content */}
             <div className="space-y-4 sm:space-y-3 md:space-y-4 lg:space-y-5 text-center md:text-left">
@@ -306,12 +302,6 @@ const Home = () => {
           </div>
         </div>
 
-        {/* Bottom Wave */}
-        <div className="absolute bottom-0 left-0 right-0">
-          <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-8 md:h-12">
-            <path d="M0 120L60 105C120 90 240 60 360 45C480 30 600 30 720 37.5C840 45 960 60 1080 67.5C1200 75 1320 75 1380 75L1440 75V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0Z" fill="currentColor" className="text-base-100" />
-          </svg>
-        </div>
       </div>
 
       {/* Featured Section */}
